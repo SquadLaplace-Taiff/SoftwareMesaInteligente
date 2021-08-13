@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 0.1.0
+  version: 0.1.1
   title: Software de testes
   description: Projeto para o 3º semestre do CT Desenvolvimento de Sistemas. <br>Software para gerenciamento de mesa inteligente desenvolvida para a empresa TAIFF.
   
@@ -38,27 +38,23 @@ paths:
           description: Falha na comunicação com o servidor
           
   /posicao/teste:
-    put:
+    post:
       tags:
       - 'Testes'
-      summary: 'Cria ou edita um modelo de teste'
-      description: 'Cria ou edita um modelo de teste'
+      summary: 'Cria um modelo de teste'
+      description: 'Cria um modelo de teste'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/testes'
       responses:
-        '200':
-          description: OK
         '201':
           description: Teste criado com sucesso
-        '404':           
-          description: Não encontrado
         '400':
           description: Valor inválido
         '500':
-          description: Falha na comunicação com o servidor
+          description: Falha na comunicação com o servidor        
           
   /posicao/teste/{id_teste}:
     delete:
@@ -75,6 +71,34 @@ paths:
             type: integer
             format: int64
       responses: 
+        '200':
+          description: OK
+        '404':           
+          description: Não encontrado
+        '400':
+          description: Valor inválido
+        '500':
+          description: Falha na comunicação com o servidor
+    
+    put:
+      tags:
+      - 'Testes'
+      summary: 'Edita um modelo de teste'
+      description: 'Edita um modelo de teste'
+      parameters:
+        - name: id_teste
+          in: path
+          required: true
+          description: Id do teste a ser excluído.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/testes'
+      responses:
         '200':
           description: OK
         '404':           
