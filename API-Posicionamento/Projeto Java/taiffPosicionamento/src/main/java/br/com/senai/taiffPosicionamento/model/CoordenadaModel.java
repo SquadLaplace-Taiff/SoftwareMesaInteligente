@@ -1,4 +1,4 @@
-package br.senai.taiffPosicionamento.model;
+package br.com.senai.taiffPosicionamento.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="coordenada")
-public class CoodenadaModel {
+public class CoordenadaModel {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -18,11 +18,11 @@ public class CoodenadaModel {
 	private int r;
 	private int t;
 	
-	public CoodenadaModel() {
+	public CoordenadaModel() {
 		
 	}
 
-	public CoodenadaModel(long id, int x, int y, int z, int r, int t) {
+	public CoordenadaModel(long id, int x, int y, int z, int r, int t) {
 		
 		this.id = id;
 		this.x = x;
@@ -34,10 +34,6 @@ public class CoodenadaModel {
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public int getX() {
