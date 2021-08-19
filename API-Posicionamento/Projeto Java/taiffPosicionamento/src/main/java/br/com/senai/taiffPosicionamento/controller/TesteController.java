@@ -26,7 +26,7 @@ public class TesteController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<TesteModel> criarTeste(TesteModel teste){
+	public ResponseEntity<TesteModel> criarTeste(@RequestBody TesteModel teste){
 		try {
 			testeRepository.save(teste);				
 			return ResponseEntity.created(null).body(teste);
@@ -46,7 +46,7 @@ public class TesteController {
 		}
 		
 		catch (Exception e) {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class TesteController {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<TesteModel> editaTestePorId(@PathVariable long id, TesteModel testeNovo){
+	public ResponseEntity<TesteModel> editaTestePorId(@PathVariable long id, @RequestBody TesteModel testeNovo){
 		
 		Optional<TesteModel> testeOptional = testeRepository.findById(id);
 		
