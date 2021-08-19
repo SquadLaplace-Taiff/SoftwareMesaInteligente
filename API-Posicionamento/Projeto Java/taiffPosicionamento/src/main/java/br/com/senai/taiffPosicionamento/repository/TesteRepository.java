@@ -6,4 +6,6 @@ import br.com.senai.taiffPosicionamento.model.TesteModel;
 
 public interface TesteRepository extends JpaRepository <TesteModel, Long> {
 
+	public TesteModel findByModelo(String modelo);
+
 }
