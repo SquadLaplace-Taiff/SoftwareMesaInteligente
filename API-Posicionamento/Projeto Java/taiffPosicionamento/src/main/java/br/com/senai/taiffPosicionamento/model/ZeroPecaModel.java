@@ -11,8 +11,7 @@ import javax.persistence.Table;
 public class ZeroPecaModel {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long id_teste;
 	private Integer x;
 	private Integer y;
 	private Integer z;
@@ -20,17 +19,17 @@ public class ZeroPecaModel {
 	
 	public ZeroPecaModel(long id, Integer x, Integer y, Integer z) {
 		super();
-		this.id = id;
+		this.id_teste = id;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
 	public long getId() {
-		return id;
+		return id_teste;
 	}
 	public void setId(long id) {
-		this.id = id;
+		this.id_teste = id;
 	}
 	public Integer getX() {
 		return x;
