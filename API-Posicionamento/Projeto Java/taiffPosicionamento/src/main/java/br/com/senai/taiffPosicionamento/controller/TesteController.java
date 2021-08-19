@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senai.taiffPosicionamento.model.TesteModel;
-import br.com.senai.taiffPosicionamento.repository.CoordenadaRepository;
 import br.com.senai.taiffPosicionamento.repository.TesteRepository;
-import br.com.senai.taiffPosicionamento.repository.ZeroPecaRepository;
 
 @RestController
 @RequestMapping("/teste")
@@ -26,28 +24,30 @@ public class TesteController {
 	@Autowired
 	private TesteRepository testeRepository;
 	
-	@Autowired
-	private ZeroPecaRepository zeroPecaRepository;
-	
-	@Autowired
-	private CoordenadaRepository coordenadaRepository;
-	
 	@PostMapping
 	@Transactional
 	public ResponseEntity<TesteModel> criarTeste(TesteModel teste){
+		try {
+			testeRepository.save(teste);				
+			return ResponseEntity.created(null).body(teste);
+		} 
 		
-		testeRepository.save(teste);
-				
-		return ResponseEntity.created(null).body(teste);
+		catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 	
 	
 	@GetMapping
 	public ResponseEntity<TesteModel> buscaTestePorModelo(@RequestBody String modelo){
+		try {
+			TesteModel teste = testeRepository.findByModelo(modelo);
+			return ResponseEntity.ok().body(teste);
+		}
 		
-		TesteModel teste = testeRepository.findByModelo(modelo);
-		
-		return ResponseEntity.ok().body(teste);	
+		catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 	
 	
@@ -77,10 +77,14 @@ public class TesteController {
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> excluiTestePorId(@PathVariable long id){
-		
+		try {
 		testeRepository.deleteById(id);
-		
 		return ResponseEntity.ok(null);
+		}
+		
+		catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
 		
 	}
 	
