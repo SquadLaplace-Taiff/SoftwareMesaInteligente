@@ -10,41 +10,48 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.sun.istack.NotNull;
+
 @Entity
 @Table(name="Teste")
 public class TesteModel {
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long id_teste;
+	@NotNull
 	private String modelo;
+	@NotNull
+	private String nome_teste;
+	
 	@OneToMany
-	List<CoordenadaModel> coordenadas;
+	private List<CoordenadaModel> coordenada;
 	@OneToOne
-	ZeroPecaModel zeroPeca;
+	private ZeroPecaModel zeroPeca;
 	
 	
 	public TesteModel() {
-		
 	}
-	
-	
-	public TesteModel(String modelo, List<CoordenadaModel> coordenadas, ZeroPecaModel zeroPeca) {
+
+
+	public TesteModel(long id_teste, String modelo, String nome_teste, List<CoordenadaModel> coordenada,
+			ZeroPecaModel zeroPeca) {
+		
+		this.id_teste = id_teste;
 		this.modelo = modelo;
-		this.coordenadas = coordenadas;
+		this.nome_teste = nome_teste;
+		this.coordenada = coordenada;
 		this.zeroPeca = zeroPeca;
 	}
 
 
-
-
-	public long getId() {
-		return id;
+	public long getId_teste() {
+		return id_teste;
 	}
 
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId_teste(long id_teste) {
+		this.id_teste = id_teste;
 	}
 
 
@@ -58,13 +65,23 @@ public class TesteModel {
 	}
 
 
-	public List<CoordenadaModel> getCoordenadas() {
-		return coordenadas;
+	public String getNome_teste() {
+		return nome_teste;
 	}
 
 
-	public void setCoordenadas(List<CoordenadaModel> coordenadas) {
-		this.coordenadas = coordenadas;
+	public void setNome_teste(String nome_teste) {
+		this.nome_teste = nome_teste;
+	}
+
+
+	public List<CoordenadaModel> getCoordenada() {
+		return coordenada;
+	}
+
+
+	public void setCoordenada(List<CoordenadaModel> coordenada) {
+		this.coordenada = coordenada;
 	}
 
 
@@ -75,11 +92,5 @@ public class TesteModel {
 
 	public void setZeroPeca(ZeroPecaModel zeroPeca) {
 		this.zeroPeca = zeroPeca;
-	}
-	
-	
-	
-	
-	
-	
+	}	
 }

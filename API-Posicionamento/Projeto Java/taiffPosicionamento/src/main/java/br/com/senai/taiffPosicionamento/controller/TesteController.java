@@ -1,5 +1,7 @@
 package br.com.senai.taiffPosicionamento.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.senai.taiffPosicionamento.model.CoordenadaModel;
 import br.com.senai.taiffPosicionamento.model.TesteModel;
+import br.com.senai.taiffPosicionamento.model.ZeroPecaModel;
+import br.com.senai.taiffPosicionamento.repository.CoordenadaRepository;
 import br.com.senai.taiffPosicionamento.repository.TesteRepository;
+import br.com.senai.taiffPosicionamento.repository.ZeroPecaRepository;
 
 @RestController
 @RequestMapping("/teste")
@@ -23,12 +29,18 @@ public class TesteController {
 	
 	@Autowired
 	private TesteRepository testeRepository;
+	@Autowired
+	private CoordenadaRepository coordenadaRepository;
+	@Autowired
+	private ZeroPecaRepository zeroPecaRepository;
 	
 	@PostMapping
 	@Transactional
 	public ResponseEntity<TesteModel> criarTeste(@RequestBody TesteModel teste){
 		try {
-			testeRepository.save(teste);				
+
+			testeRepository.save(teste);
+		
 			return ResponseEntity.created(null).body(teste);
 		} 
 		
@@ -38,8 +50,8 @@ public class TesteController {
 	}
 	
 	
-	@GetMapping
-	public ResponseEntity<TesteModel> buscaTestePorModelo(@RequestBody String modelo){
+	@GetMapping("/{modelo}")
+	public ResponseEntity<TesteModel> buscaTestePorModelo(@PathVariable String modelo){
 		try {
 			TesteModel teste = testeRepository.findByModelo(modelo);
 			return ResponseEntity.ok().body(teste);
@@ -50,26 +62,34 @@ public class TesteController {
 		}
 	}
 	
-	
-	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<TesteModel> editaTestePorId(@PathVariable long id, @RequestBody TesteModel testeNovo){
+	public ResponseEntity<TesteModel> editaTestePorId(@PathVariable long id, @RequestBody TesteModel testeNovo, 
+			@RequestBody List<CoordenadaModel> coordenadas, @RequestBody ZeroPecaModel zeroPeca){
 		
 		Optional<TesteModel> testeOptional = testeRepository.findById(id);
+		List<CoordenadaModel> listaCoordenadas = new ArrayList<>();
 		
-		if (testeOptional.isPresent()) {
-			TesteModel testeEditado = testeOptional.get();
+		if (testeOptional.isPresent()) {	
+			for(CoordenadaModel coordenada: coordenadas ) {
+				
+				coordenada.setTeste_id(id);
+				coordenadaRepository.save(coordenada);
+				listaCoordenadas.add(coordenada);
+			}
 			
-			testeEditado.setZeroPeca(testeNovo.getZeroPeca());
-			testeEditado.setCoordenadas(testeNovo.getCoordenadas());
-			testeEditado.setModelo(testeNovo.getModelo());
+			zeroPeca.setTeste_id(id);
+			zeroPecaRepository.save(zeroPeca);
 			
-			testeRepository.save(testeEditado);
-						
-			return ResponseEntity.ok().body(testeEditado);
+			if(testeNovo.getNome_teste() != null) {
+				testeOptional.get().setNome_teste(testeNovo.getNome_teste());
+			}
+			testeOptional.get().setCoordenada(listaCoordenadas);
+			testeOptional.get().setZeroPeca(zeroPeca);
+			testeRepository.save(testeOptional.get());
+			
+			return ResponseEntity.ok().body(testeOptional.get());
 		}
-		
 		return ResponseEntity.notFound().build();
 	}
 	
