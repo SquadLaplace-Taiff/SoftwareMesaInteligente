@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senai.taiffPosicionamento.model.CoordenadaModel;
 import br.com.senai.taiffPosicionamento.model.TesteModel;
-import br.com.senai.taiffPosicionamento.model.ZeroPecaModel;
 import br.com.senai.taiffPosicionamento.repository.CoordenadaRepository;
 import br.com.senai.taiffPosicionamento.repository.TesteRepository;
 import br.com.senai.taiffPosicionamento.repository.ZeroPecaRepository;
@@ -50,6 +49,20 @@ public class TesteController {
 	}
 	
 	
+	@GetMapping
+	public ResponseEntity<List<TesteModel>> buscaTudoMesmo(){
+		try {
+			List<TesteModel> listaTeste = testeRepository.findAll();
+			return ResponseEntity.ok().body(listaTeste);
+		}
+		
+		catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	
+	
 	@GetMapping("/{modelo}")
 	public ResponseEntity<TesteModel> buscaTestePorModelo(@PathVariable String modelo){
 		try {
@@ -64,28 +77,27 @@ public class TesteController {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<TesteModel> editaTestePorId(@PathVariable long id, @RequestBody TesteModel testeNovo, 
-			@RequestBody List<CoordenadaModel> coordenadas, @RequestBody ZeroPecaModel zeroPeca){
+	public ResponseEntity<TesteModel> editaTestePorId(@PathVariable long id, @RequestBody TesteModel testeNovo){
 		
 		Optional<TesteModel> testeOptional = testeRepository.findById(id);
 		List<CoordenadaModel> listaCoordenadas = new ArrayList<>();
 		
 		if (testeOptional.isPresent()) {	
-			for(CoordenadaModel coordenada: coordenadas ) {
+			for(CoordenadaModel coordenada: testeNovo.getCoordenada()) {
 				
 				coordenada.setTeste_id(id);
 				coordenadaRepository.save(coordenada);
 				listaCoordenadas.add(coordenada);
 			}
 			
-			zeroPeca.setTeste_id(id);
-			zeroPecaRepository.save(zeroPeca);
+			testeNovo.getZeroPeca().setTeste_id(id);
+			zeroPecaRepository.save(testeNovo.getZeroPeca());
 			
 			if(testeNovo.getNome_teste() != null) {
 				testeOptional.get().setNome_teste(testeNovo.getNome_teste());
 			}
 			testeOptional.get().setCoordenada(listaCoordenadas);
-			testeOptional.get().setZeroPeca(zeroPeca);
+			testeOptional.get().setZeroPeca(testeNovo.getZeroPeca());
 			testeRepository.save(testeOptional.get());
 			
 			return ResponseEntity.ok().body(testeOptional.get());
