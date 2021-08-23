@@ -2,6 +2,7 @@ package br.com.senai.taiffPosicionamento.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
 
 @Entity
 @Table(name="Teste")
@@ -19,9 +19,9 @@ public class TesteModel {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_teste;
-	@NotNull
+	@Column(unique = true)
 	private String modelo;
-	@NotNull
+	@Column(unique = true)
 	private String nome_teste;
 	
 	@OneToMany
