@@ -1,0 +1,29 @@
+.inputSearch {
+/*background: url(../../../assets/img/searchImg.png) no-repeat scroll 5px 5px;*/
+padding-left:30px;
+border-radius: 30px;
+position: absolute;
+width: 380px;
+height: 58px;
+z-index: -1;
+max-width: 100%;
+
+}
+
+.inputSearch:focus {
+ 
+    outline-width: 0;
+}
+
+.searchImg {
+    position: relative;
+    z-index: 1;
+    float: right;
+    padding-top: 7px;
+    border: none;
+    background: none;
+}
+
+.containerSearch {
+    max-width: 390px;
+}
