@@ -1,10 +1,12 @@
-import logo from './logo.png';
+import logo from '../../../assets/img/logo.png';
+import { Container } from 'react-bootstrap';
+import './Header.css';
 
-export function Header(props: any) { 
+export function Header() {
     return (
-        <div> 
-            <header> <img src="{logo}" alt="" /> </header>
-            {props.children}
-        </div>
+        
+        <Container className="containerHeader"> 
+            <img className="logoTaiff" src={logo} alt="" /> 
+        </Container>
     );
 }
