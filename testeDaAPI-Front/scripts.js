@@ -1,4 +1,4 @@
-const url = 'http://localhost:8080/teste/Teste%20albino%20asd';
+const url = 'http://localhost:8080/teste/Secador%20Unique%20Duo';
 
 // Conexão com a API
 fetch(url)
@@ -12,7 +12,7 @@ fetch(url)
 
 // Pega os dados da requisição(GET)
 function getData(data) {
-    const dataBase = data;
+    const dataBase = data[0];
     generateCoordenadas(dataBase);
     gerarNomeTeste(dataBase);
     gerarZeroPeca(dataBase);
