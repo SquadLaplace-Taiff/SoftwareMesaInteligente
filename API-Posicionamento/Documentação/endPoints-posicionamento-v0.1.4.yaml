@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 0.2.1
+  version: 0.1.4
   title: Software de testes
   description: Projeto para o 3º semestre do CT Desenvolvimento de Sistemas. <br>Software para gerenciamento de mesa inteligente desenvolvida para a empresa TAIFF.
   
@@ -8,21 +8,31 @@ servers:
   - url: http://localhost:8080
     description: Servidor para o consumo dos end-points
 paths:
-  /posicao/teste/{produtoNome}:
+
+  /posicao/teste/:
+    post:
+      tags:
+      - 'Testes'
+      summary: 'Cria um novo teste'
+      description: 'Cria um novo teste'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/testes'
+      responses:
+        '201':
+          description: Teste criado com sucesso
+        '400':
+          description: Valor inválido
+        '500':
+          description: Falha na comunicação com o servidor
+          
     get:
       tags:
         - "Testes"
-      summary: "Busca os testes pelo nome do produto"
-      description: "Busca todos os testes referentes ao produto"
-      parameters:
-        - name: produtoNome
-          in: path
-          required: true
-          description: Parameter description in CommonMark or HTML.
-          schema:
-            type: string
-            format: utf-8
-            minimum: 1
+      summary: "Busca todos os testes"
+      description: "Busca todos os testes"
       responses: 
         '200':
           description: OK
@@ -32,18 +42,17 @@ paths:
                 $ref: '#/components/schemas/testesArray'
         '404':           
           description: Não encontrado
-        '400':
-          description: Valor inválido
         '500':
-          description: Falha na comunicação com o servidor
-  /posicao/teste/{id_Teste}:
+          description: Falha na comunicação com o servidor  
+
+  /posicao/teste/{modelo}:
     get:
       tags:
         - "Testes"
-      summary: "Busca os testes pelo id"
-      description: "Busca um teste em especifico"
+      summary: "Busca os testes pelo MODELO do produto"
+      description: "Busca os testes pelo MODELO do produto"
       parameters:
-        - name: id_Teste
+        - name: modelo
           in: path
           required: true
           description: Parameter description in CommonMark or HTML.
@@ -65,22 +74,28 @@ paths:
         '500':
           description: Falha na comunicação com o servidor
           
-  /posicao/teste/{id}:
-    put:
+  /posicao/teste/id/{id_teste}:
+    get:
       tags:
-      - 'Testes'
-      summary: 'Cria ou edita um modelo de teste'
-      description: 'Cria ou edita um modelo de teste'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/testes'
-      responses:
+        - "Testes"
+      summary: "Busca o teste pelo ID do teste"
+      description: "Busca um teste em especifico pelo ID do teste"
+      parameters:
+        - name: id_teste
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: string
+            format: utf-8
+            minimum: 1
+      responses: 
         '200':
           description: OK
-        '201':
-          description: Teste criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/testesArray'
         '404':           
           description: Não encontrado
         '400':
@@ -89,11 +104,39 @@ paths:
           description: Falha na comunicação com o servidor
           
   /posicao/teste/{id_teste}:
+     put:
+      tags:
+      - 'Testes'
+      summary: 'Edita um teste existente'
+      description: 'Edita um teste existente'
+      parameters:
+        - name: id_teste
+          in: path
+          required: true
+          description: Id do teste a ser excluído.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/testes'
+      responses:
+        '200':
+          description: OK
+        '404':           
+          description: Não encontrado
+        '400':
+          description: Valor inválido
+        '500':
+          description: Falha na comunicação com o servidor
+          
     delete:
       tags:
         - "Testes"
-      summary: "Deletar teste pelo id"
-      description: "Deletar teste pelo id"
+      summary: "Deletar teste pelo ID do teste"
+      description: "Deletar teste pelo ID do teste"
       parameters:
         - name: id_teste
           in: path
@@ -107,58 +150,8 @@ paths:
           description: OK
         '404':           
           description: Não encontrado
-        '400':
-          description: Valor inválido
         '500':
           description: Falha na comunicação com o servidor
-          
-  /posicao/zeroPeca:
-    post:
-      tags: 
-      - "Testes"
-      summary: 'Define a posição do zero peça'
-      description: 'Define a posição do zero peça'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/coordenadasZeroPeca'
-      responses:
-        '201':
-          description: Teste criado com sucesso
-        '400':
-          description: Valor inválido
-        '500':
-          description: Falha na comunicação com o servidor
-          
-  /posicao/zeroPeca/{id_teste}:
-    get:
-      tags: 
-      - 'Testes'
-      summary: 'Pega a posição do zero peça'
-      description: 'Pega a posição do zero peça'
-      parameters:
-        - name: id_teste
-          in: path
-          required: true
-          description: ID do teste para pegar o zero peça do teste.
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/coordenadasZeroPeca'
-        '400':
-          description: Valor inválido
-        '404':
-          description: Teste não encontrado
-        '500':
-          description: Falha na comunicação com o servidor
-      
 
 components:
   schemas:
@@ -173,10 +166,10 @@ components:
     coordenadasZeroPeca:
       type: object
       properties:
-        id_teste:
+        teste_id:
           type: integer
           format: int64
-          example: 1
+          example: 321412
         x:
           type: integer
           format: int64
@@ -194,6 +187,10 @@ components:
     coordenadas:
       type: object
       properties:
+        teste_id:
+          type: integer
+          format: int64
+          example: 321412
         x:
           type: integer
           format: int64
@@ -219,14 +216,14 @@ components:
     testes:
       type: object
       properties:
-        id:
+        id_teste:
           type: integer
           format: int64
-          example: 1
+          example: 321412
         nome_teste:
           type: string
           format: utf-8
-          example: teste-parado
+          example: teste-de-temperatura
         modelo:
           type: string
           format: utf-8
@@ -239,4 +236,3 @@ components:
           type: object
           $ref: '#/components/schemas/coordenadasZeroPeca'
             
-      
