@@ -19,7 +19,6 @@ public class TesteModel {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_teste;
-	@Column(unique = true)
 	private String modelo;
 	@Column(unique = true)
 	private String nome_teste;
