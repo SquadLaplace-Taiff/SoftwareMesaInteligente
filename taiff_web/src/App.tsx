@@ -7,7 +7,7 @@ function App() {
   return (
     <section>
       <Header/>
-      <ButtonTaiff name="ASJDoaidj" /> 
+      <ButtonTaiff name="Teste" /> 
       <Search/>
     </section> 
       
