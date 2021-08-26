@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senai.taiffPosicionamento.model.CoordenadaModel;
@@ -57,6 +58,19 @@ public class TesteController {
 		}
 		
 		catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@GetMapping("/id/{id}")
+	public ResponseEntity<Optional<TesteModel>> buscaId(@PathVariable Long id) {
+		try {
+			Optional<TesteModel> buscaTeste = testeRepository.findById(id);
+			return ResponseEntity.ok().body(buscaTeste);
+		}
+		
+		catch (Exception e) {
+			
 			return ResponseEntity.notFound().build();
 		}
 	}
