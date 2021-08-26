@@ -15,13 +15,11 @@ export class APIService extends React.Component {
 
 
     Teste() {
-        fetch("http://localhost:8080/teste", { mode: 'no-cors', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:3000/' } })
+        fetch("http://localhost:8080/teste", { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:3000/' } })
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({
-                        res: result
-                    });
+                    console.log(result);
                 })
             .catch(error => console.log('Authorization failed : ' + error.message))
     };
