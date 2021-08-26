@@ -5,17 +5,31 @@ export class APIService extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            res: {}
+            url: "http://localhost:8080/teste",
+            myHeaders: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Origin": "*"
+            }
         };
     };
 
-    testeModel = {};
-
-    myHeaders = new Headers();
-
-
-    Teste() {
-        fetch("http://localhost:8080/teste", { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:3000/' } })
+    buscarTodosTestes() {
+        fetch(this.state.url, { 
+            headers: this.state.myHeaders 
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                })
+            .catch(error => console.log('Authorization failed : ' + error.message))
+    };
+    
+    buscarTestePorId(id) {
+        fetch(`${this.state.url}/id/${id}`, { 
+            headers: this.state.myHeaders 
+            })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -24,70 +38,38 @@ export class APIService extends React.Component {
             .catch(error => console.log('Authorization failed : ' + error.message))
     };
 
-    TestePost() {
-        this.testeModel = {
-            modelo: "Teste albino",
-            nome_teste: "Nome Teste Albino"
-        }
+    buscarTestePorModelo(modelo) {
+        fetch(`${this.state.url}/${modelo}`, { 
+            headers: this.state.myHeaders 
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                })
+            .catch(error => console.log('Authorization failed : ' + error.message))
+    };
 
-        fetch('http://localhost:8080/teste', {
+    criarTeste(data) {
+        fetch(this.state.url, {
             method: "POST",
-            body: JSON.stringify({
-            "modelo": "Teste albino def",
-            "nome_teste": "Nome Teste Albino def"
-            }),
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Origin": "*"
-            }
+            body: JSON.stringify(data),
+            headers: this.state.myHeaders
         })
     }
 
-    TestePut() {
-        fetch('http://localhost:8080/teste/1', {
+    atualizarTeste(id, data) {
+        fetch(`${this.state.url}/${id}`, {
             method: "PUT",
-            body: JSON.stringify({
-            "modelo": "Teste albinoasd",
-            "nome_teste": "Nome Teste Albinoasdas",
-            "coordenada": [
-                {
-                    "x": 3,
-                    "y": 3,
-                    "z": 3,
-                    "r": 3,
-                    "t": 3,
-                },
-                {
-                    "x": 4,
-                    "y": 4,
-                    "z": 4,
-                    "r": 4,
-                    "t": 4,
-                },
-            ],
-            "zeroPeca": {
-                "x": 2,
-                "y": 2,
-                "z": 2,
-            }
-            }),
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Origin": "*"
-            }
+            body: JSON.stringify(data),
+            headers: this.state.myHeaders
         })
     }
 
-    TesteDelete() {
-        fetch('http://localhost:8080/teste/1', {
+    deletarTeste(id) {
+        fetch(`${this.state.url}/${id}`, {
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Origin": "*"
-            }
+            headers: this.state.myHeaders
         });
     }
 }
