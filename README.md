@@ -8,10 +8,10 @@ O software visa atender algumas necessidades básicas do cliente no momento do t
 https://github.com/SquadLaplace-Taiff/SoftwareMesaInteligente/blob/main/API-Posicionamento/Proposta-v1/endPoints-posicionamento-v0.1.3.yaml }
 
 Essa API consiste em apenas um endpoint que suporta 6 tipos de requisição HTTP:
-  a) POST - /posicao/teste - Cria um novo teste
-  b) GET - /posicao/teste  - Busca todos os testes salvos
-  c) GET - /posicao/teste/{modelo} - Busca um teste específico a partir do modelo do produto
-  d) GET - /posicao/teste/id/{id} - Busca um teste específico a partir do seu próprio ID
-  e) PUT - /posicao/teste/{id} - Edita um teste existente a partir de seu próprio ID
-  f) DELETE - /posicao/teste/{id} - Exclui um teste existente a partir de seu próprio ID
+ - a) POST - /posicao/teste - Cria um novo teste
+ - b) GET - /posicao/teste  - Busca todos os testes salvos
+ - c) GET - /posicao/teste/{modelo} - Busca um teste específico a partir do modelo do produto
+ - d) GET - /posicao/teste/id/{id} - Busca um teste específico a partir do seu próprio ID
+ - e) PUT - /posicao/teste/{id} - Edita um teste existente a partir de seu próprio ID
+ - f) DELETE - /posicao/teste/{id} - Exclui um teste existente a partir de seu próprio ID
  
