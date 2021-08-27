@@ -9,7 +9,7 @@ servers:
     description: Servidor para o consumo dos end-points
     
 paths:
-  /posicao/teste/:
+  /teste/:
     post:
       tags:
       - 'Testes'
@@ -49,7 +49,7 @@ paths:
         '500':
           description: Falha na comunicação com o servidor  
 
-  /posicao/teste/{modelo}:
+  /teste/{modelo}:
     get:
       tags:
         - "Testes"
@@ -78,7 +78,7 @@ paths:
         '500':
           description: Falha na comunicação com o servidor
           
-  /posicao/teste/id/{id_teste}:
+  /teste/id/{id_teste}:
     get:
       tags:
         - "Testes"
@@ -107,7 +107,7 @@ paths:
         '500':
           description: Falha na comunicação com o servidor
           
-  /posicao/teste/{id_teste}:
+  /teste/{id_teste}:
     put:
       tags:
       - 'Testes'
