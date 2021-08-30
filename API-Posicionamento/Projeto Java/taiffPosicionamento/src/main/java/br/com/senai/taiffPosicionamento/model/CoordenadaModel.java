@@ -6,12 +6,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name="coordenada")
 public class CoordenadaModel {
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long coordenada_id;
+	
+	private long teste_id;
 	private int x;
 	private int y;
 	private int z;
@@ -22,9 +26,10 @@ public class CoordenadaModel {
 		
 	}
 
-	public CoordenadaModel(long id, int x, int y, int z, int r, int t) {
+	public CoordenadaModel(long coordenada_id, long teste_id, int x, int y, int z, int r, int t) {
 		
-		this.id = id;
+		this.coordenada_id = coordenada_id;
+		this.teste_id = teste_id;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -32,8 +37,20 @@ public class CoordenadaModel {
 		this.t = t;
 	}
 
-	public long getId() {
-		return id;
+	public long getCoordenada_id() {
+		return coordenada_id;
+	}
+
+	public void setCoordenada_id(long coordenada_id) {
+		this.coordenada_id = coordenada_id;
+	}
+
+	public long getTeste_id() {
+		return teste_id;
+	}
+
+	public void setTeste_id(long teste_id) {
+		this.teste_id = teste_id;
 	}
 
 	public int getX() {
@@ -75,9 +92,6 @@ public class CoordenadaModel {
 	public void setT(int t) {
 		this.t = t;
 	}
-	
-	
-	
-	
 
+	
 }
