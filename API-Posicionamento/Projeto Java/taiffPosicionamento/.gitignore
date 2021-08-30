@@ -4,6 +4,7 @@ target/classes/META-INF/maven/br.com.senai/taiffPosicionamento/pom.properties
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+pom.properties
 
 ### STS ###
 .apt_generated
