@@ -1,7 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 import { Button } from 'react-bootstrap';
 import { APIService } from "../../services/API.service";
-
 import './ButtonExcluir.css';
 
 type ButtonAttributes = ButtonHTMLAttributes<HTMLButtonElement>;
