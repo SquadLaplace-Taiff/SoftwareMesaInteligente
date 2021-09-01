@@ -77,9 +77,12 @@ public class TesteController {
 	
 	
 	@GetMapping("/{modelo}")
-	public ResponseEntity<TesteModel> buscaTestePorModelo(@PathVariable String modelo){
+	public ResponseEntity<List<TesteModel>> buscaTestePorModelo(@PathVariable String modelo){
 		try {
-			TesteModel teste = testeRepository.findByModelo(modelo);
+			
+			List<TesteModel> teste = new ArrayList<>();
+			
+			teste = testeRepository.findAllByModelo(modelo);
 			return ResponseEntity.ok().body(teste);
 		}
 		
