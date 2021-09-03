@@ -1,3 +1,8 @@
 Button, button { 
     font-family: 'Montserrat', sans-serif;
 }
+
+section { 
+    display: flex;
+    flex-direction: column;
+}
