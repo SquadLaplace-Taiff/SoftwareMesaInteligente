@@ -2,6 +2,7 @@ package br.com.senai.taiffPosicionamento.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,9 +24,9 @@ public class TesteModel {
 	@Column(unique = true)
 	private String nome_teste;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<CoordenadaModel> coordenada;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private ZeroPecaModel zeroPeca;
 	
 	
