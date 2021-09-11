@@ -4,6 +4,7 @@ import { ButtonTaiff } from './app/components/ButtonTaiff/ButtonTaiff';
 import { ButtonExcluir } from './app/components/ButtonExcluir/ButtonExcluir';
 import { Posicao } from './app/components/Labels/Posicao';
 import { SubHeader } from './app/components/SubHeader/SubHeader';
+import { GraficoLinha } from './app/components/Graficos/GraficoLinha';
 
 import './style.css';
 import { teste } from './app/interfaces/interfaces';
@@ -25,10 +26,7 @@ function App() {
   }
   return (
     <section>
-      <Header/>
-      <SubHeader/>
-      <Search/>
-      <Posicao></Posicao>
+      <GraficoLinha />
     </section>
 
   );
