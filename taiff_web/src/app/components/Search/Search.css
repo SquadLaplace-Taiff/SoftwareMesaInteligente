@@ -7,10 +7,12 @@ border-radius: 30px;
 position: absolute;
 width: 380px;
 height: 58px;
-z-index: -1;
+z-index: 1;
 max-width: 100%;
+}
 
-
+form {
+    height: 120px;
 }
 
 .tituloSearch {
@@ -29,15 +31,13 @@ max-width: 100%;
     padding-top: 7px;
     border: none;
     background: none;
-    z-index: -1;
+    z-index: 2;
 }
 
 .containerSearch {
     max-width: 390px;
     font-family: 'Montserrat', sans-serif;
     position: relative;
-    top: 30px;
-    left: -250px;
 }
 
 .tituloSearch{

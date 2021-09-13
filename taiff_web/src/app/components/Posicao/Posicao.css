@@ -12,13 +12,12 @@
     justify-content: space-between;
     max-width: 1236px ;
     min-width: 900px;
-    margin-top: 12vh;
-    margin-left: 70vh;
 }
 
 .contenForm{
    display: flex;
    justify-content: center; 
+   position: relative;
 }
 
 .eixo{

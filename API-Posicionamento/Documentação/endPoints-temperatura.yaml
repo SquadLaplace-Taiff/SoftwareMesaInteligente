@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: Software de testes
+  description: Projeto para o 3º semestre do CT Desenvolvimento de Sistemas. <br>Software para gerenciamento de mesa inteligente desenvolvida para a empresa TAIFF.
+  
+servers:
+  - url: http://localhost:8080
+    description: Servidor para o consumo dos end-points
+    
+paths:
+  /temperatura/:
+    post:
+      tags:
+      - 'Temperaturas'
+      summary: 'Adiciona uma nova temperatura'
+      description: 'Adiciona uma temperatura ao banco'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/temperatura'
+      responses:
+        '201':
+          description: Teste criado com sucesso
+        '400':
+          description: Valor inválido
+        '500':
+          description: Falha na comunicação com o servidor
+
+  /temperatura/{coordenada_id}:
+    get:
+      tags:
+        - "Temperaturas"
+      summary: "Busca as temperaturas por uma coordenada específica"
+      description: "Busca as temperaturas por uma coordenada específica"
+      parameters:
+        - name: coordenada_id
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: string
+            format: utf-8
+            minimum: 1
+      responses: 
+        '200':
+          description: OK
+          content:
+            array:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/temperatura'
+        '404':           
+          description: Não encontrado
+        '400':
+          description: Valor inválido
+        '500':
+          description: Falha na comunicação com o servidor
+
+
+components:
+  schemas:
+    temperatura: 
+      type: object
+      properties:
+        termopar_1:
+          type: number
+          format: number
+          example: 112.6
+        termopar_2:
+          type: number
+          format: number
+          example: 109.63
+        termopar_3:
+          type: number
+          format: number
+          example: 113.63
+        termopar_ambiente:
+          type: number
+          format: number
+          example: 26.53
+        dt_leitura:
+          type: string
+          format: utf-8
+          example: '0/09/2021 21:52:45:93'
+        coordenada_id:
+          type: number
+          format: number
+          example: 2
+
