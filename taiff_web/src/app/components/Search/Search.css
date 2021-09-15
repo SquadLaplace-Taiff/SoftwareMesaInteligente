@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=lato:wght@300;400;700&display=swap');
+
+.inputSearch {
+/*background: url(../../../assets/img/searchImg.png) no-repeat scroll 5px 5px;*/
+padding-left:30px;
+border-radius: 30px;
+position: absolute;
+width: 380px;
+height: 58px;
+z-index: 1;
+max-width: 100%;
+}
+
+form {
+    height: 120px;
+}
+
+.tituloSearch {
+    font-size: 30px;
+}
+
+.inputSearch:focus {
+ 
+    outline-width: 0;
+}
+
+.searchImg {
+    position: relative;
+    z-index: 1;
+    float: right;
+    padding-top: 7px;
+    border: none;
+    background: none;
+    z-index: 2;
+}
+
+.containerSearch {
+    max-width: 390px;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+}
+
+.tituloSearch{
+    text-align: center;
+}
