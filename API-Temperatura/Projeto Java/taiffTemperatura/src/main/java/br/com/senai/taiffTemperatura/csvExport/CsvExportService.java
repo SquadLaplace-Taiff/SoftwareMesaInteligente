@@ -27,9 +27,12 @@ public class CsvExportService {
 		List<TemperaturaModel> temperaturas = temperaturaRepository.findByCoordenadaId(coordenadaId);
 		
 		try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-			csvPrinter.printRecord("dt_leitura", "coordenadaId", "termopar_1", "termopar_2", "termopar_3", "termopar_amb");
+			csvPrinter.printRecord("dt_leitura", "coordenadaId", "termopar_1", "termopar_2", "termopar_3", "termopar_amb", "linha");
+			int linha = 1;
             for (TemperaturaModel temperatura : temperaturas) {
-                csvPrinter.printRecord(temperatura.getDt_leitura(), temperatura.getCoordenadaId(), temperatura.getTermopar_1(), temperatura.getTermopar_2(), temperatura.getTermopar_3(), temperatura.getTermopar_amb());
+                csvPrinter.printRecord(temperatura.getDt_leitura(), temperatura.getCoordenadaId(), temperatura.getTermopar_1(), 
+                	temperatura.getTermopar_2(), temperatura.getTermopar_3(), temperatura.getTermopar_amb(), linha);
+                linha++;
             }
         } catch (IOException e) {
             
