@@ -1,273 +1,372 @@
-openapi: 3.0.0
-info:
-  version: 0.1.5
-  title: Software de testes
-  description: Projeto para o 3º semestre do CT Desenvolvimento de Sistemas. <br>Software para gerenciamento de mesa inteligente desenvolvida para a empresa TAIFF.
-  
-servers:
-  - url: http://localhost:8080
-    description: Servidor para o consumo dos end-points
-    
-paths:
-  /teste/:
-    post:
-      tags:
-      - 'Testes'
-      summary: 'Cria um novo teste'
-      description: 'Cria um novo teste'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/testePost'
-      responses:
-        '201':
-          description: Teste criado com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/respostaTestePost'
-        '400':
-          description: Valor inválido
-        '500':
-          description: Falha na comunicação com o servidor
-          
-    get:
-      tags:
-        - "Testes"
-      summary: "Busca todos os testes"
-      description: "Busca todos os testes"
-      responses: 
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/testesArray'
-        '404':           
-          description: Não encontrado
-        '500':
-          description: Falha na comunicação com o servidor  
-
-  /teste/{modelo}:
-    get:
-      tags:
-        - "Testes"
-      summary: "Busca os testes pelo MODELO do produto"
-      description: "Busca os testes pelo MODELO do produto"
-      parameters:
-        - name: modelo
-          in: path
-          required: true
-          description: Parameter description in CommonMark or HTML.
-          schema:
-            type: string
-            format: utf-8
-            minimum: 1
-      responses: 
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/testesArray'
-        '404':           
-          description: Não encontrado
-        '400':
-          description: Valor inválido
-        '500':
-          description: Falha na comunicação com o servidor
-          
-  /teste/id/{id_teste}:
-    get:
-      tags:
-        - "Testes"
-      summary: "Busca o teste pelo ID do teste"
-      description: "Busca um teste em especifico pelo ID do teste"
-      parameters:
-        - name: id_teste
-          in: path
-          required: true
-          description: Parameter description in CommonMark or HTML.
-          schema:
-            type: string
-            format: utf-8
-            minimum: 1
-      responses: 
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/testes'
-        '404':           
-          description: Não encontrado
-        '400':
-          description: Valor inválido
-        '500':
-          description: Falha na comunicação com o servidor
-          
-  /teste/{id_teste}:
-    put:
-      tags:
-      - 'Testes'
-      summary: 'Edita um teste existente'
-      description: 'Edita um teste existente'
-      parameters:
-        - name: id_teste
-          in: path
-          required: true
-          description: Id do teste a ser excluído.
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/testes'
-      responses:
-        '200':
-          description: OK
-        '404':           
-          description: Não encontrado
-        '400':
-          description: Valor inválido
-        '500':
-          description: Falha na comunicação com o servidor
-          
-    delete:
-      tags:
-        - "Testes"
-      summary: "Deletar teste pelo ID do teste"
-      description: "Deletar teste pelo ID do teste"
-      parameters:
-        - name: id_teste
-          in: path
-          required: true
-          description: Id do teste a ser excluído.
-          schema:
-            type: integer
-            format: int64
-      responses: 
-        '200':
-          description: OK
-        '404':           
-          description: Não encontrado
-        '500':
-          description: Falha na comunicação com o servidor
-
-components:
-  schemas:
-    testesArray:
-      type: object
-      properties:
-        testes:
-          type: array
-          items:
-            $ref: '#/components/schemas/testes'
-            
-    coordenadasZeroPeca:
-      type: object
-      properties:
-        teste_id:
-          type: integer
-          format: int64
-          example: 321412
-        x:
-          type: integer
-          format: int64
-          example: 30
-        y:
-          type: integer
-          format: int64
-          example: 55
-        z:
-          type: integer
-          format: int64
-          example: 15
-      
-            
-    coordenadas:
-      type: object
-      properties:
-        teste_id:
-          type: integer
-          format: int64
-          example: 321412
-        x:
-          type: integer
-          format: int64
-          example: 30
-        y:
-          type: integer
-          format: int64
-          example: 55
-        z:
-          type: integer
-          format: int64
-          example: 15
-        r:
-          type: integer
-          format: int64
-          example: 25
-        t:
-          type: integer
-          format: int64
-          example: 45
-          
-    
-    testes:
-      type: object
-      properties:
-        id_teste:
-          type: integer
-          format: int64
-          example: 321412
-        nome_teste:
-          type: string
-          format: utf-8
-          example: teste-de-temperatura
-        modelo:
-          type: string
-          format: utf-8
-          example: modelo-produto
-        coordenadas:
-          type: array
-          items:
-            $ref: '#/components/schemas/coordenadas'
-        zero_peca: 
-          type: object
-          $ref: '#/components/schemas/coordenadasZeroPeca'
-          
-    testePost:
-      type: object
-      properties:
-        modelo:
-          type: string
-          format: utf-8
-          example: modelo produto
-        nome_teste:
-          type: string
-          format: utf-8
-          example: modelo produto - T1
-          
-    respostaTestePost:
-      type: object
-      properties:
-        id_teste:
-          type: integer
-          format: int64
-          example: 1
-        nome_teste:
-          type: string
-          format: utf-8
-          example: teste-de-temperatura
-        modelo:
-          type: string
-          format: utf-8
-          example: modelo-produto
-        coordenadas:
-          example: null
-        zero_peca: 
-          example: null
+{
+  "swagger": "2.0",
+  "info":
+    {
+      "description": "Projeto para o 3º semestre do CT Desenvolvimento de Sistemas. 
+                      <br>Software para gerenciamento de mesa inteligente desenvolvida para a empresa TAIFF. 
+                      <br>A API de posicionamento tem como prosposta monitorar o posicionamento dos eixos durante o teste.",
+      "version": "1.0",
+      "title": "Api Documentation",
+      "termsOfService": "urn:tos",
+      "contact": {},
+      "license":
+        {
+          "name": "Apache 2.0",
+          "url": "http://www.apache.org/licenses/LICENSE-2.0",
+        },
+    },
+  "host": "localhost:8080",
+  "basePath": "/teste",
+  "tags":
+    [
+      {
+        "name": "basic-error-controller",
+        "description": "Basic Error Controller",
+      },
+      { "name": "teste-controller", "description": "Teste Controller" },
+    ],
+  "paths":
+    {
+      "/teste":
+        {
+          "get":
+            {
+              "tags": ["teste-controller"],
+              "summary": "buscaTudoMesmo",
+              "operationId": "buscaTudoMesmoUsingGET",
+              "produces": ["*/*"],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "schema":
+                        {
+                          "type": "array",
+                          "items": { "$ref": "#/definitions/TesteModel" },
+                        },
+                    },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                  "404": { "description": "Not Found" },
+                },
+            },
+          "post":
+            {
+              "tags": ["teste-controller"],
+              "summary": "criarTeste",
+              "operationId": "criarTesteUsingPOST",
+              "consumes": ["application/json"],
+              "produces": ["*/*"],
+              "parameters":
+                [
+                  {
+                    "in": "body",
+                    "name": "teste",
+                    "description": "teste",
+                    "required": true,
+                    "schema": { "$ref": "#/definitions/TesteModel" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "schema": { "$ref": "#/definitions/TesteModel" },
+                    },
+                  "201": { "description": "Created" },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                  "404": { "description": "Not Found" },
+                },
+            },
+        },
+      "/teste/id/{id}":
+        {
+          "get":
+            {
+              "tags": ["teste-controller"],
+              "summary": "buscaId",
+              "operationId": "buscaIdUsingGET",
+              "produces": ["*/*"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "id",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64",
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "schema":
+                        {
+                          "$ref": "#/definitions/TesteModel",
+                        },
+                    },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                  "404": { "description": "Not Found" },
+                },
+            },
+        },
+      "/teste/{id}":
+        {
+          "put":
+            {
+              "tags": ["teste-controller"],
+              "summary": "editaTestePorId",
+              "operationId": "editaTestePorIdUsingPUT",
+              "consumes": ["application/json"],
+              "produces": ["*/*"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "id",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64",
+                  },
+                  {
+                    "in": "body",
+                    "name": "testeNovo",
+                    "description": "testeNovo",
+                    "required": true,
+                    "schema": { "$ref": "#/definitions/TesteModel" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "schema": { "$ref": "#/definitions/TesteModel" },
+                    },
+                  "201": { "description": "Created" },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                  "404": { "description": "Not Found" },
+                },
+            },
+          "delete":
+            {
+              "tags": ["teste-controller"],
+              "summary": "excluiTestePorId",
+              "operationId": "excluiTestePorIdUsingDELETE",
+              "produces": ["*/*"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "id",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64",
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    { "description": "OK", "schema": { "type": "object" } },
+                  "204": { "description": "No Content" },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                },
+            },
+        },
+      "/teste/{modelo}":
+        {
+          "post":
+            {
+              "tags": ["teste-controller"],
+              "summary": "buscaTestePorModelo",
+              "operationId": "buscaTestePorModeloUsingPOST",
+              "consumes": ["application/json"],
+              "produces": ["*/*"],
+              "parameters":
+                [
+                  {
+                    "name": "modelo",
+                    "in": "path",
+                    "description": "modelo",
+                    "required": true,
+                    "type": "string",
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "schema":
+                        {
+                          "type": "array",
+                          "items": { "$ref": "#/definitions/TesteModel" },
+                        },
+                    },
+                  "201": { "description": "Created" },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                  "404": { "description": "Not Found" },
+                },
+            },
+        },
+    },
+  "definitions":
+    {
+      "CoordenadaModel":
+        {
+          "type": "object",
+          "properties":
+            {
+              "coordenada_id": { "type": "integer", "format": "int64" },
+              "r": { "type": "integer", "format": "int32" },
+              "t": { "type": "integer", "format": "int32" },
+              "teste_id": { "type": "integer", "format": "int64" },
+              "x": { "type": "integer", "format": "int32" },
+              "y": { "type": "integer", "format": "int32" },
+              "z": { "type": "integer", "format": "int32" },
+            },
+          "title": "CoordenadaModel",
+        },
+      "ModelAndView":
+        {
+          "type": "object",
+          "properties":
+            {
+              "empty": { "type": "boolean" },
+              "model": { "type": "object" },
+              "modelMap":
+                {
+                  "type": "object",
+                  "additionalProperties": { "type": "object" },
+                },
+              "reference": { "type": "boolean" },
+              "status":
+                {
+                  "type": "string",
+                  "enum":
+                    [
+                      "ACCEPTED",
+                      "ALREADY_REPORTED",
+                      "BAD_GATEWAY",
+                      "BAD_REQUEST",
+                      "BANDWIDTH_LIMIT_EXCEEDED",
+                      "CHECKPOINT",
+                      "CONFLICT",
+                      "CONTINUE",
+                      "CREATED",
+                      "DESTINATION_LOCKED",
+                      "EXPECTATION_FAILED",
+                      "FAILED_DEPENDENCY",
+                      "FORBIDDEN",
+                      "FOUND",
+                      "GATEWAY_TIMEOUT",
+                      "GONE",
+                      "HTTP_VERSION_NOT_SUPPORTED",
+                      "IM_USED",
+                      "INSUFFICIENT_SPACE_ON_RESOURCE",
+                      "INSUFFICIENT_STORAGE",
+                      "INTERNAL_SERVER_ERROR",
+                      "I_AM_A_TEAPOT",
+                      "LENGTH_REQUIRED",
+                      "LOCKED",
+                      "LOOP_DETECTED",
+                      "METHOD_FAILURE",
+                      "METHOD_NOT_ALLOWED",
+                      "MOVED_PERMANENTLY",
+                      "MOVED_TEMPORARILY",
+                      "MULTIPLE_CHOICES",
+                      "MULTI_STATUS",
+                      "NETWORK_AUTHENTICATION_REQUIRED",
+                      "NON_AUTHORITATIVE_INFORMATION",
+                      "NOT_ACCEPTABLE",
+                      "NOT_EXTENDED",
+                      "NOT_FOUND",
+                      "NOT_IMPLEMENTED",
+                      "NOT_MODIFIED",
+                      "NO_CONTENT",
+                      "OK",
+                      "PARTIAL_CONTENT",
+                      "PAYLOAD_TOO_LARGE",
+                      "PAYMENT_REQUIRED",
+                      "PERMANENT_REDIRECT",
+                      "PRECONDITION_FAILED",
+                      "PRECONDITION_REQUIRED",
+                      "PROCESSING",
+                      "PROXY_AUTHENTICATION_REQUIRED",
+                      "REQUESTED_RANGE_NOT_SATISFIABLE",
+                      "REQUEST_ENTITY_TOO_LARGE",
+                      "REQUEST_HEADER_FIELDS_TOO_LARGE",
+                      "REQUEST_TIMEOUT",
+                      "REQUEST_URI_TOO_LONG",
+                      "RESET_CONTENT",
+                      "SEE_OTHER",
+                      "SERVICE_UNAVAILABLE",
+                      "SWITCHING_PROTOCOLS",
+                      "TEMPORARY_REDIRECT",
+                      "TOO_EARLY",
+                      "TOO_MANY_REQUESTS",
+                      "UNAUTHORIZED",
+                      "UNAVAILABLE_FOR_LEGAL_REASONS",
+                      "UNPROCESSABLE_ENTITY",
+                      "UNSUPPORTED_MEDIA_TYPE",
+                      "UPGRADE_REQUIRED",
+                      "URI_TOO_LONG",
+                      "USE_PROXY",
+                      "VARIANT_ALSO_NEGOTIATES",
+                    ],
+                },
+              "view": { "$ref": "#/definitions/View" },
+              "viewName": { "type": "string" },
+            },
+          "title": "ModelAndView",
+        },
+      "TesteModel":
+        {
+          "type": "object",
+          "properties":
+            {
+              "coordenada":
+                {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/CoordenadaModel" },
+                },
+              "id_teste": { "type": "integer", "format": "int64" },
+              "modelo": { "type": "string" },
+              "nome_teste": { "type": "string" },
+              "zeroPeca": { "$ref": "#/definitions/ZeroPecaModel" },
+            },
+          "title": "TesteModel",
+        },
+      "View":
+        {
+          "type": "object",
+          "properties": { "contentType": { "type": "string" } },
+          "title": "View",
+        },
+      "ZeroPecaModel":
+        {
+          "type": "object",
+          "properties":
+            {
+              "teste_id": { "type": "integer", "format": "int64" },
+              "x": { "type": "integer", "format": "int32" },
+              "y": { "type": "integer", "format": "int32" },
+              "z": { "type": "integer", "format": "int32" },
+              "zeroPeca_Id": { "type": "integer", "format": "int64" },
+            },
+          "title": "ZeroPecaModel",
+        },
+    },
+}

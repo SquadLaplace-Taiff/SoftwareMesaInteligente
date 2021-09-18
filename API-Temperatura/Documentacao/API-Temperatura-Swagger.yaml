@@ -1,0 +1,232 @@
+{
+  "swagger": "2.0",
+  "info":
+    {
+      "description": "Projeto para o 3º semestre do CT Desenvolvimento de Sistemas. 
+                      <br>Software para gerenciamento de mesa inteligente desenvolvida para a empresa TAIFF. 
+                     <br>A API de Temperatura tem como prosposta monitorar o posicionamento dos eixos durante o teste." ,
+      "version": "1.0",
+      "title": "Api Documentation",
+      "termsOfService": "urn:tos",
+      "contact": {},
+      "license":
+        {
+          "name": "Apache 2.0",
+          "url": "http://www.apache.org/licenses/LICENSE-2.0",
+        },
+    },
+  "host": "localhost:8080",
+  "basePath": "/temperatura",
+  "tags":
+    [
+      {
+        "name": "temperatura-controller",
+        "description": "Temperatura Controller",
+      },
+    ],
+  "paths":
+    {
+      "/temperatura":
+        {
+          "post":
+            {
+              "tags": ["temperatura-controller"],
+              "summary": "registrarTemperatura",
+              "operationId": "registrarTemperaturaUsingPOST",
+              "consumes": ["application/json"],
+              "produces": ["*/*"],
+              "parameters":
+                [
+                  {
+                    "in": "body",
+                    "name": "temperatura",
+                    "description": "temperatura",
+                    "required": true,
+                    "schema": { "$ref": "#/definitions/TemperaturaModel" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "schema": { "$ref": "#/definitions/TemperaturaModel" },
+                    },
+                  "201": { "description": "Created" },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                  "404": { "description": "Not Found" },
+                },
+            },
+        },
+      "/temperatura/csv":
+        {
+          "get":
+            {
+              "tags": ["temperatura-controller"],
+              "summary": "getAllEmployeesInCsv",
+              "operationId": "getAllEmployeesInCsvUsingGET",
+              "produces": ["*/*"],
+              "responses":
+                {
+                  "200": { "description": "OK" },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                  "404": { "description": "Not Found" },
+                },
+            },
+        },
+      "/temperatura/{coordenadaId}":
+        {
+          "get":
+            {
+              "tags": ["temperatura-controller"],
+              "summary": "buscaTemperaturasPorCoordenada",
+              "operationId": "buscaTemperaturasPorCoordenadaUsingGET",
+              "produces": ["*/*"],
+              "parameters":
+                [
+                  {
+                    "name": "coordenadaId",
+                    "in": "path",
+                    "description": "coordenadaId",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64",
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "schema":
+                        {
+                          "type": "array",
+                          "items": { "$ref": "#/definitions/TemperaturaModel" },
+                        },
+                    },
+                  "401": { "description": "Unauthorized" },
+                  "403": { "description": "Forbidden" },
+                  "404": { "description": "Not Found" },
+                },
+            },
+        },
+    },
+  "definitions":
+    {
+      "ModelAndView":
+        {
+          "type": "object",
+          "properties":
+            {
+              "empty": { "type": "boolean" },
+              "model": { "type": "object" },
+              "modelMap":
+                {
+                  "type": "object",
+                  "additionalProperties": { "type": "object" },
+                },
+              "reference": { "type": "boolean" },
+              "status":
+                {
+                  "type": "string",
+                  "enum":
+                    [
+                      "ACCEPTED",
+                      "ALREADY_REPORTED",
+                      "BAD_GATEWAY",
+                      "BAD_REQUEST",
+                      "BANDWIDTH_LIMIT_EXCEEDED",
+                      "CHECKPOINT",
+                      "CONFLICT",
+                      "CONTINUE",
+                      "CREATED",
+                      "DESTINATION_LOCKED",
+                      "EXPECTATION_FAILED",
+                      "FAILED_DEPENDENCY",
+                      "FORBIDDEN",
+                      "FOUND",
+                      "GATEWAY_TIMEOUT",
+                      "GONE",
+                      "HTTP_VERSION_NOT_SUPPORTED",
+                      "IM_USED",
+                      "INSUFFICIENT_SPACE_ON_RESOURCE",
+                      "INSUFFICIENT_STORAGE",
+                      "INTERNAL_SERVER_ERROR",
+                      "I_AM_A_TEAPOT",
+                      "LENGTH_REQUIRED",
+                      "LOCKED",
+                      "LOOP_DETECTED",
+                      "METHOD_FAILURE",
+                      "METHOD_NOT_ALLOWED",
+                      "MOVED_PERMANENTLY",
+                      "MOVED_TEMPORARILY",
+                      "MULTIPLE_CHOICES",
+                      "MULTI_STATUS",
+                      "NETWORK_AUTHENTICATION_REQUIRED",
+                      "NON_AUTHORITATIVE_INFORMATION",
+                      "NOT_ACCEPTABLE",
+                      "NOT_EXTENDED",
+                      "NOT_FOUND",
+                      "NOT_IMPLEMENTED",
+                      "NOT_MODIFIED",
+                      "NO_CONTENT",
+                      "OK",
+                      "PARTIAL_CONTENT",
+                      "PAYLOAD_TOO_LARGE",
+                      "PAYMENT_REQUIRED",
+                      "PERMANENT_REDIRECT",
+                      "PRECONDITION_FAILED",
+                      "PRECONDITION_REQUIRED",
+                      "PROCESSING",
+                      "PROXY_AUTHENTICATION_REQUIRED",
+                      "REQUESTED_RANGE_NOT_SATISFIABLE",
+                      "REQUEST_ENTITY_TOO_LARGE",
+                      "REQUEST_HEADER_FIELDS_TOO_LARGE",
+                      "REQUEST_TIMEOUT",
+                      "REQUEST_URI_TOO_LONG",
+                      "RESET_CONTENT",
+                      "SEE_OTHER",
+                      "SERVICE_UNAVAILABLE",
+                      "SWITCHING_PROTOCOLS",
+                      "TEMPORARY_REDIRECT",
+                      "TOO_EARLY",
+                      "TOO_MANY_REQUESTS",
+                      "UNAUTHORIZED",
+                      "UNAVAILABLE_FOR_LEGAL_REASONS",
+                      "UNPROCESSABLE_ENTITY",
+                      "UNSUPPORTED_MEDIA_TYPE",
+                      "UPGRADE_REQUIRED",
+                      "URI_TOO_LONG",
+                      "USE_PROXY",
+                      "VARIANT_ALSO_NEGOTIATES",
+                    ],
+                },
+              "view": { "$ref": "#/definitions/View" },
+              "viewName": { "type": "string" },
+            },
+          "title": "ModelAndView",
+        },
+      "TemperaturaModel":
+        {
+          "type": "object",
+          "properties":
+            {
+              "coordenadaId": { "type": "integer", "format": "int64" },
+              "dt_leitura": { "type": "string", "format": "date-time" },
+              "termopar_1": { "type": "number", "format": "float" },
+              "termopar_2": { "type": "number", "format": "float" },
+              "termopar_3": { "type": "number", "format": "float" },
+              "termopar_amb": { "type": "number", "format": "float" },
+            },
+          "title": "TemperaturaModel",
+        },
+      "View":
+        {
+          "type": "object",
+          "properties": { "contentType": { "type": "string" } },
+          "title": "View",
+        },
+    },
+}

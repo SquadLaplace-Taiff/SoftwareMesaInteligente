@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senai.taiffTemperatura.csvExport.CsvExportService;
@@ -31,7 +32,7 @@ public class TemperaturaController {
 	@Autowired
 	private TemperaturaRepository temperaturaRepository;
 	
-	@PostMapping
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<TemperaturaModel> registrarTemperatura(@RequestBody TemperaturaModel temperatura){
 		
 		try {
@@ -45,7 +46,7 @@ public class TemperaturaController {
 	}
 	
 	
-	@RequestMapping("/{coordenadaId}")
+	@RequestMapping(value = "/{coordenadaId}", method = RequestMethod.GET)
 	public ResponseEntity<List<TemperaturaModel>> buscaTemperaturasPorCoordenada(@PathVariable long coordenadaId){
 		try {
 			List<TemperaturaModel> listaTemperatura = temperaturaRepository.findByCoordenadaId(coordenadaId);
@@ -58,7 +59,7 @@ public class TemperaturaController {
 	}
 	
 	
-	@RequestMapping("/csv")
+	@RequestMapping(value = "/csv", method = RequestMethod.GET)
     public void getAllEmployeesInCsv(HttpServletResponse servletResponse) throws IOException {
         servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition","attachment; filename=\"temperaturas.csv\"");
