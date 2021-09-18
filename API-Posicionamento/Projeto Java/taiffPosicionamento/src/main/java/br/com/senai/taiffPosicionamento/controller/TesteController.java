@@ -34,8 +34,9 @@ public class TesteController {
 	@Autowired
 	private ZeroPecaRepository zeroPecaRepository;
 	
-	@PostMapping
+	
 	@Transactional
+	@RequestMapping(method = RequestMethod.POST )
 	public ResponseEntity<TesteModel> criarTeste(@RequestBody TesteModel teste){
 		try {
 
@@ -50,7 +51,7 @@ public class TesteController {
 	}
 	
 	
-	@GetMapping
+	@RequestMapping(method = RequestMethod.GET )
 	public ResponseEntity<List<TesteModel>> buscaTudoMesmo(){
 		try {
 			List<TesteModel> listaTeste = testeRepository.findAll();
@@ -62,7 +63,7 @@ public class TesteController {
 		}
 	}
 	
-	@GetMapping("/id/{id}")
+	@RequestMapping(value = "/id/{id}", method = RequestMethod.GET )
 	public ResponseEntity<Optional<TesteModel>> buscaId(@PathVariable Long id) {
 		try {
 			Optional<TesteModel> buscaTeste = testeRepository.findById(id);
@@ -77,7 +78,7 @@ public class TesteController {
 	
 	
 	
-	@GetMapping("/{modelo}")
+	@RequestMapping(value="/{modelo}", method = RequestMethod.POST )
 	public ResponseEntity<List<TesteModel>> buscaTestePorModelo(@PathVariable String modelo){
 		try {
 			
@@ -92,7 +93,7 @@ public class TesteController {
 		}
 	}
 	
-	@PutMapping("/{id}")
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT )
 	@Transactional
 	public ResponseEntity<TesteModel> editaTestePorId(@PathVariable long id, @RequestBody TesteModel testeNovo){
 		
@@ -123,7 +124,7 @@ public class TesteController {
 	}
 	
 	
-	@DeleteMapping("/{id}")
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE )
 	@Transactional
 	public ResponseEntity<?> excluiTestePorId(@PathVariable long id){
 		try {
