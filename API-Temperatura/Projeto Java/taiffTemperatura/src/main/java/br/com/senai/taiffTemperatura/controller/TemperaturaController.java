@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.senai.taiffTemperatura.csvExport.CsvExportService;
 import br.com.senai.taiffTemperatura.model.TemperaturaModel;
 import br.com.senai.taiffTemperatura.repository.TemperaturaRepository;
+import br.com.senai.taiffTemperatura.service.DataService;
 
 @RestController
 @RequestMapping("/temperatura")
 public class TemperaturaController {
 	
+	DataService dataService = new DataService();
 
 	private final CsvExportService csvExportService;
 	
@@ -31,6 +33,11 @@ public class TemperaturaController {
 
 	@Autowired
 	private TemperaturaRepository temperaturaRepository;
+	
+	 @RequestMapping(value = "/teste", method = RequestMethod.GET)
+	 public void teste() {
+		 dataService.getData(temperaturaRepository.findByCoordenadaId(1));
+	 }
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<TemperaturaModel> registrarTemperatura(@RequestBody TemperaturaModel temperatura){
