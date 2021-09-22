@@ -1,6 +1,7 @@
 package br.com.senai.taiffTemperatura.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senai.taiffTemperatura.csvExport.CsvExportService;
+import br.com.senai.taiffTemperatura.dto.TemperaturaJanelaDto;
 import br.com.senai.taiffTemperatura.model.TemperaturaModel;
 import br.com.senai.taiffTemperatura.repository.TemperaturaRepository;
 import br.com.senai.taiffTemperatura.service.DataService;
@@ -34,9 +36,26 @@ public class TemperaturaController {
 	@Autowired
 	private TemperaturaRepository temperaturaRepository;
 	
+	public List<TemperaturaJanelaDto> TartarugaAlbinaVerde() {
+		List<TemperaturaModel> temperaturas = temperaturaRepository.findWindow(190, 200);
+		
+		List<TemperaturaJanelaDto> temperaturaJanelas = new ArrayList<TemperaturaJanelaDto>();
+		for (TemperaturaModel temperatura : temperaturas) {
+			TemperaturaJanelaDto tempJanelas = new TemperaturaJanelaDto(temperatura.getTermopar_1(), temperatura.getTermopar_2(), temperatura.getTermopar_3(), temperatura.getTermopar_amb());
+			temperaturaJanelas.add(tempJanelas);
+		}
+		
+		return temperaturaJanelas;
+		
+	 }
+	
 	 @RequestMapping(value = "/teste", method = RequestMethod.GET)
 	 public void teste() {
-		 dataService.getData(temperaturaRepository.findByCoordenadaId(1));
+//		 dataService.getData(temperaturaRepository.findByCoordenadaId(1));
+		 
+		 for (TemperaturaJanelaDto janelaTemperaturas : TartarugaAlbinaVerde()) {
+			System.out.println("termopar_1 " + janelaTemperaturas.getTermopar_1() + "termopar_2 " + janelaTemperaturas.getTermopar_2() + "termopar_3 " +janelaTemperaturas.getTermopar_3() + "termopar_amb " + janelaTemperaturas.getTermopar_amb());
+		} 
 	 }
 	
 	@RequestMapping(method = RequestMethod.POST)
