@@ -6,16 +6,29 @@ public class TemperaturaJanelaDto {
 	private float termopar_2;
 	private float termopar_3;
 	private float termopar_amb;
+	private int linha;
 	
 	
 	
-	
-	public TemperaturaJanelaDto(float termopar_1, float termopar_2, float termopar_3, float termopar_amb) {
+	public TemperaturaJanelaDto() {
+		
+	}
+
+	public TemperaturaJanelaDto(float termopar_1, float termopar_2, float termopar_3, float termopar_amb, int linha) {
 		super();
 		this.termopar_1 = termopar_1;
 		this.termopar_2 = termopar_2;
 		this.termopar_3 = termopar_3;
 		this.termopar_amb = termopar_amb;
+		this.linha = linha;
+		
+	}
+	
+	public int getLinha() {
+		return linha;
+	}
+	public void setLinha(int linha) {
+		this.linha = linha;
 	}
 	public float getTermopar_1() {
 		return termopar_1;
