@@ -14,7 +14,7 @@ public interface TemperaturaRepository extends JpaRepository<TemperaturaModel, L
 	
 	
 	 @Query("SELECT temperaturas FROM TemperaturaModel temperaturas WHERE temperaturas.coordenadaId = :coordenada_id ORDER BY temperaturas.dt_leitura")
-     public List<TemperaturaModel> findWindow(@Param("coordenada_id") long coordenada_id);
+     public List<TemperaturaModel> buscaTemperaturaPorOrdemDeData(@Param("coordenada_id") long coordenada_id);
 	 
 	
 }
