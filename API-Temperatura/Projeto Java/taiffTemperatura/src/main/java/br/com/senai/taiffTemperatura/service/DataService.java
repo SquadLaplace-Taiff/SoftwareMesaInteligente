@@ -69,6 +69,12 @@ public class DataService {
 			estatistica.setTermopar_2(estatistica.getTermopar_2() / janelasDto.size());
 			estatistica.setTermopar_3(estatistica.getTermopar_3() / janelasDto.size());
 			estatistica.setTermopar_amb(estatistica.getTermopar_amb() /janelasDto.size());
+			
+			estatistica.setMedia((estatistica.getTermopar_1() + estatistica.getTermopar_2() 
+				+ estatistica.getTermopar_3()) / 3);
+			
+			estatistica.setTemperaturaCorrigida(estatistica.getMedia() - estatistica.getTermopar_amb() + 25);
+			
 			estatisticaModel.add(estatistica);
 		});
 
@@ -116,8 +122,8 @@ public class DataService {
 
 		int RAMP_UP_THRESHOLD = 5;
 		int RAMP_DOWN_THRESHOLD = -3;
-		int RAMP_UP_PAD = 30;
-		int RAMP_DOWN_PAD = -10;
+		int RAMP_UP_PAD = 32;
+		int RAMP_DOWN_PAD = -8;
 
 		List<JanelasModel> janelas = new ArrayList<JanelasModel>();
 

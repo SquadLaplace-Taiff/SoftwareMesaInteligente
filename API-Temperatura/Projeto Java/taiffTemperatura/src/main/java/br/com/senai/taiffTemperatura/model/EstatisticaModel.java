@@ -6,6 +6,8 @@ public class EstatisticaModel {
 	private double termopar_2;
 	private double termopar_3;
 	private double termopar_amb;
+	private double media;
+	private double temperaturaCorrigida;
 	
 	
 	
@@ -22,7 +24,7 @@ public class EstatisticaModel {
 		this.termopar_1 = termopar_1;
 		this.termopar_2 = termopar_2;
 		this.termopar_3 = termopar_3;
-		this.termopar_amb = termopar_amb;
+		this.termopar_amb = termopar_amb; 
 	}
 
 
@@ -65,6 +67,33 @@ public class EstatisticaModel {
 
 	public void setTermopar_amb(double termopar_amb) {
 		this.termopar_amb = termopar_amb;
+	}
+
+
+
+
+	public double getMedia() {
+		return media;
+	}
+
+
+
+	public void setMedia(double media) {
+		this.media = media;
+	}
+
+
+
+
+	public double getTemperaturaCorrigida() {
+		return temperaturaCorrigida;
+	}
+
+
+
+
+	public void setTemperaturaCorrigida(double temperaturaCorrigida) {
+		this.temperaturaCorrigida = temperaturaCorrigida;
 	}
 	
 	

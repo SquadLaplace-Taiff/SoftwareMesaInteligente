@@ -78,14 +78,24 @@ public class TemperaturaController {
 	}
 	
 	
-	@RequestMapping(value = "/csv", method = RequestMethod.GET)
-    public void getAllEmployeesInCsv(HttpServletResponse servletResponse) throws IOException {
-        servletResponse.setContentType("text/csv");
+	@RequestMapping(value = "/temperaturas/{id}", method = RequestMethod.GET)
+    public void getAllEmployeesInCsv(HttpServletResponse servletResponse, @PathVariable long id) throws IOException {
+        
+		servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition","attachment; filename=\"temperaturas.csv\"");
-        long id = 1;
+        
         csvExportService.convertendoTemperaturaEmCSV(servletResponse.getWriter(), id);
     }
 	
+	
+	@RequestMapping(value = "/folhaDeRosto/{id}", method = RequestMethod.GET)
+    public void gerarFolhadeRosto(HttpServletResponse servletResponse, @PathVariable long id) throws IOException {
+        
+		servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"FolhaDeRosto.csv\"");
+        
+        csvExportService.geraFolhaDeRostoCSV(servletResponse.getWriter(), id);
+    }
 	
 	
 	
