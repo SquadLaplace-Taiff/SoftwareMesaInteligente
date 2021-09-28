@@ -97,6 +97,18 @@ public class TemperaturaController {
         csvExportService.geraFolhaDeRostoCSV(servletResponse.getWriter(), id);
     }
 	
+	@RequestMapping(value = "/janelas/{coordenadaId}", method = RequestMethod.GET)
+	public ResponseEntity<List<JanelasModel>> gerarJanelas(@PathVariable long coordenadaId){
+		try {
+			List<TemperaturaModel> listaTemperatura = temperaturaRepository.findByCoordenadaId(coordenadaId);
+			return ResponseEntity.ok().body(dataService.generateWindow(listaTemperatura));
+		}
+		
+		catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 	
 	
 	
