@@ -27,19 +27,19 @@ export function GraficoLinha() {
                 result.forEach((dados: any) => {
                     // console.log(dados);
                     dataAux1.push({
-                        x: dados.dt_leitura,
+                        x: dados.linha,
                         y: dados.termopar_1,
                     });
                     dataAux2.push({
-                        x: dados.dt_leitura,
+                        x: dados.linha,
                         y: dados.termopar_2,
                     });
                     dataAux3.push({
-                        x: dados.dt_leitura,
+                        x: dados.linha,
                         y: dados.termopar_3,
                     });
                     dataAux4.push({
-                        x: dados.dt_leitura,
+                        x: dados.linha,
                         y: dados.termopar_amb,
                     });
                 })

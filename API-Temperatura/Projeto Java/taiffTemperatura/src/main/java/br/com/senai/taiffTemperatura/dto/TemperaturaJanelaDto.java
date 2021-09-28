@@ -1,5 +1,7 @@
 package br.com.senai.taiffTemperatura.dto;
 
+import br.com.senai.taiffTemperatura.model.TemperaturaModel;
+
 public class TemperaturaJanelaDto {
 	
 	private float termopar_1;
@@ -13,6 +15,19 @@ public class TemperaturaJanelaDto {
 	public TemperaturaJanelaDto() {
 		
 	}
+	
+	
+
+	public TemperaturaJanelaDto(TemperaturaModel temperatura) {
+		super();
+		this.termopar_1 = temperatura.getTermopar_1();
+		this.termopar_2 = temperatura.getTermopar_2();
+		this.termopar_3 = temperatura.getTermopar_3();
+		this.termopar_amb = temperatura.getTermopar_amb();
+		
+	}
+
+
 
 	public TemperaturaJanelaDto(float termopar_1, float termopar_2, float termopar_3, float termopar_amb, int linha) {
 		super();

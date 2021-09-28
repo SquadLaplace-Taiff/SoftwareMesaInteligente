@@ -5,6 +5,7 @@ import { ButtonExcluir } from './app/components/ButtonExcluir/ButtonExcluir';
 import { Posicao } from './app/components/Posicao/Posicao';
 import { SubHeader } from './app/components/SubHeader/SubHeader';
 import { GraficoLinha } from './app/components/Graficos/GraficoLinha';
+import GraficoEstatico from './app/components/GraficoEstatico/GraficoEstatico';
 
 import './style.css';
 import { teste } from './app/interfaces/interfaces';
@@ -26,7 +27,7 @@ function App() {
   }
   return (
     <section>
-      <GraficoLinha />
+      <GraficoEstatico />
     </section>
 
   );

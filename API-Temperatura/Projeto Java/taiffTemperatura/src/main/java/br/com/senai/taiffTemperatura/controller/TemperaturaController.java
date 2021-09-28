@@ -66,10 +66,22 @@ public class TemperaturaController {
 	
 	
 	@RequestMapping(value = "/{coordenadaId}", method = RequestMethod.GET)
-	public ResponseEntity<List<TemperaturaModel>> buscaTemperaturasPorCoordenada(@PathVariable long coordenadaId){
+	public ResponseEntity<List<TemperaturaJanelaDto>> buscaTemperaturasPorCoordenada(@PathVariable long coordenadaId){
 		try {
 			List<TemperaturaModel> listaTemperatura = temperaturaRepository.findByCoordenadaId(coordenadaId);
-			return ResponseEntity.ok().body(listaTemperatura);
+			List<TemperaturaJanelaDto> listaTemperaturaDto = new ArrayList<TemperaturaJanelaDto>();
+			
+			int linha = 1;
+			for (TemperaturaModel temperaturaModel : listaTemperatura) {
+				TemperaturaJanelaDto temperaturaDto = new TemperaturaJanelaDto(temperaturaModel); 
+				temperaturaDto.setLinha(linha);
+				linha++;
+				
+				listaTemperaturaDto.add(temperaturaDto);
+			}
+			
+			
+			return ResponseEntity.ok().body(listaTemperaturaDto);
 		}
 		
 		catch (Exception e) {
@@ -78,7 +90,7 @@ public class TemperaturaController {
 	}
 	
 	
-	@RequestMapping(value = "/temperaturas/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/temperaturasCSV/{id}", method = RequestMethod.GET)
     public void getAllEmployeesInCsv(HttpServletResponse servletResponse, @PathVariable long id) throws IOException {
         
 		servletResponse.setContentType("text/csv");
@@ -88,8 +100,8 @@ public class TemperaturaController {
     }
 	
 	
-	@RequestMapping(value = "/folhaDeRosto/{id}", method = RequestMethod.GET)
-    public void gerarFolhadeRosto(HttpServletResponse servletResponse, @PathVariable long id) throws IOException {
+	@RequestMapping(value = "/folhaDeRostoCSV/{id}", method = RequestMethod.GET)
+    public void gerarFolhadeRostoCSV(HttpServletResponse servletResponse, @PathVariable long id) throws IOException {
         
 		servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition","attachment; filename=\"FolhaDeRosto.csv\"");
@@ -109,6 +121,39 @@ public class TemperaturaController {
 		}
 	}
 	
+	
+	@RequestMapping(value = "/folhaDeRosto/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<EstatisticaModel>> gerarFolhaDeRosto(@PathVariable long id){
+		try {
+			List<TemperaturaModel> listaTemperatura = temperaturaRepository.findByCoordenadaId(id);
+
+			List<EstatisticaModel> listaEstatistica = dataService.gerarMediaDeCadaJanelas(listaTemperatura);
+			
+			List<EstatisticaModel> listaEstatisticaCompleta = new ArrayList<EstatisticaModel>();
+			
+            for (EstatisticaModel estatistica : listaEstatistica) {
+            	
+            	estatistica.setMedia((
+            			estatistica.getTermopar_1() +
+            			estatistica.getTermopar_2() +
+            			estatistica.getTermopar_3() )
+            			/ 3 );
+            	estatistica.setTemperaturaCorrigida(
+            			estatistica.getMedia() -
+            			estatistica.getTermopar_amb() + 25);
+               
+            	listaEstatisticaCompleta.add(estatistica);
+            	
+            }          
+	
+			
+			return ResponseEntity.ok().body(listaEstatisticaCompleta);
+		}
+		
+		catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 	
 	
 	
