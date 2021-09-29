@@ -2,74 +2,186 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
+import { coordenadas, datasets, dataType, janelas, temperaturas } from '../../interfaces/graficoEstatico';
 
 
-export default function GraficoEstatico(){
+export default function GraficoEstatico() {
 
-    const url = 'http://localhost:8080/temperatura/1';
+    const urlTemperatuas = 'http://localhost:8080/temperatura/1';
+    const urlJanelas = 'http://localhost:8080/temperatura/janelas/1'
 
-    const [labels, setLabels] = useState<any[]>([]);
-    const [datasetsData, setDatasetsData] = useState<any[]>([]);
+    const [labels, setLabels] = useState<String[]>([]);
+    const [termopar1, setTermopar1] = useState<coordenadas[]>([]);
+    const [termopar2, setTermopar2] = useState<coordenadas[]>([]);
+    const [termopar3, setTermopar3] = useState<coordenadas[]>([]);
+    const [termoparAmb, setTermoparAmb] = useState<coordenadas[]>([]);
+    const [janelas, setJanelas] = useState<Array<coordenadas[]>>([]);
 
-    type dataType  = {
-        labels:any[],
-        datasets:any[]
-    }
-
-    const data:dataType = {
+    const data: dataType = {
         labels: labels,
         datasets: [
             {
                 label: 'Termopar 1',
-                data: datasetsData,
+                data: termopar1,
                 fill: false,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgba(255, 99, 132, 0.2)',
+                backgroundColor: '#ff6384',
+                borderColor: '#ff6384',
             },
+            {
+                label: 'Termopar 2',
+                data: termopar2,
+                fill: false,
+                backgroundColor: '#005e91',
+                borderColor: '#005e91',
+            },
+            {
+                label: 'Termopar 3',
+                data: termopar3,
+                fill: false,
+                backgroundColor: '#13cf16',
+                borderColor: '#13cf16',
+            },
+            {
+                label: 'Termopar Ambiente',
+                data: termoparAmb,
+                fill: false,
+                backgroundColor: '#E8CC20',
+                borderColor: '#E8CC20',
+            },
+            // {
+            //     label: "Janela 1",
+            //     data: janelas,
+            //     hidden: true,
+            //     fill: false,
+            //     backgroundColor: '#e80000',
+            //     borderColor: '#e80000',
+            // },
         ],
     };
 
-    
-    console.log(data)
-
     const options = {
-        scales: {
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true,
-                    },
-                },
-            ],
+        animation: false,
+        animations: {
+            colors: false,
+            x: false,
+        },
+        transitions: {
+            active: {
+                animation: {
+                    duration: 0
+                }
+            }
+        },
+        parsing: {
+            xAxisKey: 'x',
+            yAxisKey: 'y'
         },
     };
 
-    function gerarGrafico(){
-        fetch(`${url}`)
+    function gerarGrafico() {
+        fetch(`${urlTemperatuas}`)
             .then(res => res.json())
             .then(
-                (result:any[]) => {
+                (result: temperaturas[]) => {
                     setLabels(
                         result.map(
-                            (objeto:any) => objeto.linha.toString()));
+                            (objeto: temperaturas) => objeto.linha.toString()
+                        )
+                    );
 
-                    setDatasetsData(
-                            result.map(
-                                temperatura1 => temperatura1.termopar_1
-                                ))
-            })
+                    for (let i = 1; i <= data.datasets.length; i++) {
+                        switch (i) {
+                            case 1:
+                                setTermopar1(result.map((temperaturas: temperaturas) => {
+                                    return {
+                                        x: temperaturas.linha.toString(),
+                                        y: temperaturas.termopar_1
+                                    }
+                                }));
+                                break;
+                            case 2:
+                                setTermopar2(result.map((temperaturas: temperaturas) => {
+                                    return {
+                                        x: temperaturas.linha.toString(),
+                                        y: temperaturas.termopar_2
+                                    }
+                                }));
+                                break;
+                            case 3:
+                                setTermopar3(result.map((temperaturas: temperaturas) => {
+                                    return {
+                                        x: temperaturas.linha.toString(),
+                                        y: temperaturas.termopar_3
+                                    }
+                                }));
+                                break;
+                            case 4:
+                                setTermoparAmb(result.map((temperaturas: temperaturas) => {
+                                    return {
+                                        x: temperaturas.linha.toString(),
+                                        y: temperaturas.termopar_amb
+                                    }
+                                }));
+                                break;
+                        }
+                    }
+                })
+
+        fetch(`${urlJanelas}`)
+            .then(res => res.json())
+            .then((janelas: Array<janelas>) => {
+
+
+                setJanelas(janelas.map((janela: janelas) => {
+                    let janelasLista: Array<coordenadas> = [];
+
+                    for (let i = 1; i <= 4; i++) {
+
+                        switch (i) {
+                            case 1:
+                                janelasLista.push({
+                                    x: janela.valorInicial.toString(),
+                                    y: 20
+                                })
+                                break;
+                            case 2:
+                                janelasLista.push({
+                                    x: janela.valorInicial.toString(),
+                                    y: 120
+                                })
+                                break;
+                            case 3:
+                                janelasLista.push({
+                                    x: janela.valorFinal.toString(),
+                                    y: 20
+                                })
+                                break;
+                            case 4:
+                                janelasLista.push({
+                                    x: janela.valorFinal.toString(),
+                                    y: 120
+                                })
+                                break;
+                        }
+
+                    }
+                    return janelasLista;
+                }
+                ))
+            })        
+
     }
 
-        return(
+    return (
 
-            <div>
+        <div>
 
-                <Line data={data} options={options} />
+            <Line data={data} options={options} />
 
-                <Button 
+            <Button
                 onClick={() => gerarGrafico()}>Gerar gráfico</Button>
-            </div>
+        </div>
 
-        );
+    );
 
 } 
