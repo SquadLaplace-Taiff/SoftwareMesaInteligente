@@ -3,10 +3,10 @@ import { Line } from 'react-chartjs-2';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { coordenadas, datasets, dataType, janelas, temperaturas } from '../../interfaces/graficoEstatico';
-
+import "./grafico.css";
 
 export default function GraficoEstatico() {
-
+    
     const urlTemperatuas = 'http://localhost:8080/temperatura/1';
     const urlJanelas = 'http://localhost:8080/temperatura/janelas/1'
 
@@ -16,6 +16,13 @@ export default function GraficoEstatico() {
     const [termopar3, setTermopar3] = useState<coordenadas[]>([]);
     const [termoparAmb, setTermoparAmb] = useState<coordenadas[]>([]);
     const [janelas, setJanelas] = useState<Array<coordenadas[]>>([]);
+
+    const urlCSV = 'http://localhost:8080/temperatura/temperaturasCSV/1';
+    function gerarCSV(){
+        //fetch(urlCSV)  
+        window.open(urlCSV);
+    }
+
 
     const data: dataType = {
         labels: labels,
@@ -127,61 +134,62 @@ export default function GraficoEstatico() {
                     }
                 })
 
-        fetch(`${urlJanelas}`)
-            .then(res => res.json())
-            .then((janelas: Array<janelas>) => {
+        // fetch(`${urlJanelas}`)
+        //     .then(res => res.json())
+        //     .then((janelas: Array<janelas>) => {
 
 
-                setJanelas(janelas.map((janela: janelas) => {
-                    let janelasLista: Array<coordenadas> = [];
+        //         setJanelas(janelas.map((janela: janelas) => {
+        //             let janelasLista: Array<coordenadas> = [];
 
-                    for (let i = 1; i <= 4; i++) {
+        //             for (let i = 1; i <= 4; i++) {
 
-                        switch (i) {
-                            case 1:
-                                janelasLista.push({
-                                    x: janela.valorInicial.toString(),
-                                    y: 20
-                                })
-                                break;
-                            case 2:
-                                janelasLista.push({
-                                    x: janela.valorInicial.toString(),
-                                    y: 120
-                                })
-                                break;
-                            case 3:
-                                janelasLista.push({
-                                    x: janela.valorFinal.toString(),
-                                    y: 20
-                                })
-                                break;
-                            case 4:
-                                janelasLista.push({
-                                    x: janela.valorFinal.toString(),
-                                    y: 120
-                                })
-                                break;
-                        }
+        //                 switch (i) {
+        //                     case 1:
+        //                         janelasLista.push({
+        //                             x: janela.valorInicial.toString(),
+        //                             y: 20
+        //                         })
+        //                         break;
+        //                     case 2:
+        //                         janelasLista.push({
+        //                             x: janela.valorInicial.toString(),
+        //                             y: 120
+        //                         })
+        //                         break;
+        //                     case 3:
+        //                         janelasLista.push({
+        //                             x: janela.valorFinal.toString(),
+        //                             y: 20
+        //                         })
+        //                         break;
+        //                     case 4:
+        //                         janelasLista.push({
+        //                             x: janela.valorFinal.toString(),
+        //                             y: 120
+        //                         })
+        //                         break;
+        //                 }
 
-                    }
-                    return janelasLista;
-                }
-                ))
-            })        
+        //             }
+        //             return janelasLista;
+        //         }
+        //         ))
+        //     })        
 
     }
 
     return (
 
-        <div>
-
-            <Line data={data} options={options} />
-
-            <Button
-                onClick={() => gerarGrafico()}>Gerar gráfico</Button>
-        </div>
+        <section id="section-grafico">
+            <Line className="grafico" data={data} options={options} />
+            <div className='button-container'>
+                <Button onClick={() => gerarGrafico()}>Gerar gráfico</Button>
+                <Button onClick={() => gerarCSV()}>Gerar CSV</Button> 
+                <Button href='/tabela'>Ir para folha de rosto</Button>   
+            </div>
+        </section>
 
     );
 
-} 
+}

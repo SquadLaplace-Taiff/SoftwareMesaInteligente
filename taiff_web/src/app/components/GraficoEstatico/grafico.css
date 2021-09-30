@@ -1,0 +1,13 @@
+#section-grafico{
+    width: 65vw;
+}
+
+.grafico{ width: 65vw;}
+
+.button-container{
+    margin: 15px;
+}
+
+.button-container Button{
+    margin:25px
+}
