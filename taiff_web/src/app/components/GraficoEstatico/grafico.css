@@ -6,8 +6,14 @@
 
 .button-container{
     margin: 15px;
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
 }
 
-.button-container Button{
-    margin:25px
+.button-container Button, a{
+    height: 50px;
+
+    text-align: center;
 }

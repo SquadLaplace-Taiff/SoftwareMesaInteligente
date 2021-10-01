@@ -7,8 +7,8 @@ export default function TelaTabela() {
     const [dados, setDados] = useState<Array<tabela>>([]);
     const url = 'http://localhost:8080/temperatura/folhaDeRosto/1';
     const urlCSV = 'http://localhost:8080/temperatura/folhaDeRostoCSV/1';
-    
-    function gerarCSV(){
+
+    function gerarCSV() {
         //fetch(urlCSV)  
         window.open(urlCSV);
     }
@@ -39,7 +39,7 @@ export default function TelaTabela() {
 
     return (
         <section id="section-tabela">
-            <Table className="tabela" striped bordered hover>
+            <Table className="tabela" striped bordered hover variant="dark">
                 <thead>
                     <tr>
                         <th>Janelas</th>
@@ -54,10 +54,10 @@ export default function TelaTabela() {
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>113,53</td>
+                        <td>26,02</td>
                         <td>94,50</td>
                         <td>111,67</td>
-                        <td>26,02</td>
+                        <td>113,53</td>
                         <td>106,57</td>
                         <td>105,55</td>
                     </tr>
@@ -134,7 +134,7 @@ export default function TelaTabela() {
                         <td>109,19</td>
                     </tr>
                     <tr>
-                        <td>Média</td>
+                        <td><b>Média</b></td>
                         <td>25,70</td>
                         <td>113,04</td>
                         <td>99,89</td>
