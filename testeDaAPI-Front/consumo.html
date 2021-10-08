@@ -23,8 +23,15 @@
     </header>
     <main>
         
-        <form action="" id="" class="container">
+        <form action="" id="formulario" class="container" name="formulario">
             <div class="row">
+                <section id="teste">
+                    <h2>DADOS DO TESTE</h2>
+                    <label for="nometeste">Nome do teste: </label>
+                    <input type="text" id="nometeste" name="nometeste">
+                    <label for="modelo">Modelo: </label>
+                    <input type="text" id="modelo" name="modelo">
+                </section>
                 <section id="zeroPeca" class="">
                     <h2>ZERO PEÇA</h2>
                     <label for="zeropeca_input_x">Posição x: </label>
@@ -89,31 +96,18 @@
                     </div>
                 </section>
                 <div>
-                    <input type="submit" value="enviar">
+                    <input type="submit" value="enviar" onclick=criaTeste()>
                 </div>
             </div>
         </form>
-  </main>   
+    </main>   
     
 
 
-  <!-- Script bootstrap -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- Script bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="consumo.js"></script>
 </body>
 </html>
-
-<script>
-    const url = 'http://localhost:8080/teste';
-
-// Conexão com a API
-fetch(url, )
-    .then(response => response.json())
-    .then(data => {
-        postData(data);
-    })
-    .catch(
-        error => console.log('Request failed', error)
-    )
-</script>

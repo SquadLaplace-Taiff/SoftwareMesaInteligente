@@ -78,7 +78,7 @@ public class TesteController {
 	
 	
 	
-	@RequestMapping(value="/{modelo}", method = RequestMethod.POST )
+	@RequestMapping(value="/{modelo}", method = RequestMethod.GET )
 	public ResponseEntity<List<TesteModel>> buscaTestePorModelo(@PathVariable String modelo){
 		try {
 			
