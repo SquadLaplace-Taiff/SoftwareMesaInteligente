@@ -43,6 +43,7 @@ function criaTeste(){
             x: document.formulario.zeropeca_input_x.value,
             y: document.formulario.zeropeca_input_y.value,
             z: document.formulario.zeropeca_input_z.value,
+            r: document.formulario.zeropeca_input_r.value,
         },
         coordenada: [{
             x: document.formulario.coordenadas1_input_x.value,
@@ -71,22 +72,44 @@ function criaTeste(){
         }]
     }
 
-    fetch(`http://localhost:8080/teste/19`, {
-        method: "put",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(myBody)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
+    localStorage.setItem('zeroPeca', JSON.stringify(myBody.zeroPeca));
+    coordenadas = myBody.coordenada.map(coordenada => {
+        let ZeroPeca = JSON.parse(localStorage.getItem('zeroPeca'))
+        return {
+            x: coordenada.x - ZeroPeca.x,
+            y: coordenada.y - ZeroPeca.y,
+            z: coordenada.z - ZeroPeca.z,
+            r: coordenada.r - ZeroPeca.r,
+        }
+    });
+    localStorage.setItem('Coordenadas', JSON.stringify(coordenadas))
+
+    // fetch(`http://localhost:8080/teste/19`, {
+    //     method: "put",
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(myBody)
+    // })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log(data);
+    //     })
+    //     .catch(
+    //         error => console.log('Request failed', error)
+    //     )
+}
+
+function buscarPorModelo() {
+    let modelo = document.querySelector('#busca-modelo').value;
+
+    fetch(`${url}/${modelo}`)
+        .then(res => res.json())
+        .then(resposta => console.log(resposta))
         .catch(
             error => console.log('Request failed', error)
         )
 }
-
 
 
 var form = document.getElementById('formulario');

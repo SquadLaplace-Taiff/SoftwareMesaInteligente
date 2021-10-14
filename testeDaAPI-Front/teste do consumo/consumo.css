@@ -1,0 +1,17 @@
+#teste, #zeroPeca, #coordenadas {
+    margin-top: 20px;
+}
+
+
+#coordenadas div{ 
+    display: flex;
+    flex-direction: row;
+
+    margin-top: 10px;
+}
+
+.button-container { 
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+}
