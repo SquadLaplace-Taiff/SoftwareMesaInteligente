@@ -1,6 +1,8 @@
 package br.com.senai.taiffTemperatura.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +84,25 @@ public class TemperaturaController {
 			
 			
 			return ResponseEntity.ok().body(listaTemperaturaDto);
+		}
+		
+		catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@RequestMapping(value = "/{dataString}/{coordenadaId}", method = RequestMethod.GET)
+	public ResponseEntity<List<TemperaturaModel>> buscaUltimasTemperaturas(@PathVariable long coordenadaId, @PathVariable String dataString){
+		try {
+			System.out.println("Antes " + dataString);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+			System.out.println("Meio " + dataString);
+			LocalDateTime data = LocalDateTime.parse(dataString, formatter);
+			System.out.println("Depois " + dataString);
+			
+			List<TemperaturaModel> listaTemperatura = temperaturaRepository.buscaUltimasTemperatura(coordenadaId, data);
+					
+			return ResponseEntity.ok().body(listaTemperatura);
 		}
 		
 		catch (Exception e) {

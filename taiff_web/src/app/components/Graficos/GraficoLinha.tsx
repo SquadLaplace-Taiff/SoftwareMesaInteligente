@@ -2,107 +2,73 @@ import { Line, Chart } from 'react-chartjs-2';
 import { Button } from 'react-bootstrap';
 import 'chartjs-adapter-luxon';
 import StreamingPlugin from 'chartjs-plugin-streaming';
-import { useState } from 'react';
+import { Component, useState } from 'react';
 
+Chart.register(StreamingPlugin);
 
-export function GraficoLinha() {
-
-    Chart.register(StreamingPlugin);
-
-    const url = 'http://localhost:8080/temperatura/1';
-
-    const dataAux1: any = []
-    const dataAux2: any = []
-    const dataAux3: any = []
-    const dataAux4: any = []
-
-    // const moment = require('moment');
-
-    const [datasets, setDatasets] = useState<any>();
-
-    fetch(`${url}`)
-        .then(res => res.json())
-        .then(
-            (result) => {
-                result.forEach((dados: any) => {
-                    // console.log(dados);
-                    dataAux1.push({
-                        x: dados.linha,
-                        y: dados.termopar_1,
-                    });
-                    dataAux2.push({
-                        x: dados.linha,
-                        y: dados.termopar_2,
-                    });
-                    dataAux3.push({
-                        x: dados.linha,
-                        y: dados.termopar_3,
-                    });
-                    dataAux4.push({
-                        x: dados.linha,
-                        y: dados.termopar_amb,
-                    });
-                })
-            })
-        .catch(error => console.log('Authorization failed : ' + error.message))
-
-
-    console.log(dataAux1);
-
-
-    function gerarGrafico() { 
-        setDatasets([
-            {
-                label: 'Temperatura 1',
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgb(54, 162, 235)',
-                cubicInterpolationMode: 'monotone',
-                fill: false,
-                data: dataAux1
-            },
-            {
-                label: 'Temperatura 2',
-                backgroundColor: 'rgba(255, 8, 0, 0.5)',
-                borderColor: 'rgb(255, 8, 0)',
-                cubicInterpolationMode: 'monotone',
-                fill: false,
-                data: dataAux2
-            },
-            {
-                label: 'Temperatura 3',
-                backgroundColor: 'rgba(9, 255, 0, 0.5)',
-                borderColor: 'rgb(9, 255, 0)',
-                cubicInterpolationMode: 'monotone',
-                fill: false,
-                data: dataAux3
-            },
-            {
-                label: 'Temperatura Ambiente',
-                backgroundColor: 'rgba(161, 103, 9, 0.5)',
-                borderColor: 'rgb(161, 103, 9)',
-                cubicInterpolationMode: 'monotone',
-                fill: false,
-                data: dataAux4
-            }
-        ])
-    }
-
-
-    return (
-        <div className="graphic-container">
+export class GraficoLinha extends Component {
+    render() {
+        return (
             <Line
-                data={{ datasets }}
+                data={{
+                    datasets: [{
+                        label: 'Dataset 1',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderDash: [8, 4],
+                        fill: true,
+                        data: []
+                    }, {
+                        label: 'Dataset 2',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        cubicInterpolationMode: 'monotone',
+                        fill: true,
+                        data: []
+                    }]
+                }}
                 options={{
                     scales: {
-                        xAxes: [{
-                            type: 'realtime'
-                        }]
+                        x: {
+                            type: 'realtime',
+                            realtime: {
+                                delay: 2000,
+                                onRefresh: (chart:any) => {
+                                    if (chart.data.datasets[0].data.lenght > 0) {
+                                        fetch(`http://localhost:8080/temperatura/${chart.data.datasets[0].data[-1].x}/1`)
+                                            .then(res => res.json())
+                                            .then(resultado => {
+
+                                                resultado.forEach((leitura:any) => {
+                                                    chart.data.datasets.forEach((dataset:any, index:number) => {
+                                                        dataset.data.push({
+                                                            x: leitura.dt_leitura,
+                                                            y: leitura.termopar_1
+                                                        });
+                                                    });
+                                                });
+                                            })
+                                    } else {
+                                        fetch("http://localhost:8080/temperatura/2021-09-13%2000:00:00.090000/1")
+                                        .then(res => res.json())
+                                            .then(resultado => {
+
+                                                resultado.forEach((leitura:any) => {
+                                                    chart.data.datasets.forEach((dataset:any, index:number) => {
+                                                        dataset.data.push({
+                                                            x: leitura.dt_leitura,
+                                                            y: leitura.termopar_1
+                                                        });
+                                                    });
+                                                });
+                                            })
+                                    }
+                                }
+                            }
+                        }
                     }
                 }}
             />
-
-            <Button 
-            onClick={() => gerarGrafico()}>Gerar gráfico</Button>
-        </div>
-    );
+        );
+    }
 }
