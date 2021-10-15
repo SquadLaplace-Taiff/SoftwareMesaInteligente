@@ -34,8 +34,10 @@ export class GraficoLinha extends Component {
                             realtime: {
                                 delay: 2000,
                                 onRefresh: (chart:any) => {
-                                    if (chart.data.datasets[0].data.lenght > 0) {
-                                        fetch(`http://localhost:8080/temperatura/${chart.data.datasets[0].data[-1].x}/1`)
+                                    //console.log("cheguei")
+                                    if (chart.data.datasets[0].data.length > 0) {
+                                        console.log("cheguei1")
+                                        fetch(`http://localhost:8080/temperatura/${chart.data.datasets[0].data.pop().x.replace('T' , ' ')}/1`)
                                             .then(res => res.json())
                                             .then(resultado => {
 
@@ -49,16 +51,21 @@ export class GraficoLinha extends Component {
                                                 });
                                             })
                                     } else {
+                                        console.log(chart.data.datasets[0].data.length)
                                         fetch("http://localhost:8080/temperatura/2021-09-13%2000:00:00.090000/1")
                                         .then(res => res.json())
                                             .then(resultado => {
 
                                                 resultado.forEach((leitura:any) => {
+                                            
                                                     chart.data.datasets.forEach((dataset:any, index:number) => {
+                                                        
                                                         dataset.data.push({
+                                                            
                                                             x: leitura.dt_leitura,
                                                             y: leitura.termopar_1
                                                         });
+                                        
                                                     });
                                                 });
                                             })
