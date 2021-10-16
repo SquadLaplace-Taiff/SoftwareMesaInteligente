@@ -11,7 +11,7 @@ var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
 async function executar() {
-    for (i = 1; i <= 5; i++) {
+    for (i = 1; i <= 500; i++) {
 
         var myDate = new Date, myFormat = [
             myDate.getMonth() + 1,
@@ -29,7 +29,7 @@ async function executar() {
 
         let myBody = {
             dt_leitura: myDate,
-            coordenadaId: 2,
+            coordenadaId: 4,
             termopar_1: Math.random() * (115 - 100) + 100,
             termopar_2: Math.random() * (115 - 100) + 100,
             termopar_3: Math.random() * (115 - 100) + 100,
@@ -42,10 +42,10 @@ async function executar() {
                 body: JSON.stringify(myBody),
                 headers: myHeaders
             }).then(console.log('Requisição ' + i)).catch(error => console.log(error))
-        let espere = await delay(1);
+        let espere = await delay(500);
     }
 
-    fetch("http://localhost:8080/temperatura/2",
+    fetch("http://localhost:8080/temperatura/3",
             {
                 method: "get",
                 headers: myHeaders
