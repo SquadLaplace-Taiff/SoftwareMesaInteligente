@@ -1,7 +1,9 @@
 import { BrowserRouter, Route } from 'react-router-dom';
-import { GraficoLinha } from './app/components/Graficos/GraficoLinha';
-import TelaGrafico from './app/pages/TelaGrafico';
-import TelaTabela from './app/pages/TelaTabela';
+
+import { Home } from './app/pages/Home/Home'
+import { Graficos } from './app/pages/graficos/Graficos'
+import { FolhaDeRosto } from './app/pages/folhaDeRosto/FolhaDeRosto'
+
 //import { Route, BrowserRouter } from 'react-router-dom';
 
 import './style.css';
@@ -10,9 +12,9 @@ function App() {
 
   return (
     <BrowserRouter>
-          <Route path="/" exact component={TelaGrafico}/>
-          <Route path="/tabela" component={TelaTabela}/>
-          <Route path="/teste" component={GraficoLinha}/> 
+          <Route path="/" exact component={Home}/>
+          <Route path="/graficos" component={Graficos}/>
+          <Route path="/folhaDeRosto" component={FolhaDeRosto}/> 
     </BrowserRouter>
   );
 }
