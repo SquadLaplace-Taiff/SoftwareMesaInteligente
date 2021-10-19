@@ -90,7 +90,7 @@ public class TemperaturaController {
 	}
 
 	@RequestMapping(value = "/{dataString}/{coordenadaId}", method = RequestMethod.GET)
-	public ResponseEntity<List<TemperaturaModel>> buscaUltimasTemperaturas(@PathVariable long coordenadaId,
+	public ResponseEntity<TemperaturaModel> buscaUltimasTemperaturas(@PathVariable long coordenadaId,
 			@PathVariable String dataString) {
 		try {
 			
@@ -122,7 +122,7 @@ public class TemperaturaController {
 
 			List<TemperaturaModel> listaTemperatura = temperaturaRepository.buscaUltimasTemperatura(coordenadaId, data);
 
-			return ResponseEntity.ok().body(listaTemperatura);
+			return ResponseEntity.ok().body(listaTemperatura.get(0));
 		}
 
 		catch (Exception e) {

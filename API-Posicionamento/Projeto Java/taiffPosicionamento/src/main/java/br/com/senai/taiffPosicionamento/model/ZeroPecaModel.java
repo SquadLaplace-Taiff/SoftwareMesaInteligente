@@ -16,6 +16,7 @@ public class ZeroPecaModel {
 	private Integer x;
 	private Integer y;
 	private Integer z;
+	private Integer r;
 	private long teste_id;
 	
 	
@@ -23,12 +24,13 @@ public class ZeroPecaModel {
 	}
 
 
-	public ZeroPecaModel(long zeroPeca_Id, Integer x, Integer y, Integer z, long teste_id) {
+	public ZeroPecaModel(long zeroPeca_Id, Integer x, Integer y, Integer z, Integer r, long teste_id) {
 	
 		this.zeroPeca_Id = zeroPeca_Id;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.r = r;
 		this.teste_id = teste_id;
 	}
 
@@ -81,6 +83,17 @@ public class ZeroPecaModel {
 	public void setTeste_id(long teste_id) {
 		this.teste_id = teste_id;
 	}
+
+
+	public Integer getR() {
+		return r;
+	}
+
+
+	public void setR(Integer r) {
+		this.r = r;
+	}
+	
 	
 	
 

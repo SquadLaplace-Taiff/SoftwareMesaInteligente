@@ -29,7 +29,7 @@ async function executar() {
 
         let myBody = {
             dt_leitura: myDate,
-            coordenadaId: 4,
+            coordenadaId: 5,
             termopar_1: Math.random() * (115 - 100) + 100,
             termopar_2: Math.random() * (115 - 100) + 100,
             termopar_3: Math.random() * (115 - 100) + 100,
