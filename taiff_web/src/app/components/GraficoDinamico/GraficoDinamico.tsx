@@ -6,7 +6,7 @@ import { Component, useState } from 'react';
 
 Chart.register(StreamingPlugin);
 
-export class GraficoLinha extends Component {
+export class GraficoDinamico extends Component {
     render() {
 
 
