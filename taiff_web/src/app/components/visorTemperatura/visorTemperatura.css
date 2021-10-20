@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&display=swap');
+
+.formInput{
+    height: 50px;
+    max-width: 80px;
+    background: #FDFDFD;
+    border: 1px solid #868686;
+    box-sizing: border-box;
+    border-radius: 25px !important;
+}
+
+.form{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1236px ;
+    min-width: 900px;
+}
+
+.contenForm{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative;
+    width: 80%;
+    margin: 100px auto;
+}
+
+.visor-label{
+    margin-left: 25px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    color: #868686;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 1.5em;
+}
+
+.input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
