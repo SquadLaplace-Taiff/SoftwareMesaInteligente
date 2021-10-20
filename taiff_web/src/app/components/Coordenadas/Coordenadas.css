@@ -25,8 +25,8 @@
 }
 
 .coordenadas-label{
-    margin-left: 25px;
-    margin-right: 10px;
+    margin-left: 20px;
+    margin-right: 5px;
     margin-bottom: 0;
     color: #868686;
     font-family: 'Archivo Narrow', sans-serif;
@@ -40,7 +40,6 @@
 }
 
 .input{
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,4 +50,8 @@
     color: #868686;
     font-family: 'Archivo Narrow', sans-serif;
     font-size: 1.5em;
+}
+.novo-ponto{
+    max-width: 180px;
+    margin: 10px;
 }
