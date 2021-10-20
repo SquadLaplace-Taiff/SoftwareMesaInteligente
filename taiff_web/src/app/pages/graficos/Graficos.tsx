@@ -1,10 +1,12 @@
 import React from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Modal } from "react-bootstrap";
 import ReactDOM from "react-dom";
 import { GraficoDinamico } from "../../components/GraficoDinamico/GraficoDinamico";
 import GraficoEstatico from "../../components/GraficoEstatico/GraficoEstatico";
 
 import './Graficos.css';
+import { ModalCsv } from "./Modals/ModalCsv/ModalCsv";
+import { ModalFolhaDeRosto } from "./Modals/ModalFolhaDeRosto/ModalFolhaDeRosto";
 import { Tabela } from "./Tabela/Tabela";
 
 
@@ -21,7 +23,7 @@ export class Graficos extends React.Component<{}, any> {
         this.GraficoDinamico();
     }
 
-    GraficoEstatico() { 
+    GraficoEstatico() {
         return (
             <GraficoEstatico />
         );
@@ -35,11 +37,11 @@ export class Graficos extends React.Component<{}, any> {
     }
 
     TrocarGrafico() {
-        (this.state.graficoDinamico) ? this.setState({graficoDinamico: false}) : this.setState({graficoDinamico: true});
+        (this.state.graficoDinamico) ? this.setState({ graficoDinamico: false }) : this.setState({ graficoDinamico: true });
     }
 
     render() {
-        return( 
+        return (
             <section className="section-graficos">
 
                 <h1 className="title h1">Temperaturas</h1>
@@ -55,7 +57,11 @@ export class Graficos extends React.Component<{}, any> {
                 </Container>
 
                 <Button onClick={() => this.TrocarGrafico()}>Trocar gráfico</Button>
+                <ModalCsv id={1}/>
+                <ModalFolhaDeRosto/>
+
             </section>
+
         );
     }
 
