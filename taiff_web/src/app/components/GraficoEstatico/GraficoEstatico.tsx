@@ -3,7 +3,7 @@ import { Line } from 'react-chartjs-2';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { coordenadas, datasets, dataType, janelas, temperaturas } from '../../interfaces/graficoEstatico';
-import "./grafico.css";
+import "./graficoEstatico.css";
 
 export default function GraficoEstatico() {
     
