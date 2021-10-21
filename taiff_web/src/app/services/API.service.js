@@ -15,9 +15,9 @@ export class APIService extends React.Component {
     };
 
     buscarTodosTestes() {
-        fetch(this.state.url, { 
-            headers: this.state.myHeaders 
-            })
+        fetch(this.state.url, {
+            headers: this.state.myHeaders
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -25,11 +25,11 @@ export class APIService extends React.Component {
                 })
             .catch(error => console.log('Authorization failed : ' + error.message))
     };
-    
+
     buscarTestePorId(id) {
-        fetch(`${this.state.url}/id/${id}`, { 
-            headers: this.state.myHeaders 
-            })
+        fetch(`${this.state.url}/id/${id}`, {
+            headers: this.state.myHeaders
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -39,9 +39,9 @@ export class APIService extends React.Component {
     };
 
     buscarTestePorModelo(modelo) {
-        fetch(`${this.state.url}/${modelo}`, { 
-            headers: this.state.myHeaders 
-            })
+        fetch(`${this.state.url}/${modelo}`, {
+            headers: this.state.myHeaders
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -72,4 +72,29 @@ export class APIService extends React.Component {
             headers: this.state.myHeaders
         });
     }
+
+    buscarUltimaTemperatura(dataLeitura, id) {
+
+        if (dataLeitura != undefined) {
+            fetch(`http://localhost:8080/temperatura/${dataLeitura}/${id}`)
+                .then(res => res.json())
+                .then(resultado => {
+                    return resultado
+                })
+        } else {
+            fetch(`http://localhost:8080/temperatura/2021-09-13T00:00:00.090000/${id}`)
+                .then(res => res.json())
+                .then(resultado => {
+                    return resultado
+                })
+        }
+
+
+    }
+
+
+
+
+
 }
+
