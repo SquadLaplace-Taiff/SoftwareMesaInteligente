@@ -68,7 +68,7 @@ export class GraficoDinamico extends Component {
                                 onRefresh: (chart: any) => {
                                     if (chart.data.datasets[0].data.length > 0) {
                                         console.log("cheguei1")
-                                        fetch(`http://localhost:8080/temperatura/${localStorage.getItem("dataLeitura")}/5`)
+                                        fetch(`http://localhost:8080/temperatura/${localStorage.getItem("dataLeitura")}/6`)
                                             .then(res => res.json())
                                             .then(resultado => {
                                                 localStorage.setItem("dataLeitura", resultado.dt_leitura)
@@ -84,7 +84,7 @@ export class GraficoDinamico extends Component {
                                             })
                                     } else {
                                         console.log(chart.data.datasets[0].data.length)
-                                        fetch("http://localhost:8080/temperatura/2021-09-13T00:00:00.090000/5")
+                                        fetch("http://localhost:8080/temperatura/2021-09-13T00:00:00.090000/6")
                                             .then(res => res.json())
                                             .then(resultado => {
                                                     localStorage.setItem("dataLeitura", resultado.dt_leitura)
