@@ -21,25 +21,34 @@ public class CsvExportService {
 	public CsvExportService (TemperaturaRepository temperaturaRepository) {
 		this.temperaturaRepository = temperaturaRepository;
 	}
-	public String replasePontoParaVirgula(double temp ) {
+	public String replacePontoParaVirgula(double temp ) {
 		return String.valueOf(temp).replace(".", ",");
 		
 	}
 	
-	public void convertendoTemperaturaEmCSV(Writer writer, long coordenadaId) {
-		List<TemperaturaModel> temperaturas = temperaturaRepository.findByCoordenadaId(coordenadaId);
+	public void convertendoTemperaturaEmCSV(Writer writer) {
+		List<TemperaturaModel> temperaturas = temperaturaRepository.findAll();
 		
 		try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL.withDelimiter(';'))) {
-			csvPrinter.printRecord("dt_leitura", "coordenadaId", "termopar_1", "termopar_2", "termopar_3", 
-					"termopar_amb", "linha");
+			csvPrinter.printRecord("Linha","Data Leitura", "Termopar 1", "Termopar 2", "Termopar 3", 
+					"Termopar Ambiente","Coordenada X","Coordenada Y","Coordenada Z","Coordenada R");
 			int linha = 1;
             for (TemperaturaModel temperatura : temperaturas) {
-                csvPrinter.printRecord(temperatura.getDt_leitura(), temperatura.getCoordenadaId(), 
-                		replasePontoParaVirgula(temperatura.getTermopar_1()), 
-                		replasePontoParaVirgula(temperatura.getTermopar_2()), 
-                		replasePontoParaVirgula(temperatura.getTermopar_3()), 
-                		replasePontoParaVirgula(temperatura.getTermopar_amb()), linha);
-                linha++;
+                csvPrinter.printRecord(
+                		linha,
+                		temperatura.getDt_leitura(), 
+                		replacePontoParaVirgula(temperatura.getTermopar_1()), 
+                		replacePontoParaVirgula(temperatura.getTermopar_2()), 
+                		replacePontoParaVirgula(temperatura.getTermopar_3()), 
+                		replacePontoParaVirgula(temperatura.getTermopar_amb()),
+                		temperatura.getX(),
+                		temperatura.getY(),
+                		temperatura.getZ(),
+                		temperatura.getR()
+                		
+                		);
+                		
+                	linha++;
             }
         } catch (IOException e) {
             
@@ -69,12 +78,12 @@ public class CsvExportService {
             for (EstatisticaModel estatistica : listaEstatistica) {
             	csvPrinter.printRecord(
             			janela,
-            			replasePontoParaVirgula(estatistica.getTermopar_amb()),
-            			replasePontoParaVirgula(estatistica.getTermopar_1()),
-            			replasePontoParaVirgula(estatistica.getTermopar_2()),
-            			replasePontoParaVirgula(estatistica.getTermopar_3()),
-            			replasePontoParaVirgula(estatistica.getMedia()),
-            			replasePontoParaVirgula(estatistica.getTemperaturaCorrigida())
+            			replacePontoParaVirgula(estatistica.getTermopar_amb()),
+            			replacePontoParaVirgula(estatistica.getTermopar_1()),
+            			replacePontoParaVirgula(estatistica.getTermopar_2()),
+            			replacePontoParaVirgula(estatistica.getTermopar_3()),
+            			replacePontoParaVirgula(estatistica.getMedia()),
+            			replacePontoParaVirgula(estatistica.getTemperaturaCorrigida())
             			);
             	
             	tempAmb += estatistica.getTermopar_amb();
@@ -98,12 +107,12 @@ public class CsvExportService {
             
             csvPrinter.printRecord(
             		"Média",
-            		replasePontoParaVirgula(tempAmb),
-            		replasePontoParaVirgula(termo1),
-            		replasePontoParaVirgula(termo2),
-            		replasePontoParaVirgula(termo3),
-            		replasePontoParaVirgula(tempMed),
-            		replasePontoParaVirgula(tempCor)            		
+            		replacePontoParaVirgula(tempAmb),
+            		replacePontoParaVirgula(termo1),
+            		replacePontoParaVirgula(termo2),
+            		replacePontoParaVirgula(termo3),
+            		replacePontoParaVirgula(tempMed),
+            		replacePontoParaVirgula(tempCor)            		
             		);
             
         } catch (IOException e) {
