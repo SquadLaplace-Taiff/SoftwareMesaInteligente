@@ -17,9 +17,9 @@ export class APIService extends React.Component {
     };
 
     buscarTodosTestes() {
-        fetch(this.state.url, { 
-            headers: this.state.myHeaders 
-            })
+        fetch(this.state.url, {
+            headers: this.state.myHeaders
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -27,11 +27,11 @@ export class APIService extends React.Component {
                 })
             .catch(error => console.log('Authorization failed : ' + error.message))
     };
-    
+
     buscarTestePorId(id) {
-        fetch(`${this.state.url}/id/${id}`, { 
-            headers: this.state.myHeaders 
-            })
+        fetch(`${this.state.url}/id/${id}`, {
+            headers: this.state.myHeaders
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -41,9 +41,9 @@ export class APIService extends React.Component {
     };
 
     buscarTestePorModelo(modelo) {
-        fetch(`${this.state.url}/${modelo}`, { 
-            headers: this.state.myHeaders 
-            })
+        fetch(`${this.state.url}/${modelo}`, {
+            headers: this.state.myHeaders
+        })
             .then(res => res.json())
             .then(
                 (result) => {

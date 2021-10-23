@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&display=swap');
+
+.formInput{
+    height: 50px;
+    max-width: 80px;
+    background: #FDFDFD;
+    border: 1px solid #868686;
+    box-sizing: border-box;
+    border-radius: 25px !important;
+}
+
+.form{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1236px ;
+    min-width: 900px;
+}
+
+.container-coordenadas{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative;
+    width: 100%;
+}
+
+.coordenadas-label{
+    margin-left: 20px;
+    margin-right: 5px;
+    margin-bottom: 0;
+    color: #868686;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 1.5em;
+}
+
+.ultima{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+#coordenada-zeropeca-1{
+    color: #868686;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 1.5em;
+}
+.novo-ponto{
+    max-width: 180px;
+    margin: 10px;
+}

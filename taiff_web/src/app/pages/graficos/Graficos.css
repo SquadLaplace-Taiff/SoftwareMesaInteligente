@@ -1,0 +1,15 @@
+.section-graficos { 
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.title { 
+    color: #505050;
+    font-weight: bold;
+}
+
+Button { 
+    max-width: 300px;
+    align-self: center;
+}

@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&display=swap');
+
+.grupo-botoes{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative;
+    width: 100%;
+}
+
+.botoes{
+    margin: 50px;    
+    color: #868686;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 1.5em;
+}
+.carrega-teste{
+    color: #868686;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 1.5em;
+}
