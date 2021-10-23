@@ -3,20 +3,21 @@ import { Button, Container, Modal } from "react-bootstrap";
 import ReactDOM from "react-dom";
 import { GraficoDinamico } from "../../components/GraficoDinamico/GraficoDinamico";
 import GraficoEstatico from "../../components/GraficoEstatico/GraficoEstatico";
-
+import { teste } from "../../../App";
 import './Graficos.css';
 import { ModalCsv } from "./Modals/ModalCsv/ModalCsv";
 import { ModalFolhaDeRosto } from "./Modals/ModalFolhaDeRosto/ModalFolhaDeRosto";
 import { Tabela } from "./Tabela/Tabela";
 
 
-export class Graficos extends React.Component<{}, any> {
+export class Graficos extends React.Component<{data: number}, any> {
 
     constructor(props: any) {
         super(props);
         this.state = {
             graficoDinamico: true
         };
+       teste()
     }
 
     componentWillUnmount() {
@@ -39,7 +40,7 @@ export class Graficos extends React.Component<{}, any> {
     TrocarGrafico() {
         (this.state.graficoDinamico) ? this.setState({ graficoDinamico: false }) : this.setState({ graficoDinamico: true });
     }
-
+    
     render() {
         return (
             <section className="section-graficos">

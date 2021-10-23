@@ -89,12 +89,15 @@ export class APIService extends React.Component {
             fetch(`${this.state.urlTemperatura}/${this.state.dtTemperatura}`)
                 .then(res => res.json())
                 .then(resultado => {
+                    this.setState({ dtTemperatura: resultado.dt_leitura })
+                    return resultado
                 })
         } else {
             fetch(`${this.state.urlTemperatura}/${this.state.dtTemperatura}`)
                 .then(res => res.json())
                 .then(resultado => {       
-                    this.setState({ dtTemperatura: res.dt_leitura })
+                    this.setState({ dtTemperatura: resultado.dt_leitura })
+                    return resultado
                 })
         }
     }
