@@ -9,7 +9,7 @@ import { FolhaDeRosto } from './app/pages/folhaDeRosto/FolhaDeRosto'
 import './style.css';
 
 function App() {
-
+    console.log("ai")
   return (
     <BrowserRouter>
           <Route path="/" exact component={Home}/>

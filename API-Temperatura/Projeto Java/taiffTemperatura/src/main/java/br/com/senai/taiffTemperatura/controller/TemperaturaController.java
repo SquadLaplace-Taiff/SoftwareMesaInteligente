@@ -9,6 +9,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,7 @@ import br.com.senai.taiffTemperatura.csvExport.CsvExportService;
 import br.com.senai.taiffTemperatura.dto.TemperaturaJanelaDto;
 import br.com.senai.taiffTemperatura.model.EstatisticaModel;
 import br.com.senai.taiffTemperatura.model.JanelasModel;
+import br.com.senai.taiffTemperatura.model.Key;
 import br.com.senai.taiffTemperatura.model.TemperaturaModel;
 import br.com.senai.taiffTemperatura.repository.TemperaturaRepository;
 import br.com.senai.taiffTemperatura.service.DataService;
@@ -41,15 +44,31 @@ public class TemperaturaController {
 	@Autowired
 	private TemperaturaRepository temperaturaRepository;
 
-	@RequestMapping(value = "/mediaGeral/{coordenadaId}", method = RequestMethod.GET)
-	public ResponseEntity<EstatisticaModel> mediaGeral(@PathVariable long coordenadaId) {
-		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData(coordenadaId);
+	@RequestMapping(value = "/mediaGeral", method = RequestMethod.GET)
+	public ResponseEntity<EstatisticaModel> mediaGeral() {
+		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
 		return ResponseEntity.ok().body(dataService.gerarMediaGeralDasJanelas(temperaturas));
 	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE )
+	public ResponseEntity<?> apagarBanco(@RequestBody  Key key){
+		String senha = "3e3BT#GzAD0jLxeLGq";
+		if(key.getKey().equals(senha) ) {
+			try {
+				temperaturaRepository.deleteAll();
+				return ResponseEntity.ok().build();
+			} catch (Exception e) {
+				return ResponseEntity.internalServerError().build();
+			}
+		}else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Chave inválida ");
+		}
+	
+	}
 
-	@RequestMapping(value = "/mediaJanelas/{coordenadaId}", method = RequestMethod.GET)
-	public ResponseEntity<List<EstatisticaModel>> mediaDasJanelas(@PathVariable long coordenadaId) {
-		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData(coordenadaId);
+	@RequestMapping(value = "/mediaJanelas", method = RequestMethod.GET)
+	public ResponseEntity<List<EstatisticaModel>> mediaDasJanelas() {
+		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
 		return ResponseEntity.ok().body(dataService.gerarMediaDeCadaJanelas(temperaturas));
 	}
 
@@ -66,10 +85,10 @@ public class TemperaturaController {
 		}
 	}
 
-	@RequestMapping(value = "/{coordenadaId}", method = RequestMethod.GET)
-	public ResponseEntity<List<TemperaturaJanelaDto>> buscaTemperaturasPorCoordenada(@PathVariable long coordenadaId) {
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ResponseEntity<List<TemperaturaJanelaDto>> buscaTemperaturasPorCoordenada() {
 		try {
-			List<TemperaturaModel> listaTemperatura = temperaturaRepository.findByCoordenadaId(coordenadaId);
+			List<TemperaturaModel> listaTemperatura = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
 			List<TemperaturaJanelaDto> listaTemperaturaDto = new ArrayList<TemperaturaJanelaDto>();
 
 			int linha = 1;
@@ -89,9 +108,8 @@ public class TemperaturaController {
 		}
 	}
 
-	@RequestMapping(value = "/{dataString}/{coordenadaId}", method = RequestMethod.GET)
-	public ResponseEntity<TemperaturaModel> buscaUltimasTemperaturas(@PathVariable long coordenadaId,
-			@PathVariable String dataString) {
+	@RequestMapping(value = "/{dataString}", method = RequestMethod.GET)
+	public ResponseEntity<TemperaturaModel> buscaUltimasTemperaturas(@PathVariable String dataString) {
 		try {
 			
 			dataString = dataString.replace("T", " ");
@@ -120,7 +138,7 @@ public class TemperaturaController {
 			LocalDateTime data = LocalDateTime.parse(dataString, formatter);
 			System.out.println("Depois " + dataString);
 
-			List<TemperaturaModel> listaTemperatura = temperaturaRepository.buscaUltimasTemperatura(coordenadaId, data);
+			List<TemperaturaModel> listaTemperatura = temperaturaRepository.buscaUltimasTemperatura(data);
 
 			return ResponseEntity.ok().body(listaTemperatura.get(0));
 		}
@@ -130,28 +148,28 @@ public class TemperaturaController {
 		}
 	}
 
-	@RequestMapping(value = "/temperaturasCSV/{id}", method = RequestMethod.GET)
-	public void getAllEmployeesInCsv(HttpServletResponse servletResponse, @PathVariable long id) throws IOException {
+	@RequestMapping(value = "/temperaturasCSV", method = RequestMethod.GET)
+	public void getAllEmployeesInCsv(HttpServletResponse servletResponse) throws IOException {
 
 		servletResponse.setContentType("text/csv");
 		servletResponse.addHeader("Content-Disposition", "attachment; filename=\"temperaturas.csv\"");
 
-		csvExportService.convertendoTemperaturaEmCSV(servletResponse.getWriter(), id);
+		csvExportService.convertendoTemperaturaEmCSV(servletResponse.getWriter());
 	}
 
-	@RequestMapping(value = "/folhaDeRostoCSV/{id}", method = RequestMethod.GET)
-	public void gerarFolhadeRostoCSV(HttpServletResponse servletResponse, @PathVariable long id) throws IOException {
+	@RequestMapping(value = "/folhaDeRostoCSV", method = RequestMethod.GET)
+	public void gerarFolhadeRostoCSV(HttpServletResponse servletResponse) throws IOException {
 
 		servletResponse.setContentType("text/csv");
 		servletResponse.addHeader("Content-Disposition", "attachment; filename=\"FolhaDeRosto.csv\"");
 
-		csvExportService.geraFolhaDeRostoCSV(servletResponse.getWriter(), id);
+		csvExportService.geraFolhaDeRostoCSV(servletResponse.getWriter());
 	}
 
-	@RequestMapping(value = "/janelas/{coordenadaId}", method = RequestMethod.GET)
-	public ResponseEntity<List<JanelasModel>> gerarJanelas(@PathVariable long coordenadaId) {
+	@RequestMapping(value = "/janelas", method = RequestMethod.GET)
+	public ResponseEntity<List<JanelasModel>> gerarJanelas() {
 		try {
-			List<TemperaturaModel> listaTemperatura = temperaturaRepository.findByCoordenadaId(coordenadaId);
+			List<TemperaturaModel> listaTemperatura = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
 			return ResponseEntity.ok().body(dataService.generateWindow(listaTemperatura));
 		}
 
@@ -160,10 +178,10 @@ public class TemperaturaController {
 		}
 	}
 
-	@RequestMapping(value = "/folhaDeRosto/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<EstatisticaModel>> gerarFolhaDeRosto(@PathVariable long id) {
+	@RequestMapping(value = "/folhaDeRosto", method = RequestMethod.GET)
+	public ResponseEntity<List<EstatisticaModel>> gerarFolhaDeRosto() {
 		try {
-			List<TemperaturaModel> listaTemperatura = temperaturaRepository.findByCoordenadaId(id);
+			List<TemperaturaModel> listaTemperatura = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
 
 			List<EstatisticaModel> listaEstatistica = dataService.gerarMediaDeCadaJanelas(listaTemperatura);
 

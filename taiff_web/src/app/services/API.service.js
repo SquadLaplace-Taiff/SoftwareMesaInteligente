@@ -10,7 +10,9 @@ export class APIService extends React.Component {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
                 "Origin": "*"
-            }
+            },
+            urlTemperatura: "http://localhost:8080/temperatura",
+            dtTemperatura: "2021-09-13T00:00:00.090000"
         };
     };
 
@@ -71,5 +73,29 @@ export class APIService extends React.Component {
             method: "DELETE",
             headers: this.state.myHeaders
         });
+    }
+
+    deletarTemperaturaTemporarias(){
+        fetch(`${this.state.urlTemperatura}`, {
+            method: "DELETE",
+            headers: this.state.myHeaders,
+            body: JSON.stringify({
+                key: "3e3BT#GzAD0jLxeLGq"
+            })
+        });
+    }
+    temperaturaEmTempoReal(){
+        if (this.state.dtTemperatura != "2021-09-13T00:00:00.090000") {
+            fetch(`${this.state.urlTemperatura}/${this.state.dtTemperatura}`)
+                .then(res => res.json())
+                .then(resultado => {
+                })
+        } else {
+            fetch(`${this.state.urlTemperatura}/${this.state.dtTemperatura}`)
+                .then(res => res.json())
+                .then(resultado => {       
+                    this.setState({ dtTemperatura: res.dt_leitura })
+                })
+        }
     }
 }

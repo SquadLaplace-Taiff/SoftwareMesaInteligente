@@ -26,19 +26,24 @@ public class CsvExportService {
 		
 	}
 	
-	public void convertendoTemperaturaEmCSV(Writer writer, long coordenadaId) {
-		List<TemperaturaModel> temperaturas = temperaturaRepository.findByCoordenadaId(coordenadaId);
+	public void convertendoTemperaturaEmCSV(Writer writer) {
+		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
 		
 		try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL.withDelimiter(';'))) {
-			csvPrinter.printRecord("dt_leitura", "coordenadaId", "termopar_1", "termopar_2", "termopar_3", 
-					"termopar_amb", "linha");
+			csvPrinter.printRecord( "Linha", "Data da leitura", "Termopar 1", "Termopar 2", "Termopar 3", 
+					"Termopar ambiente", "Codernada X", "Codernada Y", "Codernada Z", "Codernada R");
 			int linha = 1;
             for (TemperaturaModel temperatura : temperaturas) {
-                csvPrinter.printRecord(temperatura.getDt_leitura(), temperatura.getCoordenadaId(), 
+                csvPrinter.printRecord(linha,temperatura.getDt_leitura(),
                 		replasePontoParaVirgula(temperatura.getTermopar_1()), 
                 		replasePontoParaVirgula(temperatura.getTermopar_2()), 
                 		replasePontoParaVirgula(temperatura.getTermopar_3()), 
-                		replasePontoParaVirgula(temperatura.getTermopar_amb()), linha);
+                		replasePontoParaVirgula(temperatura.getTermopar_amb()),
+                		temperatura.getX(),
+                		temperatura.getY(),
+                		temperatura.getZ(),
+                		temperatura.getR());
+                        
                 linha++;
             }
         } catch (IOException e) {
@@ -47,8 +52,8 @@ public class CsvExportService {
 	}
 	
 	
-	public void geraFolhaDeRostoCSV(Writer writer, long coordenadaId) {
-		List<TemperaturaModel> temperaturas = temperaturaRepository.findByCoordenadaId(coordenadaId);
+	public void geraFolhaDeRostoCSV(Writer writer) {
+		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
 		
 		DataService dataService = new DataService();
 		List<EstatisticaModel> listaEstatistica = dataService.gerarMediaDeCadaJanelas(temperaturas);
