@@ -11,7 +11,7 @@ export function Coordenadas(){
         let ponto = myArray
         ponto.push(<div>oi</div>)
         updateMyArray(ponto);
-        console.log(myArray);
+        // console.log(myArray);
     }
 
         return(

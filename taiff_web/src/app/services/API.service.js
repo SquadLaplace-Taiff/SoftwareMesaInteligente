@@ -84,6 +84,7 @@ export class APIService extends React.Component {
             })
         });
     }
+
     temperaturaEmTempoReal(){
         if (this.state.dtTemperatura != "2021-09-13T00:00:00.090000") {
             fetch(`${this.state.urlTemperatura}/${this.state.dtTemperatura}`)

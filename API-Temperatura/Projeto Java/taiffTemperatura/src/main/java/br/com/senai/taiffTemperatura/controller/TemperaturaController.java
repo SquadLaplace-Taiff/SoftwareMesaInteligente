@@ -51,7 +51,7 @@ public class TemperaturaController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE )
-	public ResponseEntity<?> apagarBanco(@RequestBody  Key key){
+	public ResponseEntity<?> apagarBanco(@RequestBody Key key){
 		String senha = "3e3BT#GzAD0jLxeLGq";
 		if(key.getKey().equals(senha) ) {
 			try {

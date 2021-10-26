@@ -1,23 +1,21 @@
 import React from "react";
 import { Button, Container, Modal } from "react-bootstrap";
-import ReactDOM from "react-dom";
 import { GraficoDinamico } from "../../components/GraficoDinamico/GraficoDinamico";
 import GraficoEstatico from "../../components/GraficoEstatico/GraficoEstatico";
-import { teste } from "../../../App";
-import './Graficos.css';
 import { ModalCsv } from "./Modals/ModalCsv/ModalCsv";
 import { ModalFolhaDeRosto } from "./Modals/ModalFolhaDeRosto/ModalFolhaDeRosto";
 import { Tabela } from "./Tabela/Tabela";
 
+import './Graficos.css';
 
-export class Graficos extends React.Component<{data: number}, any> {
+
+export class Graficos extends React.Component<{data: any}, any> {
 
     constructor(props: any) {
         super(props);
         this.state = {
             graficoDinamico: true
         };
-       teste()
     }
 
     componentWillUnmount() {
@@ -32,7 +30,7 @@ export class Graficos extends React.Component<{data: number}, any> {
 
     GraficoDinamico() {
         return (
-            // <GraficoDinamico />
+            // <GraficoDinamico/>
             <h1>Imagine um grafico aqui</h1>
         );
     }
