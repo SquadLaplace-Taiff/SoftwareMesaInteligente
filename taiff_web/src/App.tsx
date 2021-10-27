@@ -4,11 +4,12 @@ import { Graficos } from './app/pages/graficos/Graficos'
 import { FolhaDeRosto } from './app/pages/folhaDeRosto/FolhaDeRosto'
 
 import './style.css';
+import Lista from './app/components/Coordenadas/Lista';
 
 function App() {
   return (
     <BrowserRouter>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Lista} />
         <Route path="/graficos" component={Graficos} />
         <Route path="/folhaDeRosto" component={FolhaDeRosto}/> 
     </BrowserRouter>
