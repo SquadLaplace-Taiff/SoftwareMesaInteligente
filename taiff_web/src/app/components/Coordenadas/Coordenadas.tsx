@@ -1,62 +1,63 @@
-import { Button, FormControl,InputGroup, FormLabel, Form, Row, Container, Col } from 'react-bootstrap';
+import { Button, FormControl, InputGroup, FormLabel, Form, Row, Container, Col } from 'react-bootstrap';
 import './Coordenadas.css';
 import imgDelete from '../../../assets/img/X.png';
 import { useState } from 'react';
 
-export function Coordenadas(){
+export function Coordenadas() {
     const [myArray, updateMyArray] = useState<any[]>([]);
+    const [count, setCount] = useState(0);
 
 
-    function maisUmaLinha(){
+    function maisUmaLinha() {
         let ponto = myArray
-        ponto.push(<div>oi</div>)
+        ponto.push(1)
         updateMyArray(ponto);
-        // console.log(myArray);
+        console.log(myArray);
     }
 
-        return(
-            
-            <Form className="container-coordenadas container">
-                <Container>
+    return (
+
+        <Form className="container-coordenadas container">
+            <Container>
                 <Row>
                     <Col>
                         <InputGroup className="input">
                             <FormLabel className="coordenadas-label">Eixo X</FormLabel>
-                            <FormControl 
+                            <FormControl
                                 className="formInput"
-                                type="number"/>
+                                type="number" />
                         </InputGroup>
                     </Col>
                     <Col>
                         <InputGroup className="input">
                             <FormLabel className="coordenadas-label">Eixo Y</FormLabel>
-                            <FormControl 
+                            <FormControl
                                 className="formInput"
-                                type="number"/>
+                                type="number" />
                         </InputGroup>
                     </Col>
                     <Col>
                         <InputGroup className="input">
                             <FormLabel className="coordenadas-label">Eixo Z</FormLabel>
-                            <FormControl 
+                            <FormControl
                                 className="formInput"
-                                type="number"/>
+                                type="number" />
                         </InputGroup>
                     </Col>
                     <Col>
                         <InputGroup className="input">
                             <FormLabel className="coordenadas-label">Eixo R</FormLabel>
-                            <FormControl 
+                            <FormControl
                                 className="formInput"
-                                type="number"/>
+                                type="number" />
                         </InputGroup>
                     </Col>
                     <Col>
                         <InputGroup className="input">
                             <FormLabel className="coordenadas-label">Tempo</FormLabel>
-                            <FormControl 
+                            <FormControl
                                 className="formInput"
-                                type="number"/>
+                                type="number" />
                         </InputGroup>
                     </Col>
                     <Col className="ultima">
@@ -65,16 +66,23 @@ export function Coordenadas(){
                             type="radio"
                             name="coordenada-zeropeca"
                             id="coordenada-zeropeca-1"
-                            />
-                            <img src={imgDelete} className="imgX"/>
+                        />
+                        <img src={imgDelete} className="imgX" />
                     </Col>
                 </Row>
-                { myArray.map((Teste:any) => Teste)
+                {
+                    myArray.map((numero: number, index: number) => {
+                        return (<input value={numero} key={index}/>)
+                    })
                 }
+                <p>You clicked {count} times</p>
+                <button onClick={() => setCount(count + 1)}>
+                    Click me
+                </button>
                 <Row>
-                    <Button className="novo-ponto" variant="light" onClick={ () => maisUmaLinha()}>Novo ponto</Button>
+                    <Button className="novo-ponto" variant="light" onClick={() => maisUmaLinha()}>Novo ponto</Button>
                 </Row>
-                </Container>
-            </Form>
+            </Container>
+        </Form>
     )
 }

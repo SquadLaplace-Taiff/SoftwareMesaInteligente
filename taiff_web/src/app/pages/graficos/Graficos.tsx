@@ -30,8 +30,8 @@ export class Graficos extends React.Component<{data: any}, any> {
 
     GraficoDinamico() {
         return (
-            // <GraficoDinamico/>
-            <h1>Imagine um grafico aqui</h1>
+            <GraficoDinamico/>
+            // <h1>Imagine um grafico aqui</h1>
         );
     }
 

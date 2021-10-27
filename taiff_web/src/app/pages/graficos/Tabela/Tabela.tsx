@@ -13,7 +13,7 @@ export class Tabela extends React.Component<{}, any> {
     private url = 'http://localhost:8080/temperatura/folhaDeRosto';
 
     pegarDados(id: number) { 
-        fetch(`${this.url}/${id}`)
+        fetch(`${this.url}`)
             .then(res => res.json())
             .then(resposta => {
                 this.setState({resposta: resposta})

@@ -13,7 +13,6 @@ export function Home(props:any) {
                 <img src={logo}/> 
             </div>
             <Container fluid>  
-                <VisorTemperatura/>
                 <Coordenadas/>
                 <ButtonHome/>
             </Container>
