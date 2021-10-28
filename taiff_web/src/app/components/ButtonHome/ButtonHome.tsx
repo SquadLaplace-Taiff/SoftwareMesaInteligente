@@ -16,10 +16,23 @@ export function ButtonHome(){
         <>
         <div className="grupo-botoes">
             <Button className="botoes" variant="info" onClick={handleShow}>Carregar teste</Button>
-            <Button className="botoes" variant="info">Novo teste</Button>
-            <Button className="botoes" variant="info">Iniciar teste</Button>
+            <Button className="botoes" variant="info" onClick={() => document.location.reload()}>Novo teste</Button>
+            <Button className="botoes" variant="info" >Iniciar teste</Button>
         </div>
         
+
+
+
+
+
+
+
+
+
+
+
+
+
         <Modal className="carrega-teste" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
         <Modal.Title>Buscar teste por Modelo</Modal.Title>

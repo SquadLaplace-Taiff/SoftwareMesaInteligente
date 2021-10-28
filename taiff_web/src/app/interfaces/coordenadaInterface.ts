@@ -4,5 +4,5 @@ export type coordenadaInput = {
     coordenada_z?: number;
     eixo_r?: number;
     tempo?: number;
-    zero_peca?: string;
+    zero_peca?: boolean;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ListItem from './SaiZika'
+import ListItem from './ListItem'
 import NewTaskInput from './CoordenadaTeste'
 import { coordenadaInput } from '../../interfaces/coordenadaInterface'
 
@@ -21,7 +21,7 @@ const Lista = () => {
     }
 
     function updateTask(target: any, index: number) {
-        console.log(target);
+       // console.log(target);
 
         const itensCopy = Array.from(tasks);
 
@@ -62,9 +62,10 @@ const Lista = () => {
                 setTasks(itensCopy);
                 break;
             default: 
+                console.log(target.target.checked)
                 itensCopy.splice(index, 1, {
                     ...tasks[index],
-                    zero_peca: target.target.value
+                    zero_peca: target.target.checked
                 });
                 setTasks(itensCopy);
                 break;
@@ -83,7 +84,7 @@ const Lista = () => {
             <div className="App-header">
                 <NewTaskInput onSubmit={addNewTask} />
                 {tasks.map((coordenada: coordenadaInput, index: number) => {
-                    console.log(coordenada);
+                    //console.log(coordenada);
 
                     return (
                         <ListItem

@@ -1,6 +1,7 @@
 import { Line, Chart } from 'react-chartjs-2';
 import 'chartjs-adapter-luxon';
 import StreamingPlugin from 'chartjs-plugin-streaming';
+import { Redirect } from 'react-router';
 
 Chart.register(StreamingPlugin);
 
@@ -75,6 +76,8 @@ export function GraficoDinamico(props: any) {
 
                                             });
                                         })
+                                        .catch(error => window.location.href="/relatorio" )
+                                        
                                 } else {
                                     // console.log(chart.data.datasets[0].data.length)
                                     fetch("http://localhost:8080/temperatura/2021-09-13T00:00:00.090000")
@@ -89,8 +92,10 @@ export function GraficoDinamico(props: any) {
                                                     });
 
                                                 });
+                                                
                                             
                                         })
+                                        .catch(error => window.location.href="/relatorio" )
                                 }
                             }
                         }

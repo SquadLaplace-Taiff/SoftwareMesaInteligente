@@ -17,12 +17,6 @@ export default function GraficoEstatico() {
     const [termoparAmb, setTermoparAmb] = useState<coordenadas[]>([]);
     const [janelas, setJanelas] = useState<Array<coordenadas[]>>([]);
 
-    const urlCSV = 'http://localhost:8080/temperatura/temperaturasCSV/1';
-    function gerarCSV(){
-        //fetch(urlCSV)  
-        window.open(urlCSV);
-    }
-
 
     const data: dataType = {
         labels: labels,
@@ -184,9 +178,7 @@ export default function GraficoEstatico() {
         <section id="section-grafico">
             <Line className="grafico" data={data} options={options} />
             <div className='button-container'>
-                <Button onClick={() => gerarGrafico()}>Gerar gráfico</Button>
-                <Button onClick={() => gerarCSV()}>Gerar CSV</Button> 
-                <Button href='/tabela'>Ir para folha de rosto</Button>   
+                <Button onClick={() => gerarGrafico()}>Gerar gráfico</Button>  
             </div>
         </section>
 

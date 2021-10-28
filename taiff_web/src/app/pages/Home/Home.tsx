@@ -1,9 +1,8 @@
-import { VisorTemperatura } from '../../components/visorTemperatura/VisorTemperatura'
-import { Coordenadas } from '../../components/Coordenadas/Coordenadas'
 import { Container } from "react-bootstrap";
 import { ButtonHome } from "../../components/ButtonHome/ButtonHome";
 import logo from "../../../assets/img/logo.png";
 import './Home.css';
+import Lista from '../../components/Coordenadas/Lista';
 
 export function Home(props:any) {
 
@@ -13,7 +12,7 @@ export function Home(props:any) {
                 <img src={logo}/> 
             </div>
             <Container fluid>  
-                <Coordenadas/>
+                <Lista/>
                 <ButtonHome/>
             </Container>
         </>

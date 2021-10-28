@@ -9,7 +9,7 @@ const NewTaskInput = ({ onSubmit }: any) => {
         coordenada_z: 0,
         eixo_r: 0,
         tempo: 0,
-        zero_peca: ""
+        zero_peca: false
     });
 
     function setNewTask({ target }: any) {
