@@ -1,20 +1,10 @@
-import { type } from "os";
 import { useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { FolhaDeRosto } from "../../../folhaDeRosto/FolhaDeRosto";
+import { Link } from "react-router-dom";
+import { formFolhaDeRosto } from "../../../../interfaces/folhaDeRostoIterface";
 
-type formFolhaDeRosto = {
-    executor?: string;
-    tipo?: string;
-    fabricante?: string;
-    modeloEmPlaca?: string;
-    paisFabricado?: string;
-    modeloComercial?: string;
-    frequencia?: number;
-    tensao?: number;
-    potencia?: number;
-    local?: string;
-}
+
+
 
 export function ModalFolhaDeRosto() {
     const [show, setShow] = useState(false);
@@ -39,6 +29,16 @@ export function ModalFolhaDeRosto() {
                 <Modal.Body>
                     <Form>
                         <Row className="mb-3">
+                            <Form.Group controlId="formNomeTeste">
+                                <Form.Label>Nome do Teste</Form.Label>
+                                <Form.Control onChange={(e) => {
+                                    novoEstado = {
+                                        ...folhaDeRosto,
+                                        nomeDoTeste: e.target.value
+                                    }
+                                    setFolhaDeRosto(novoEstado);
+                                }} type="text" placeholder="Nome do Teste" />
+                            </Form.Group>
                             <Form.Group controlId="formExecutor">
                                 <Form.Label>Executor</Form.Label>
                                 <Form.Control onChange={(e) => {
@@ -156,9 +156,12 @@ export function ModalFolhaDeRosto() {
                     <Button variant="secondary" onClick={handleClose}>
                         Fechar
                     </Button>
-                    <Button variant="primary" onClick={() => console.log(folhaDeRosto)}>
+                    <Link  to={{
+                        pathname: "/folhaDeRosto",
+                        state: folhaDeRosto,
+                    }} >
                         Gerar Folha de Rosto
-                    </Button>
+                    </Link>
                 </Modal.Footer>
             </Modal>
         </>
