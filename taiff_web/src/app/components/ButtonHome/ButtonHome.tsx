@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Button, Modal, Form} from 'react-bootstrap';
+import { Container, Button, Modal, Form} from 'react-bootstrap';
 import './ButtonHome.css';
 import imgDelete from '../../../assets/img/X.png';
 
@@ -14,11 +14,11 @@ export function ButtonHome(){
     const handleShow2 = () => setShow2(true);
     return(
         <>
-        <div className="grupo-botoes">
-            <Button className="botoes" variant="info" onClick={handleShow}>Carregar teste</Button>
-            <Button className="botoes" variant="info" onClick={() => document.location.reload()}>Novo teste</Button>
-            <Button className="botoes" variant="info" >Iniciar teste</Button>
-        </div>
+        <Container className="container">
+            <Button className="btn-primary" variant="info" onClick={handleShow}>Carregar teste</Button>
+            <Button className="btn-primary" variant="info" onClick={() => document.location.reload()}>Novo teste</Button>
+            <Button className="btn-primary" variant="info" >Iniciar teste</Button>
+        </Container>
         
 
 

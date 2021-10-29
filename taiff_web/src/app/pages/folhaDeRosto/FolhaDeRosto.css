@@ -1,0 +1,46 @@
+.fdr-titulo {
+    font-size: 35px;
+    font-weight: bold;
+    margin: 40px 0;
+}
+
+.fdr-subtitulo {
+    font-size: 25px;
+}
+
+.fdr-background,
+.fdr-lista {
+    background: #dff3ed;
+    padding: 18px;
+    margin: 8px 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+.fdr-background {
+    justify-content: center;
+    align-items: center;
+}
+
+.fdr-item {
+    width: 33%;
+    margin: 8px 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.fdr-flex {
+    display: flex;
+}
+
+.btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    background: #5f8378;
+    font-size: 25px;
+    border: none;
+    margin: 0 auto 40px auto;
+}
