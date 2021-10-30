@@ -89,7 +89,7 @@ const Lista = () => {
                 //console.log(coordenada);
 
                 return (
-                    <ListItem
+                    <ListItem 
                         key={index}
                         index={index}
                         value={coordenada}

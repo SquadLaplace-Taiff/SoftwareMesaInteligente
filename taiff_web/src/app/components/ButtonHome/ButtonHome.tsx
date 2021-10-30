@@ -1,8 +1,8 @@
-
 import { useState } from 'react';
-import { Container, Button, Modal, Form} from 'react-bootstrap';
+import { Row, Container, Button, Modal, Form, Col} from 'react-bootstrap';
 import './ButtonHome.css';
 import imgDelete from '../../../assets/img/X.png';
+import { Link } from 'react-router-dom';
 
 export function ButtonHome(){
     const [show, setShow] = useState(false);
@@ -15,9 +15,11 @@ export function ButtonHome(){
     return(
         <>
         <Container className="container">
-            <Button className="btn-primary" variant="info" onClick={handleShow}>Carregar teste</Button>
-            <Button className="btn-primary" variant="info" onClick={() => document.location.reload()}>Novo teste</Button>
-            <Button className="btn-primary" variant="info" >Iniciar teste</Button>
+            <Row className="justify-content-md-center">
+                <Col className="btn-container-home"><Button className="btn-primary" variant="info" onClick={handleShow}>Carregar teste</Button></Col>
+                <Col className="btn-container-home"><Button className="btn-primary" variant="info" onClick={() => document.location.reload()}>Novo teste</Button></Col>
+                <Col className="btn-container-home"><Link to="/grafico"><Button className="btn-primary" variant="info" >Iniciar teste</Button> </Link></Col>
+            </Row>
         </Container>
         
 

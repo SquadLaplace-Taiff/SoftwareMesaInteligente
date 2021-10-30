@@ -17,7 +17,7 @@ export function ModalFolhaDeRosto() {
     const [folhaDeRosto, setFolhaDeRosto] = useState<formFolhaDeRosto>()
 
     return (
-        <>
+        <section>
             <Button variant="primary" onClick={handleShow}>
                 Gerar Folha de Rosto
             </Button>
@@ -164,6 +164,6 @@ export function ModalFolhaDeRosto() {
                     </Link>
                 </Modal.Footer>
             </Modal>
-        </>
+        </section>
     );
 }

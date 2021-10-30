@@ -19,12 +19,20 @@ section {
 .btn-primary {
     font-family: 'Barlow Condensed', sans-serif;
     background: #5f8378;
-    font-size: 25px;
+    font-size: 20px;
     border: none;
     margin: 0 auto 40px auto;
     color: white;
+    padding: 5px;
 }
 
 .container {
     max-width: 900px;
+}
+
+.btn-danger{
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    padding: 5px; 
+    height: 38px;  
 }

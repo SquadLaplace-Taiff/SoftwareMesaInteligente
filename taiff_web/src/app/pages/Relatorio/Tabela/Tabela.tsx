@@ -6,13 +6,24 @@ export class Tabela extends React.Component<{}, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            resposta: []
+            resposta: [],
+            validarTabela: false
         };
     }
- 
+
     private url = 'http://localhost:8080/temperatura/folhaDeRosto';
 
-    pegarDados(id: number) { 
+    chamarTabela(){
+        if(!this.state.validarTabela){
+            this.pegarDados();
+            this.setState({
+                validarTabela: true
+            })
+        }
+        
+    }
+
+    pegarDados() { 
         fetch(`${this.url}`)
             .then(res => res.json())
             .then(resposta => {
@@ -21,11 +32,11 @@ export class Tabela extends React.Component<{}, any> {
             .catch(
                 (error: Error) => console.log('error: ' + error.message)
             )
-
-        console.log(this.state.resposta);
     }
 
+    
     render() {
+        this.chamarTabela();
         return (
             <section>
                 <Table striped bordered hover>
@@ -58,8 +69,6 @@ export class Tabela extends React.Component<{}, any> {
                         }
                     </tbody>
                 </Table>
-
-                <Button onClick={() => this.pegarDados(1)}>Dados</Button>
             </section>
         );
     }

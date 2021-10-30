@@ -15,8 +15,7 @@ export default function GraficoEstatico() {
     const [termopar2, setTermopar2] = useState<coordenadas[]>([]);
     const [termopar3, setTermopar3] = useState<coordenadas[]>([]);
     const [termoparAmb, setTermoparAmb] = useState<coordenadas[]>([]);
-    const [janelas, setJanelas] = useState<Array<coordenadas[]>>([]);
-
+    const [validaGrafico, setValidaGrafico] = useState<boolean>(false);
 
     const data: dataType = {
         labels: labels,
@@ -78,6 +77,12 @@ export default function GraficoEstatico() {
             yAxisKey: 'y'
         },
     };
+    function chamarGrafico(){
+        if(!validaGrafico){
+            gerarGrafico();
+            setValidaGrafico(true); 
+        }
+    }
 
     function gerarGrafico() {
         fetch(`${urlTemperatuas}`)
@@ -126,60 +131,15 @@ export default function GraficoEstatico() {
                                 break;
                         }
                     }
-                })
-
-        // fetch(`${urlJanelas}`)
-        //     .then(res => res.json())
-        //     .then((janelas: Array<janelas>) => {
-
-
-        //         setJanelas(janelas.map((janela: janelas) => {
-        //             let janelasLista: Array<coordenadas> = [];
-
-        //             for (let i = 1; i <= 4; i++) {
-
-        //                 switch (i) {
-        //                     case 1:
-        //                         janelasLista.push({
-        //                             x: janela.valorInicial.toString(),
-        //                             y: 20
-        //                         })
-        //                         break;
-        //                     case 2:
-        //                         janelasLista.push({
-        //                             x: janela.valorInicial.toString(),
-        //                             y: 120
-        //                         })
-        //                         break;
-        //                     case 3:
-        //                         janelasLista.push({
-        //                             x: janela.valorFinal.toString(),
-        //                             y: 20
-        //                         })
-        //                         break;
-        //                     case 4:
-        //                         janelasLista.push({
-        //                             x: janela.valorFinal.toString(),
-        //                             y: 120
-        //                         })
-        //                         break;
-        //                 }
-
-        //             }
-        //             return janelasLista;
-        //         }
-        //         ))
-        //     })        
+                }).catch(error => console.log("Failed to fetch" + error) );
 
     }
+    chamarGrafico();
 
     return (
 
         <section id="section-grafico">
             <Line className="grafico" data={data} options={options} />
-            <div className='button-container'>
-                <Button onClick={() => gerarGrafico()}>Gerar gráfico</Button>  
-            </div>
         </section>
 
     );

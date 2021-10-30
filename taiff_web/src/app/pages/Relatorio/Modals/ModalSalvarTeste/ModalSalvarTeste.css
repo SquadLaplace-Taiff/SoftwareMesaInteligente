@@ -1,0 +1,16 @@
+.btn-primary{
+    height: 38px;
+    padding: 0px 6px;
+}
+
+.salvarTeste-label{
+    display:flex ;
+    flex-direction: column;
+    }
+
+.salvarTeste-label input{
+    border-radius: 8px;
+    height: 30px;
+    width: 192px;
+    margin-top: 5px;
+}
