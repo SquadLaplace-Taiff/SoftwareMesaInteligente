@@ -21,7 +21,6 @@ import br.com.senai.taiffPosicionamento.model.CoordenadaModel;
 import br.com.senai.taiffPosicionamento.model.TesteModel;
 import br.com.senai.taiffPosicionamento.repository.CoordenadaRepository;
 import br.com.senai.taiffPosicionamento.repository.TesteRepository;
-import br.com.senai.taiffPosicionamento.repository.ZeroPecaRepository;
 
 @RestController
 @RequestMapping("/teste")
@@ -31,18 +30,31 @@ public class TesteController {
 	private TesteRepository testeRepository;
 	@Autowired
 	private CoordenadaRepository coordenadaRepository;
-	@Autowired
-	private ZeroPecaRepository zeroPecaRepository;
 	
 	
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST )
 	public ResponseEntity<TesteModel> criarTeste(@RequestBody TesteModel teste){
-		try {
-
-			testeRepository.save(teste);
 		
-			return ResponseEntity.created(null).body(teste);
+		List<CoordenadaModel> listaCoordenadas = new ArrayList<>();
+		
+		try {
+			
+			TesteModel testeBanco = testeRepository.save(teste);
+			
+			for(CoordenadaModel coordenada: testeBanco.getCoordenada()) {
+							
+				coordenada.setTeste_id(testeBanco.getId_teste());
+				coordenadaRepository.save(coordenada);
+				listaCoordenadas.add(coordenada);
+			}
+			
+			testeBanco.setCoordenada(listaCoordenadas);
+
+			testeRepository.save(testeBanco);
+			
+		
+			return ResponseEntity.created(null).body(testeBanco);
 		} 
 		
 		catch (Exception e) {
@@ -108,14 +120,10 @@ public class TesteController {
 				listaCoordenadas.add(coordenada);
 			}
 			
-			testeNovo.getZeroPeca().setTeste_id(id);
-			zeroPecaRepository.save(testeNovo.getZeroPeca());
-			
 			if(testeNovo.getNome_teste() != null) {
 				testeOptional.get().setNome_teste(testeNovo.getNome_teste());
 			}
 			testeOptional.get().setCoordenada(listaCoordenadas);
-			testeOptional.get().setZeroPeca(testeNovo.getZeroPeca());
 			testeRepository.save(testeOptional.get());
 			
 			return ResponseEntity.ok().body(testeOptional.get());

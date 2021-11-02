@@ -1,14 +1,14 @@
-export type teste = {
+export type Teste = {
     modelo: string, 
     nome_teste: string,
     coordenadas?: Array<coordenada>,
-    zeroPeca?: coordenada
 }
 
 export type coordenada = {
-    x: number, 
-    y: number,
-    z: number,
-    r: number,
-    t?: number,
+    coordenada_x: number, 
+    coordenada_y: number,
+    coordenada_z: number,
+    eixo_r: number,
+    trempo?: number,
+    zero_peca?: boolean
 }

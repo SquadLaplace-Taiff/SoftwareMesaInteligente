@@ -2,9 +2,7 @@ import { useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { formFolhaDeRosto } from "../../../../interfaces/folhaDeRostoIterface";
-
-
-
+import './ModalFolhaDeRosto.css';
 
 export function ModalFolhaDeRosto() {
     const [show, setShow] = useState(false);
@@ -156,7 +154,7 @@ export function ModalFolhaDeRosto() {
                     <Button variant="secondary" onClick={handleClose}>
                         Fechar
                     </Button>
-                    <Link  to={{
+                    <Link className="btn-primary btn-primary-fdr" to={{
                         pathname: "/folhaDeRosto",
                         state: folhaDeRosto,
                     }} >

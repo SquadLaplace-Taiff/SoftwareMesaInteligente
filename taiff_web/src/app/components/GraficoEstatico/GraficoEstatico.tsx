@@ -7,8 +7,8 @@ import "./graficoEstatico.css";
 
 export default function GraficoEstatico() {
     
-    const urlTemperatuas = 'http://localhost:8080/temperatura/1';
-    const urlJanelas = 'http://localhost:8080/temperatura/janelas/1'
+    const urlTemperatuas = 'http://localhost:8081/temperatura';
+    const urlJanelas = 'http://localhost:8081/temperatura/janelas'
 
     const [labels, setLabels] = useState<String[]>([]);
     const [termopar1, setTermopar1] = useState<coordenadas[]>([]);

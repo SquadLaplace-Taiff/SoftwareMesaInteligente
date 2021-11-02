@@ -20,11 +20,11 @@ const Lista = () => {
             zero_peca: ponto.zero_peca
         });
         setCoordenada(coordenadasCopy);
+
+        localStorage.setItem('coordenadas', JSON.stringify(coordenadasCopy));
     }
 
     function updateCoordenada(target: any, index: number) {
-        // console.log(target);
-
         const coordenadasCopy = Array.from(coordenada);
 
         switch (target.target.name.split("_")[0]) {
@@ -71,7 +71,10 @@ const Lista = () => {
                 });
                 setCoordenada(coordenadasCopy);
                 break;
-        }
+
+            };
+
+        localStorage.setItem('coordenadas', JSON.stringify(coordenadasCopy));
 
     }
 
@@ -79,6 +82,7 @@ const Lista = () => {
         const itensCopy = Array.from(coordenada);
         itensCopy.splice(index, 1);
         setCoordenada(itensCopy);
+        localStorage.setItem('coordenadas', JSON.stringify(itensCopy));
     }
 
     return (

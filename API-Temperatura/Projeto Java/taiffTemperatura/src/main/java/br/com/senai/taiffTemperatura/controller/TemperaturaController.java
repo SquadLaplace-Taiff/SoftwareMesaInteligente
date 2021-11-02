@@ -85,7 +85,7 @@ public class TemperaturaController {
 		}
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<TemperaturaJanelaDto>> buscaTemperaturasPorCoordenada() {
 		try {
 			List<TemperaturaModel> listaTemperatura = temperaturaRepository.buscaTemperaturaPorOrdemDeData();

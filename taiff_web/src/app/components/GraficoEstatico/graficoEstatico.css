@@ -2,7 +2,9 @@
     width: 65vw;
 }
 
-.grafico{ width: 65vw;}
+.grafico { 
+    max-width: 900px !important;
+}
 
 .button-container{
     margin: 15px;

@@ -11,7 +11,7 @@ export class Tabela extends React.Component<{}, any> {
         };
     }
 
-    private url = 'http://localhost:8080/temperatura/folhaDeRosto';
+    private url = 'http://localhost:8081/temperatura/folhaDeRosto';
 
     chamarTabela(){
         if(!this.state.validarTabela){

@@ -63,7 +63,7 @@ export function GraficoDinamico(props: any) {
                             onRefresh: (chart: any) => {
                                 if (chart.data.datasets[0].data.length > 0) {
                                     // console.log("cheguei1")
-                                    fetch(`http://localhost:8080/temperatura/${localStorage.getItem("dataLeitura")}`)
+                                    fetch(`http://localhost:8081/temperatura/${localStorage.getItem("dataLeitura")}`)
                                         .then(res => res.json())
                                         .then(resultado => {
                                             localStorage.setItem("dataLeitura", resultado.dt_leitura)
@@ -80,7 +80,7 @@ export function GraficoDinamico(props: any) {
                                         
                                 } else {
                                     // console.log(chart.data.datasets[0].data.length)
-                                    fetch("http://localhost:8080/temperatura/2021-09-13T00:00:00.090000")
+                                    fetch("http://localhost:8081/temperatura/2021-09-13T00:00:00.090000")
                                         .then(res => res.json())
                                         .then(resultado => {
                                                 localStorage.setItem("dataLeitura", resultado.dt_leitura)

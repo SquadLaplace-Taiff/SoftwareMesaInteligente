@@ -39,7 +39,7 @@ async function executar() {
             r : 9
         }
 
-        fetch("http://localhost:8080/temperatura",
+        fetch("http://localhost:8081/temperatura",
             {
                 method: "post",
                 body: JSON.stringify(myBody),

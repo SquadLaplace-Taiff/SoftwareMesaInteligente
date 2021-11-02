@@ -11,8 +11,9 @@ export class APIService extends React.Component {
                 "Access-Control-Allow-Origin": "*",
                 "Origin": "*"
             },
-            urlTemperatura: "http://localhost:8080/temperatura",
-            dtTemperatura: "2021-09-13T00:00:00.090000"
+            urlTemperatura: "http://localhost:8081/temperatura",
+            dtTemperatura: "2021-09-13T00:00:00.090000",
+            modeloResultado: [],
         };
     };
 
@@ -40,14 +41,15 @@ export class APIService extends React.Component {
             .catch(error => console.log('Authorization failed : ' + error.message))
     };
 
-    buscarTestePorModelo(modelo) {
+    buscarTestePorModelo(modelo='') {
+
         fetch(`${this.state.url}/${modelo}`, {
             headers: this.state.myHeaders
         })
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result);
+                    localStorage.setItem('testes', JSON.stringify(result))
                 })
             .catch(error => console.log('Authorization failed : ' + error.message))
     };
@@ -75,31 +77,14 @@ export class APIService extends React.Component {
         });
     }
 
-    deletarTemperaturaTemporarias(){
-        fetch(`${this.state.urlTemperatura}`, {
+    deletarTemperaturaTemporarias() {
+        fetch(`${this.state.urlTemperatura}/delete`, {
             method: "DELETE",
             headers: this.state.myHeaders,
             body: JSON.stringify({
                 key: "3e3BT#GzAD0jLxeLGq"
             })
-        });
-    }
-
-    temperaturaEmTempoReal(){
-        if (this.state.dtTemperatura != "2021-09-13T00:00:00.090000") {
-            fetch(`${this.state.urlTemperatura}/${this.state.dtTemperatura}`)
-                .then(res => res.json())
-                .then(resultado => {
-                    this.setState({ dtTemperatura: resultado.dt_leitura })
-                    return resultado
-                })
-        } else {
-            fetch(`${this.state.urlTemperatura}/${this.state.dtTemperatura}`)
-                .then(res => res.json())
-                .then(resultado => {       
-                    this.setState({ dtTemperatura: resultado.dt_leitura })
-                    return resultado
-                })
-        }
+        })
+        .catch( err => console.error(`Failed to Fetch: ${err}`) );
     }
 }

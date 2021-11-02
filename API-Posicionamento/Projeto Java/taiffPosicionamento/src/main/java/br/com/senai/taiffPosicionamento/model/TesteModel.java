@@ -26,22 +26,18 @@ public class TesteModel {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<CoordenadaModel> coordenada;
-	@OneToOne(cascade = CascadeType.ALL)
-	private ZeroPecaModel zeroPeca;
 	
 	
 	public TesteModel() {
 	}
 
 
-	public TesteModel(long id_teste, String modelo, String nome_teste, List<CoordenadaModel> coordenada,
-			ZeroPecaModel zeroPeca) {
+	public TesteModel(long id_teste, String modelo, String nome_teste, List<CoordenadaModel> coordenada) {
 		
 		this.id_teste = id_teste;
 		this.modelo = modelo;
 		this.nome_teste = nome_teste;
 		this.coordenada = coordenada;
-		this.zeroPeca = zeroPeca;
 	}
 
 
@@ -83,14 +79,4 @@ public class TesteModel {
 	public void setCoordenada(List<CoordenadaModel> coordenada) {
 		this.coordenada = coordenada;
 	}
-
-
-	public ZeroPecaModel getZeroPeca() {
-		return zeroPeca;
-	}
-
-
-	public void setZeroPeca(ZeroPecaModel zeroPeca) {
-		this.zeroPeca = zeroPeca;
-	}	
 }
