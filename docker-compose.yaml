@@ -1,31 +1,46 @@
+# seta a rede que os containers irão conversar
 networks:
   taiff_network: {}
 
 services: 
-
+  #Container do banco de dados 
   db:
+    # Seta o nome do container
     container_name: db
+    #imagem de origem
     image: mysql:5.7
+    #porta que irá operar
     ports:
       - 3306:3306
+    #rede que irá estar conectado
     networks:
       - taiff_network
+    #configuraçoes do mySql
     environment:
       - MYSQL_ROOT_PASSWORD=root 
       - MYSQL_DATABASE=taiff_temperatura
 
+  #container do backend
   backend:
+    #Depende que o banco de dados tenha subido para subir em sequencia
     depends_on: 
       - db
+    #imagem de origem
     image: backend-temperatura
+    #porta que irá operar
     ports: 
       - 8081:8081
+    #rede que irá estar conectado
     networks:
       - taiff_network
 
+  #container do frontend
   frontend:
+    #imagem de origem
     image: frontendtaiff
+    #porta que irá operar
     ports:
       - 3000:3000
+    #rede que irá estar conectado
     networks:
       - taiff_network
