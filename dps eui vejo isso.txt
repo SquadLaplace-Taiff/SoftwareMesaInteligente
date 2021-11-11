@@ -1,5 +1,7 @@
 1 - Gerar um build do java
 	.\mvnw.cmd install
+	ou
+	.\mvnw.cmd install -Dmaven.test.skip=true
 2 - Copiar o .jar para o container e rodar o .jar no container
 	java -jar *.jar
 
