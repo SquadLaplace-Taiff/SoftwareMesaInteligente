@@ -1,0 +1,8 @@
+1 - Gerar um build do java
+	.\mvnw.cmd install
+2 - Copiar o .jar para o container e rodar o .jar no container
+	java -jar *.jar
+
+3 - docker build -t "nome da imagem" .
+
+4 - montar o compose e dar um compose up

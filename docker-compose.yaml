@@ -1,0 +1,31 @@
+networks:
+  taiff_network: {}
+
+services: 
+
+  db:
+    container_name: db
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    networks:
+      - taiff_network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root 
+      - MYSQL_DATABASE=taiff_temperatura
+
+  backend:
+    depends_on: 
+      - db
+    image: backend-temperatura
+    ports: 
+      - 8081:8081
+    networks:
+      - taiff_network
+
+  frontend:
+    image: frontendtaiff
+    ports:
+      - 3000:3000
+    networks:
+      - taiff_network
