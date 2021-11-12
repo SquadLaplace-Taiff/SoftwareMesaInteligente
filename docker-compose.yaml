@@ -18,10 +18,24 @@ services:
     #configuraçoes do mySql
     environment:
       - MYSQL_ROOT_PASSWORD=root 
-      - MYSQL_DATABASE=taiff_temperatura
+    volumes:
+    - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+
+  #container do frontend
+  frontend:
+    build: ./taiff_web
+    #imagem de origem
+    image: front-end
+    #porta que irá operar
+    ports:
+      - 3000:3000
+    #rede que irá estar conectado
+    networks:
+      - taiff_network
 
   #container do backend
-  backend:
+  backend-temperatura:
+    build: ./API-Temperatura\Projeto Java\taiffTemperatura
     #Depende que o banco de dados tenha subido para subir em sequencia
     depends_on: 
       - db
@@ -34,13 +48,17 @@ services:
     networks:
       - taiff_network
 
-  #container do frontend
-  frontend:
+  #container do backend
+  backend-posicionamento:
+    build: ./API-Posicionamento\Projeto Java\taiffPosicionamento
+    #Depende que o banco de dados tenha subido para subir em sequencia
+    depends_on: 
+      - db
     #imagem de origem
-    image: frontendtaiff
+    image: backend-posicionamento
     #porta que irá operar
-    ports:
-      - 3000:3000
+    ports: 
+      - 8080:8080
     #rede que irá estar conectado
     networks:
       - taiff_network
