@@ -11,7 +11,7 @@ var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
 async function executar() {
-    for (i = 1; i <= 50; i++) {
+    for (i = 1; i <= 120; i++) {
 
         var myDate = new Date, myFormat = [
             myDate.getMonth() + 1,
