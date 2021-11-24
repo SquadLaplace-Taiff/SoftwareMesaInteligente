@@ -23,6 +23,7 @@ import br.com.senai.taiffTemperatura.dto.TemperaturaJanelaDto;
 import br.com.senai.taiffTemperatura.model.EstatisticaModel;
 import br.com.senai.taiffTemperatura.model.JanelasModel;
 import br.com.senai.taiffTemperatura.model.Key;
+import br.com.senai.taiffTemperatura.model.RampaModel;
 import br.com.senai.taiffTemperatura.model.TemperaturaModel;
 import br.com.senai.taiffTemperatura.repository.TemperaturaRepository;
 import br.com.senai.taiffTemperatura.service.DataService;
@@ -65,6 +66,12 @@ public class TemperaturaController {
 		}
 	
 	}
+	@RequestMapping(value = "/rampaSubida", method = RequestMethod.GET)
+	public ResponseEntity<List<RampaModel>> rampaSubida(){
+		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
+		return  ResponseEntity.ok().body(dataService.rampaSubida(temperaturas, 5, 1));
+	}
+	
 
 	@RequestMapping(value = "/mediaJanelas", method = RequestMethod.GET)
 	public ResponseEntity<List<EstatisticaModel>> mediaDasJanelas() {
