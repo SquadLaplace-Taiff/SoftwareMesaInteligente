@@ -69,7 +69,7 @@ public class TemperaturaController {
 	@RequestMapping(value = "/rampaSubida", method = RequestMethod.GET)
 	public ResponseEntity<List<RampaModel>> rampaSubida(){
 		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
-		return  ResponseEntity.ok().body(dataService.rampaSubida(temperaturas, 5, 1));
+		return  ResponseEntity.ok().body(dataService.rampaSubida(temperaturas, 10, 1));
 	}
 	
 
