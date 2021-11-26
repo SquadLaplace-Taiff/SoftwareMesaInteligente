@@ -30,104 +30,39 @@ public class DataService {
 		double acum = 0;
 		for (int j = ini; j > (ini - qtd) ; j--) {
 			acum += vetor[j];
-//			System.out.println("J: " + j);
+			//System.out.println("J: " + j);
 		}
 //		System.out.println("média: " + (acum / qtd));
 		return acum / qtd;
 	}
 
 	public List<RampaModel> rampaSubida(List<TemperaturaModel> temperaturas, int pontosMedia, double variacao) {
-		double medTemp1, medTemp2, medTemp3;
-		double medTempAnterior1 = 0, medTempAnterior2 = 0, medTempAnterior3 = 0;
-		double variacaoTemp1, variacaoTemp2, variacaoTemp3;
+		
 		List<RampaModel> rampas = new ArrayList<RampaModel>();
-		boolean tempSubindo = false;
-		boolean estabilizacaoTemp1 = false,  estabilizacaoTemp2 = false, estabilizacaoTemp3 = false;
-		int inicioRampa = 0;
 		
 		double[] vetTemp1 = new double[temperaturas.size()];
 		int x = 0;
 		
-//		for (TemperaturaModel temperatura : temperaturas) {
-//			vetTemp1[x] = temperatura.getTermopar_1();
-//			x++;
-//		}
-//		
-//		
-//		for (int i = 9; i < temperaturas.size(); i++) {
-//			double valor1 = media(i, 10, vetTemp1);
-//			double valor2 = media(i + 1, 10, vetTemp1);
-//			
-//			double diferenca = valor1 - valor2;
-//			
-//			System.out.println(i);
-//			
-//			if (Math.abs(diferenca) < 1) {
-//				System.out.println("estabilizacao: " + temperaturas.get(i).getDt_leitura() + ", valor1: " + valor1 + " valor 2: " + valor2 + " Diferença: " + diferenca);
-//			} else {
-//				System.out.println("desestabilizado: " + temperaturas.get(i).getDt_leitura() + ", valor1: " + valor1 + " valor 2: " + valor2 + " Diferença: " + diferenca);
-//			}
-//		}
+		for (TemperaturaModel temperatura : temperaturas) {
+			vetTemp1[x] = temperatura.getTermopar_1();
+			x++;
+		}
 		
-
-		for (int i = 0; i < temperaturas.size(); i++) {
-			if (tempSubindo || (i >= 1 && temperaturas.get(i).getTermopar_1() >= temperaturas.get(i - 1).getTermopar_1() + 2)) {
-				
-				if (!tempSubindo) { inicioRampa = i; }
-				
-				tempSubindo = true;
-
-				if (i >= inicioRampa + pontosMedia ) {
-					double auxMedTemp1 = 0, auxMedTemp2 = 0, auxMedTemp3 = 0;
-					for (int k = 0; k < pontosMedia; k++) {
-						auxMedTemp1 += temperaturas.get(i - pontosMedia).getTermopar_1();
-						auxMedTemp2 += temperaturas.get(i - pontosMedia).getTermopar_2();
-						auxMedTemp3 += temperaturas.get(i - pontosMedia).getTermopar_3();
-						
-						System.out.println(temperaturas.get(i - pontosMedia).getTermopar_1());
-					}
-					
-					medTemp1 = auxMedTemp1 / pontosMedia;
-					medTemp2 = auxMedTemp2 / pontosMedia;
-					medTemp3 = auxMedTemp3 / pontosMedia;
-
-					if (i == pontosMedia) {
-						medTempAnterior1 = medTemp1;
-						medTempAnterior2 = medTemp2;
-						medTempAnterior3 = medTemp3;
-					}
-					
-					variacaoTemp1 = medTemp1 - medTempAnterior1;
-					variacaoTemp2 = medTemp2 - medTempAnterior2;
-					variacaoTemp3 = medTemp3 - medTempAnterior3;
-
-//					System.out.println("VariaçãoTemp1: " + variacaoTemp1 + "\nvariacao: " + variacao + "\ni: " + i + "\npontosMedia: " + pontosMedia);
-					if (variacaoTemp1 < variacao && !estabilizacaoTemp1 && i > pontosMedia) {
-						estabilizacaoTemp1 = true;
-						RampaModel rampaTemp1 = new RampaModel(temperaturas.get(inicioRampa).getDt_leitura(),
-								temperaturas.get(i - pontosMedia).getDt_leitura(), "Termopar_1");
-						rampas.add(rampaTemp1);
-//						System.out.println("variacao temp1: " + variacaoTemp1 + " variacao: " + variacao);
-//						System.out.println("media temp 1: " + medTemp1 + " media temp anterior: " + medTempAnterior1);
-					}
-					if (variacaoTemp2 < variacao && !estabilizacaoTemp2 && i > pontosMedia) {
-						estabilizacaoTemp2 = true;
-						RampaModel rampaTemp2 = new RampaModel(temperaturas.get(inicioRampa).getDt_leitura(),
-								temperaturas.get(i - pontosMedia).getDt_leitura(), "Termopar_2");
-						rampas.add(rampaTemp2);
-					}
-					if (variacaoTemp3 < variacao && !estabilizacaoTemp3 && i > pontosMedia) {
-						estabilizacaoTemp3 = true;
-						RampaModel rampaTemp3 = new RampaModel(temperaturas.get(inicioRampa).getDt_leitura(),
-								temperaturas.get(i - pontosMedia).getDt_leitura(), "Termopar_3");
-						rampas.add(rampaTemp3);
-					}
-					
-					medTempAnterior1 = medTemp1;
-					medTempAnterior2 = medTemp2;
-					medTempAnterior3 = medTemp3;
-
-				}
+		double valor2 = 0;
+		for (int i = 9; i < temperaturas.size(); i++) {
+			double valor1 = media(i, 10, vetTemp1);
+			if(i == 9) {
+				valor2 = valor1;
+			}
+			double diferenca = valor1 - valor2;
+			valor2 = valor1;
+			
+			//System.out.println(i);
+			
+			if (Math.abs(diferenca) < 1) {
+				System.out.println("estabilizacao: " + temperaturas.get(i).getDt_leitura() + ", valor1: " + valor1 + " valor 2: " + valor2 + " Diferença: " + diferenca);
+			} else {
+				System.out.println("desestabilizado: " + temperaturas.get(i).getDt_leitura() + ", valor1: " + valor1 + " valor 2: " + valor2 + " Diferença: " + diferenca);
 			}
 		}
 		return rampas;
