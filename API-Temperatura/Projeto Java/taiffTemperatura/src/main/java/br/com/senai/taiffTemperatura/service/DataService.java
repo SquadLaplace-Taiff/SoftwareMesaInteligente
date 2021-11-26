@@ -30,9 +30,7 @@ public class DataService {
 		double acum = 0;
 		for (int j = ini; j > (ini - qtd) ; j--) {
 			acum += vetor[j];
-			//System.out.println("J: " + j);
 		}
-//		System.out.println("média: " + (acum / qtd));
 		return acum / qtd;
 	}
 
@@ -40,30 +38,71 @@ public class DataService {
 		
 		List<RampaModel> rampas = new ArrayList<RampaModel>();
 		
-		double[] vetTemp1 = new double[temperaturas.size()];
+		double[] termopar1 = new double[temperaturas.size()];
+		double[] termopar2 = new double[temperaturas.size()];
+		double[] termopar3 = new double[temperaturas.size()];
 		int x = 0;
 		
 		for (TemperaturaModel temperatura : temperaturas) {
-			vetTemp1[x] = temperatura.getTermopar_1();
+			termopar1[x] = temperatura.getTermopar_1();
+			termopar2[x] = temperatura.getTermopar_2();
+			termopar3[x] = temperatura.getTermopar_3();
 			x++;
 		}
 		
-		double valor2 = 0;
+		double temperaturaTermopar1Anterior = 0;
+		double temperaturaTermopar2Anterior = 0;
+		double temperaturaTermopar3Anterior = 0;
 		for (int i = 9; i < temperaturas.size(); i++) {
-			double valor1 = media(i, 10, vetTemp1);
+			double temperaturaTermopar1Atual = media(i, 10, termopar1);
+			double temperaturaTermopar2Atual = media(i, 10, termopar2);
+			double temperaturaTermopar3Atual = media(i, 10, termopar3);
+			
 			if(i == 9) {
-				valor2 = valor1;
+				temperaturaTermopar1Anterior = temperaturaTermopar1Atual;
+				temperaturaTermopar2Anterior = temperaturaTermopar2Atual;
+				temperaturaTermopar3Anterior = temperaturaTermopar3Atual;
 			}
-			double diferenca = valor1 - valor2;
-			valor2 = valor1;
+			double diferencaTemperaturaTermopar1 = temperaturaTermopar1Atual - temperaturaTermopar1Anterior;
+			double diferencaTemperaturaTermopar2 = temperaturaTermopar2Atual - temperaturaTermopar2Anterior;
+			double diferencaTemperaturaTermopar3 = temperaturaTermopar3Atual - temperaturaTermopar3Anterior;
+			temperaturaTermopar1Anterior = temperaturaTermopar1Atual;
+			temperaturaTermopar2Anterior = temperaturaTermopar2Atual;
+			temperaturaTermopar3Anterior = temperaturaTermopar3Atual;
 			
-			//System.out.println(i);
 			
-			if (Math.abs(diferenca) < 1) {
-				System.out.println("estabilizacao: " + temperaturas.get(i).getDt_leitura() + ", valor1: " + valor1 + " valor 2: " + valor2 + " Diferença: " + diferenca);
+			boolean direcao = true;
+			boolean estabilizado = true;
+			
+			if(direcao == true) {
+				
+			}else{
+				
+			}
+			
+			
+			
+			if (Math.abs(diferencaTemperaturaTermopar1) < 1) {
+				System.out.println("Estabilizado");
 			} else {
-				System.out.println("desestabilizado: " + temperaturas.get(i).getDt_leitura() + ", valor1: " + valor1 + " valor 2: " + valor2 + " Diferença: " + diferenca);
+				System.out.println("Desestabilizado");
 			}
+			
+			
+			
+			
+//			if (Math.abs(diferencaTemperaturaTermopar2) < 1) {
+//				System.out.println("Estabilizado");
+//			} else {
+//				System.out.println("Desestabilizado");
+//			}
+//			
+//			
+//			if (Math.abs(diferencaTemperaturaTermopar3) < 1) {
+//				System.out.println("Estabilizado");
+//			} else {
+//				System.out.println("Desestabilizado");
+//			}
 		}
 		return rampas;
 	}
