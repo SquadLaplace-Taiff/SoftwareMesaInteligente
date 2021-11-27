@@ -1,5 +1,6 @@
 package br.com.senai.taiffTemperatura.service;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import br.com.senai.taiffTemperatura.dto.TemperaturaJanelaDto;
 import br.com.senai.taiffTemperatura.model.EstatisticaModel;
 import br.com.senai.taiffTemperatura.model.JanelasModel;
 import br.com.senai.taiffTemperatura.model.RampaModel;
+import br.com.senai.taiffTemperatura.model.RampasModel;
 import br.com.senai.taiffTemperatura.model.TemperaturaModel;
 import br.com.senai.taiffTemperatura.repository.TemperaturaRepository;
 
@@ -34,9 +36,24 @@ public class DataService {
 		return acum / qtd;
 	}
 
-	public List<RampaModel> rampaSubida(List<TemperaturaModel> temperaturas, int pontosMedia, double variacao) {
+	public List<RampasModel> rampaSubida(List<TemperaturaModel> temperaturas, int pontosMedia, double variacao) {
 		
-		List<RampaModel> rampas = new ArrayList<RampaModel>();
+		var rampasTermopar1 = new RampasModel();
+		var rampasTermopar2 = new RampasModel();
+		var rampasTermopar3 = new RampasModel();
+		
+		RampaModel rampaSubindoTermopar1 = new RampaModel();
+		RampaModel rampaDescendoTermopar1 = new RampaModel();
+		
+		RampaModel rampaSubindoTermopar2 = new RampaModel();
+		RampaModel rampaDescendoTermopar2 = new RampaModel();
+		
+		RampaModel rampaSubindoTermopar3 = new RampaModel();
+		RampaModel rampaDescendoTermopar3 = new RampaModel();
+		
+		boolean inicioRampaTerm1 = true;
+		boolean inicioRampaTerm2 = true;
+		boolean inicioRampaTerm3 = true;
 		
 		double[] termopar1 = new double[temperaturas.size()];
 		double[] termopar2 = new double[temperaturas.size()];
@@ -52,7 +69,8 @@ public class DataService {
 		
 		double temperaturaTermopar1Anterior = 0;
 		double temperaturaTermopar2Anterior = 0;
-		double temperaturaTermopar3Anterior = 0;
+		double temperaturaTermopar3Anterior = 0;		
+		
 		for (int i = 9; i < temperaturas.size(); i++) {
 			double temperaturaTermopar1Atual = media(i, 10, termopar1);
 			double temperaturaTermopar2Atual = media(i, 10, termopar2);
@@ -66,44 +84,124 @@ public class DataService {
 			double diferencaTemperaturaTermopar1 = temperaturaTermopar1Atual - temperaturaTermopar1Anterior;
 			double diferencaTemperaturaTermopar2 = temperaturaTermopar2Atual - temperaturaTermopar2Anterior;
 			double diferencaTemperaturaTermopar3 = temperaturaTermopar3Atual - temperaturaTermopar3Anterior;
+
 			temperaturaTermopar1Anterior = temperaturaTermopar1Atual;
 			temperaturaTermopar2Anterior = temperaturaTermopar2Atual;
 			temperaturaTermopar3Anterior = temperaturaTermopar3Atual;
 			
 			
-			boolean direcao = true;
-			boolean estabilizado = true;
-			
-			if(direcao == true) {
-				
-			}else{
-				
-			}
-			
-			
 			
 			if (Math.abs(diferencaTemperaturaTermopar1) < 1) {
-				System.out.println("Estabilizado");
+				if(!inicioRampaTerm1) {
+					
+					if(rampaSubindoTermopar1.getFim() == null) {
+						rampaSubindoTermopar1.setFim(temperaturas.get(i - 2).getDt_leitura());
+						rampaSubindoTermopar1.setDuracao(rampaSubindoTermopar1.getInicio().until(rampaSubindoTermopar1.getFim(), ChronoUnit.MILLIS));
+					}
+					
+					inicioRampaTerm1 = true;
+				}
 			} else {
-				System.out.println("Desestabilizado");
+				if (inicioRampaTerm1) {
+					
+					if (rampaSubindoTermopar1.getInicio() == null) {
+						rampaSubindoTermopar1.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaSubindoTermopar1.setRampaSubindo(true);
+						rampaSubindoTermopar1.setTermopar("Termopar1");
+					} else {
+						rampaDescendoTermopar1.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaDescendoTermopar1.setRampaSubindo(false);
+						rampaDescendoTermopar1.setTermopar("Termopar1");
+					}
+					
+					inicioRampaTerm1 = false;
+				} else if (!inicioRampaTerm1 && (i + 1) == temperaturas.size()) {
+					rampaDescendoTermopar1.setFim(temperaturas.get(i).getDt_leitura());
+					rampaDescendoTermopar1.setDuracao(rampaDescendoTermopar1.getInicio().until(rampaDescendoTermopar1.getFim(), ChronoUnit.MILLIS));
+				}
 			}
 			
 			
 			
 			
-//			if (Math.abs(diferencaTemperaturaTermopar2) < 1) {
-//				System.out.println("Estabilizado");
-//			} else {
-//				System.out.println("Desestabilizado");
-//			}
-//			
-//			
-//			if (Math.abs(diferencaTemperaturaTermopar3) < 1) {
-//				System.out.println("Estabilizado");
-//			} else {
-//				System.out.println("Desestabilizado");
-//			}
+			if (Math.abs(diferencaTemperaturaTermopar2) < 1) {
+				if(!inicioRampaTerm2) {
+					
+					if(rampaSubindoTermopar2.getFim() == null) {
+						rampaSubindoTermopar2.setFim(temperaturas.get(i - 2).getDt_leitura());
+						rampaSubindoTermopar2.setDuracao(rampaSubindoTermopar2.getInicio().until(rampaSubindoTermopar2.getFim(), ChronoUnit.MILLIS));
+					}
+					
+					inicioRampaTerm2 = true;
+				}
+			} else {
+				if (inicioRampaTerm2) {
+					
+					if (rampaSubindoTermopar2.getInicio() == null) {
+						rampaSubindoTermopar2.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaSubindoTermopar2.setRampaSubindo(true);
+						rampaSubindoTermopar2.setTermopar("Termopar2");
+					} else {
+						rampaDescendoTermopar2.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaDescendoTermopar2.setRampaSubindo(false);
+						rampaDescendoTermopar2.setTermopar("Termopar2");
+					}
+					
+					inicioRampaTerm2 = false;
+				} else if (!inicioRampaTerm2 && (i + 1) == temperaturas.size()) {
+					rampaDescendoTermopar2.setFim(temperaturas.get(i).getDt_leitura());
+					rampaDescendoTermopar2.setDuracao(rampaDescendoTermopar2.getInicio().until(rampaDescendoTermopar2.getFim(), ChronoUnit.MILLIS));
+				}
+			}
+
+			
+			if (Math.abs(diferencaTemperaturaTermopar3) < 1) {
+				if(!inicioRampaTerm3) {
+					
+					if(rampaSubindoTermopar3.getFim() == null) {
+						rampaSubindoTermopar3.setFim(temperaturas.get(i - 2).getDt_leitura());
+						rampaSubindoTermopar3.setDuracao(rampaSubindoTermopar3.getInicio().until(rampaSubindoTermopar3.getFim(), ChronoUnit.MILLIS));
+					}
+					
+					inicioRampaTerm3 = true;
+				}
+			} else {
+				if (inicioRampaTerm3) {
+					
+					if (rampaSubindoTermopar3.getInicio() == null) {
+						rampaSubindoTermopar3.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaSubindoTermopar3.setRampaSubindo(true);
+						rampaSubindoTermopar3.setTermopar("Termopar3");
+					} else {
+						
+						rampaDescendoTermopar3.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaDescendoTermopar3.setRampaSubindo(false);
+						rampaDescendoTermopar3.setTermopar("Termopar3");
+					}
+					
+					inicioRampaTerm3 = false;
+				} else if (!inicioRampaTerm3 && (i + 1) == temperaturas.size()) {
+					rampaDescendoTermopar3.setFim(temperaturas.get(i).getDt_leitura());
+					rampaDescendoTermopar3.setDuracao(rampaDescendoTermopar3.getInicio().until(rampaDescendoTermopar3.getFim(), ChronoUnit.MILLIS));
+				}
+			}
 		}
+		
+		rampasTermopar1.setRampaSubindo(rampaSubindoTermopar1);
+		rampasTermopar1.setRampaDescendo(rampaDescendoTermopar1);
+		
+		rampasTermopar2.setRampaSubindo(rampaSubindoTermopar2);
+		rampasTermopar2.setRampaDescendo(rampaDescendoTermopar2);
+		
+		rampasTermopar3.setRampaSubindo(rampaSubindoTermopar3);
+		rampasTermopar3.setRampaDescendo(rampaDescendoTermopar3);
+		
+		var rampas = new ArrayList<RampasModel>();
+		
+		rampas.add(rampasTermopar1);
+		rampas.add(rampasTermopar2);
+		rampas.add(rampasTermopar3);
+		
 		return rampas;
 	}
 

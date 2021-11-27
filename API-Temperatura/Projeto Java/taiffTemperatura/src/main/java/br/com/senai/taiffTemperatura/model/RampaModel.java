@@ -9,15 +9,17 @@ public class RampaModel {
       private LocalDateTime fim;
       private long duracao;
       private String termopar;
-      
-    public RampaModel() {
+      private boolean rampaSubindo;
+
+	public RampaModel() {
     	
     }
       
-	public RampaModel(LocalDateTime inicio, LocalDateTime fim , String termopar) {
+	public RampaModel(LocalDateTime inicio, LocalDateTime fim , String termopar, boolean rampaSubindo) {
 		this.termopar = termopar;
 		this.inicio = inicio;
 		this.fim = fim;
+		this.rampaSubindo = rampaSubindo;
 		duracao = inicio.until(fim, ChronoUnit.MINUTES);
 	}
 	
@@ -47,6 +49,14 @@ public class RampaModel {
 
 	public void setTermopar(String termopar) {
 		this.termopar = termopar;
+	}
+	
+    public boolean isRampaSubindo() {
+		return rampaSubindo;
+	}
+
+	public void setRampaSubindo(boolean rampaSubindo) {
+		this.rampaSubindo = rampaSubindo;
 	}
       
       
