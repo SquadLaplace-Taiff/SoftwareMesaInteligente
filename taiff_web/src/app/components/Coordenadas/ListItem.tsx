@@ -66,13 +66,6 @@ const ListItem = (props: coordenadaAuxiliar) => {
                         name={`tempo_${props.index}`}
                     />
                 </label>
-                <input
-                    className="novoponto-input zero-peca"
-                    checked={props.value.zero_peca}
-                    onChange={props.onChange}
-                    type="radio"
-                    name='check-box'
-                />
                 <button className="btn-invisivel" onClick={props.onDelete}>Excluir</button>
             </div>
         </Container>

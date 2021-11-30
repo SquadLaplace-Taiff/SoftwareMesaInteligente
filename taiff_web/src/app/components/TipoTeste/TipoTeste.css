@@ -1,0 +1,9 @@
+.input-row {
+    text-align: center;
+}
+
+.input-row label {
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 22px;
+}

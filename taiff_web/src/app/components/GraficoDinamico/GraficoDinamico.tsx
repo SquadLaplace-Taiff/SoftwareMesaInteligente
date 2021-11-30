@@ -1,7 +1,6 @@
 import { Line, Chart } from 'react-chartjs-2';
 import 'chartjs-adapter-luxon';
 import StreamingPlugin from 'chartjs-plugin-streaming';
-import { Redirect } from 'react-router';
 
 Chart.register(StreamingPlugin);
 

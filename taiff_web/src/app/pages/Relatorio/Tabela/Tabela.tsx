@@ -11,64 +11,98 @@ export class Tabela extends React.Component<{}, any> {
         };
     }
 
-    private url = 'http://localhost:8081/temperatura/folhaDeRosto';
+    private url = 'http://localhost:8081/temperatura/rampaSubida';
 
-    chamarTabela(){
-        if(!this.state.validarTabela){
+    chamarTabela() {
+        if (!this.state.validarTabela) {
             this.pegarDados();
             this.setState({
                 validarTabela: true
             })
         }
-        
+
     }
 
-    pegarDados() { 
+    pegarDados() {
         fetch(`${this.url}`)
             .then(res => res.json())
             .then(resposta => {
-                this.setState({resposta: resposta})
+                this.setState({ resposta: resposta })
             })
             .catch(
                 (error: Error) => console.log('error: ' + error.message)
             )
     }
 
-    
+
     render() {
         this.chamarTabela();
         return (
             <section>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>Janela</th>
-                            <th>Ambiente</th>
-                            <th>Termopar 1</th>
-                            <th>Termopar 2</th>
-                            <th>Termopar 3</th>
-                            <th>Temperatura Média</th>
-                            <th>Temperatura Corrigida</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.state.resposta.map( (janela: tabela, index: number) => { 
-                                return(
-                                    <tr key={index}>
-                                        <td>{ index + 1 }</td>
-                                        <td>{ janela.termopar_amb.toFixed(2).replace('.', ',') }</td>
-                                        <td>{ janela.termopar_1.toFixed(2).replace('.', ',') }</td>
-                                        <td>{ janela.termopar_2.toFixed(2).replace('.', ',') }</td>
-                                        <td>{ janela.termopar_3.toFixed(2).replace('.', ',') }</td>
-                                        <td>{ janela.media.toFixed(2).replace('.', ',') }</td>
-                                        <td>{ janela.temperaturaCorrigida.toFixed(2).replace('.', ',') }</td>
-                                    </tr>
-                                );
-                            })
+                {
+                    () => {
+                        if (localStorage.getItem('tipoTeste') === 'Aquecimento' || localStorage.getItem('tipoTeste') === 'Resfriamento') {
+                            return (
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Termopar 1</th>
+                                            <th>Termopar 2</th>
+                                            <th>Termopar 3</th>
+                                            <th>Ambiente</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Inicio</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fim</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Duração</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mínimo</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Máximo</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Δ Temperatura</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+                                    </tbody>
+                                </Table>
+                            );
                         }
-                    </tbody>
-                </Table>
+                    }
+                }
+
             </section>
         );
     }

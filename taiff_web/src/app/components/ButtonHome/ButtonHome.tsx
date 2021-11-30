@@ -34,7 +34,7 @@ export function ButtonHome(){
         <>
         <Container className="container">
             <Row className="justify-content-md-center">
-                <Col className="btn-container-home"><Button className="btn-primary" variant="info" onClick={handleShow}>Carregar teste</Button></Col>
+                {/* <Col className="btn-container-home"><Button className="btn-primary" variant="info" onClick={handleShow}>Carregar teste</Button></Col> */}
                 <Col className="btn-container-home"><Button className="btn-primary" variant="info" onClick={() => document.location.reload()}>Novo teste</Button></Col>
                 <Col className="btn-container-home"><Link to="/grafico"><Button className="btn-primary" variant="info" >Iniciar teste</Button> </Link></Col>
             </Row>

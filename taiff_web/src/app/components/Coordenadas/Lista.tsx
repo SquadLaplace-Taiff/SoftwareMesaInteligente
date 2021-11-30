@@ -3,107 +3,151 @@ import ListItem from './ListItem'
 import NovaCoordenada from './NovaCoordenada'
 import { coordenadaInput } from '../../interfaces/coordenadaInterface'
 import "./Lista.css"
-import { Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
+
+let zeroPecaInit = {
+    coordenada_x: 0,
+    coordenada_y: 0,
+    coordenada_z: 0,
+    eixo_r: 0,
+    tempo: 0,
+    zero_peca: true
+}
+
+let coordenadaInit = {
+    coordenada_x: 0,
+    coordenada_y: 0,
+    coordenada_z: 0,
+    eixo_r: 0,
+    tempo: 0,
+    zero_peca: false
+}
 
 const Lista = () => {
 
-    const [coordenada, setCoordenada] = useState<coordenadaInput[]>([]);
+    const [coordenada, setCoordenada] = useState<coordenadaInput>(coordenadaInit);
+    const [zeroPeca, setZeroPeca] = useState<coordenadaInput>(zeroPecaInit);
 
-    function addNovaCoordenada(ponto: coordenadaInput) {
-        const coordenadasCopy = Array.from(coordenada);
-        coordenadasCopy.push({
-            coordenada_x: ponto.coordenada_x,
-            coordenada_y: ponto.coordenada_y,
-            coordenada_z: ponto.coordenada_z,
-            eixo_r: ponto.eixo_r,
-            tempo: ponto.tempo,
-            zero_peca: ponto.zero_peca
-        });
-        setCoordenada(coordenadasCopy);
+    function updateCoordenada(target: any) {
+        switch (target.target.name.split("_")[0]) {
+            case "coordenadaX":
+                setCoordenada({
+                    ...coordenada,
+                    coordenada_x: parseInt(target.target.value)
+                });
+                break;
+            case "coordenadaY":
+                setCoordenada({
+                    ...coordenada,
+                    coordenada_y: parseInt(target.target.value)
+                });
+                break;
+            case "coordenadaZ":
+                setCoordenada({
+                    ...coordenada,
+                    coordenada_z: parseInt(target.target.value)
+                });
+                break;
+            case "eixoR":
+                setCoordenada({
+                    ...coordenada,
+                    eixo_r: parseInt(target.target.value)
+                });
+                break;
+            case "tempo":
+                setCoordenada({
+                    ...coordenada,
+                    tempo: parseInt(target.target.value)
+                });
+                break;
+            default:
+                setCoordenada({
+                    ...coordenada,
+                    zero_peca: false
+                });
+                break;
+            }
 
-        localStorage.setItem('coordenadas', JSON.stringify(coordenadasCopy));
+        localStorage.setItem('coordenada', JSON.stringify(coordenada));
+
     }
 
-    function updateCoordenada(target: any, index: number) {
-        const coordenadasCopy = Array.from(coordenada);
+    function deleteCoordenada() {
+        setCoordenada(coordenadaInit);
+        localStorage.setItem('coordenadas', JSON.stringify(coordenada));
+    }
+
+    function updateZeroPeca(target: any) {
 
         switch (target.target.name.split("_")[0]) {
             case "coordenadaX":
-                coordenadasCopy.splice(index, 1, {
-                    ...coordenada[index],
+                setZeroPeca({
+                    ...zeroPeca,
                     coordenada_x: parseInt(target.target.value)
                 });
-                setCoordenada(coordenadasCopy);
                 break;
             case "coordenadaY":
-                coordenadasCopy.splice(index, 1, {
-                    ...coordenada[index],
+                setZeroPeca({
+                    ...zeroPeca,
                     coordenada_y: parseInt(target.target.value)
                 });
-                setCoordenada(coordenadasCopy);
                 break;
             case "coordenadaZ":
-                coordenadasCopy.splice(index, 1, {
-                    ...coordenada[index],
+                setZeroPeca({
+                    ...zeroPeca,
                     coordenada_z: parseInt(target.target.value)
                 });
-                setCoordenada(coordenadasCopy);
                 break;
             case "eixoR":
-                coordenadasCopy.splice(index, 1, {
-                    ...coordenada[index],
+                setZeroPeca({
+                    ...zeroPeca,
                     eixo_r: parseInt(target.target.value)
                 });
-                setCoordenada(coordenadasCopy);
                 break;
             case "tempo":
-                coordenadasCopy.splice(index, 1, {
-                    ...coordenada[index],
+                setZeroPeca({
+                    ...zeroPeca,
                     tempo: parseInt(target.target.value)
                 });
-                setCoordenada(coordenadasCopy);
                 break;
             default:
-                console.log(target.target.checked)
-                coordenadasCopy.splice(index, 1, {
-                    ...coordenada[index],
-                    zero_peca: target.target.checked
+                setZeroPeca({
+                    ...zeroPeca,
+                    zero_peca: true
                 });
-                setCoordenada(coordenadasCopy);
                 break;
-
-            };
-
-        localStorage.setItem('coordenadas', JSON.stringify(coordenadasCopy));
-
+            }
+        localStorage.setItem('zeroPeca', JSON.stringify(zeroPeca));
     }
 
-    function deleteCoordenada(index: number) {
-        const itensCopy = Array.from(coordenada);
-        itensCopy.splice(index, 1);
-        setCoordenada(itensCopy);
-        localStorage.setItem('coordenadas', JSON.stringify(itensCopy));
+    function deleteZeroPeca() {
+        setZeroPeca(zeroPecaInit);
     }
 
     return (
 
         <Container className="container">
-            
-            {coordenada.map((coordenada: coordenadaInput, index: number) => {
-                //console.log(coordenada);
 
-                return (
-                    <ListItem 
-                        key={index}
-                        index={index}
-                        value={coordenada}
-                        onChange={(event: any) => updateCoordenada(event, index)}
-                        onDelete={() => deleteCoordenada(index)}
+            <Row>
+                <h2 className="title-input">Zero Peça</h2>
+                <ListItem 
+                    key={0}
+                    index={0}
+                    value={zeroPeca}
+                    onChange={(event: any) => updateZeroPeca(event)}
+                    onDelete={() => deleteZeroPeca()}
                     />
-                )
-            })}
-
-            <NovaCoordenada onSubmit={addNovaCoordenada} />
+            </Row>
+            <Row>
+                <h2 className="title-input">Coordenada</h2>
+                <ListItem 
+                    key={0}
+                    index={0}
+                    value={coordenada}
+                    onChange={(event: any) => updateCoordenada(event)}
+                    onDelete={() => deleteCoordenada()}
+                    />
+            </Row>
 
         </Container>
 

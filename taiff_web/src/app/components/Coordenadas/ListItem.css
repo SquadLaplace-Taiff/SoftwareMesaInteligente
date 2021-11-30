@@ -1,6 +1,7 @@
 .Item-container {
     display: flex;
     flex-wrap: nowrap;
+    justify-content: center;
     margin-top: 15px;
 }
 

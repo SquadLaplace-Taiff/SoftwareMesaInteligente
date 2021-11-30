@@ -24,7 +24,7 @@ export function Relatorio() {
                     <Row>
                        <Col ><ModalCsv id={1} /></Col> 
                        <Col ><ModalFolhaDeRosto /></Col>
-                       <Col><ModalSalvarTeste/></Col>
+                       {/* <Col><ModalSalvarTeste/></Col> */}
                     </Row>
             </Container>
             
