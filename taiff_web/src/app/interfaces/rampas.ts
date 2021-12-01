@@ -1,6 +1,6 @@
 export interface Rampas {
-    rampaDescendo: Rampa;
-    rampaSubindo: Rampa;
+    rampaDescendo?: Rampa;
+    rampaSubindo?: Rampa;
 }
 
 export interface Rampa {

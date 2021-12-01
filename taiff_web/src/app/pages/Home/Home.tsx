@@ -12,10 +12,12 @@ export function Home(props:any) {
 
     function deletarTemperaturas() {
         apiService.deletarTemperaturaTemporarias();  
-        localStorage.removeItem('tipoTeste'); 
+        //localStorage.removeItem('tipoTeste'); 
     }
 
-    deletarTemperaturas();
+    localStorage.removeItem('tipoTeste');
+
+    //deletarTemperaturas();
 
     return( 
         <>
