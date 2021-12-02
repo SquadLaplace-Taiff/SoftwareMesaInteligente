@@ -9,4 +9,7 @@ export interface Rampa {
     fim: string;
     rampaSubindo: boolean;
     termopar: string;
+    tempAmbiente: number;
+    tempMaxima: number;
+    tempMinima: number;
 }

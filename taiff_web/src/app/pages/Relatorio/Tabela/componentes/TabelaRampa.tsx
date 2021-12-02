@@ -1,43 +1,107 @@
 import { useState } from "react";
 import { Table } from "react-bootstrap";
-import { Rampas, Rampa } from "../../../../interfaces/rampas" 
+import { Rampas, Rampa } from "../../../../interfaces/rampas"
 
-export function TabelaRampa(props:any) {
+const rampaInit = {
+    duracao: 0,
+    inicio: '',
+    fim: '',
+    rampaSubindo: false,
+    termopar: '',
+    tempAmbiente: 0,
+    tempMaxima: 0,
+    tempMinima: 0,
+}
 
-    const [dadosTabela, setDadosTabela] = useState<any>();
+const tabelaInit ={
+    rampaDescendo: rampaInit,
+    rampaSubindo: rampaInit
+}
+
+export function TabelaRampa(props: any) {
+
+    const [dadosTabela, setDadosTabela] = useState<Array<Rampas>>([tabelaInit]);
     const [pegarDados, setPegarDados] = useState<Boolean>(false);
 
     const url = 'http://localhost:8081/temperatura/rampaSubida';
 
-    let teste:Array<any> = [];
-    
     function fetchAPI() {
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                
-                atribuir(data)
-                setDadosTabela(data);
-
+                setDadosTabela(data)
             })
             .catch(
                 (error: Error) => console.log('error: ' + error.message)
             )
     }
 
-    async function atribuir(data:any){
-        if (props.tipoTeste === 'Aquecimento'){
-            
-            //data.forEach((dadoRampa:any) => {
-            //    teste.push(dadoRampa.rampaSubindo);
-            //});
-            await setDadosTabela('oi');
-            console.log(dadosTabela + "teste");
-            
+    function pegarDadosTempo(time: string) {
+        let hora;
+
+        hora = time.split('T')[1];
+        return hora;
+    }
+
+    function gerarTabela() {
+        if (props.tipoTeste === 'Aquecimento') {
+            return (
+                <tbody>
+                    <tr>
+                        <td>Inicio</td>
+                        {
+                            dadosTabela.map((dados: Rampas) => {
+                                return <td>{pegarDadosTempo(dados.rampaSubindo?.inicio!)}</td>
+                            })
+                        }
+                    </tr>
+                    <tr>
+                        <td>Fim</td>
+                        {
+                            dadosTabela.map((dados: Rampas) => {
+                                return <td>{pegarDadosTempo(dados.rampaSubindo?.fim!)}</td>
+                            })
+                        }
+                    </tr>
+                    <tr>
+                        <td>Duração</td>
+                        {
+                            dadosTabela.map((dados: Rampas) => {
+                                return <td>{dados.rampaSubindo?.duracao! / 1000 } segundos</td>
+                            })
+                        }
+                    </tr>
+                    <tr>
+                        <td>Mínimo</td>
+                        {
+                            dadosTabela.map((dados: Rampas) => {
+                                return <td>{dados.rampaSubindo?.tempMinima.toFixed(2)} ºC</td>
+                            })
+                        }
+                    </tr>
+                    <tr>
+                        <td>Máximo</td>
+                        {
+                            dadosTabela.map((dados: Rampas) => {
+                                return <td>{dados.rampaSubindo?.tempMaxima.toFixed(2)} ºC</td>
+                            })
+                        }
+                    </tr>
+                    <tr>
+                        <td>Δ Temperatura</td>
+                        {
+                            dadosTabela.map((dados: Rampas) => {
+                                return <td>{(dados.rampaSubindo?.tempMaxima! - dados.rampaSubindo?.tempMinima!).toFixed(2)} ºC</td>
+                            })
+                        }
+                    </tr>
+
+                </tbody>
+            )
         }
     }
-    
-    if (!pegarDados){
+
+    if (!pegarDados) {
         fetchAPI();
         setPegarDados(true)
     }
@@ -46,57 +110,17 @@ export function TabelaRampa(props:any) {
         <Table striped bordered hover>
             <thead>
                 <tr>
-                    <th></th>
+                    <th>Média Ambiente: {(dadosTabela[0].rampaSubindo?.tempAmbiente)?.toFixed(2)} ºC</th>
                     <th>Termopar 1</th>
                     <th>Termopar 2</th>
                     <th>Termopar 3</th>
-                    <th>Ambiente</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Inicio</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Fim</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Duração</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Mínimo</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Máximo</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Δ Temperatura</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
 
-            </tbody>
+            {
+                gerarTabela() 
+            }
+
         </Table>
     )
 }

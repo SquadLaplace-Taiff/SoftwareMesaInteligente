@@ -2,6 +2,7 @@ package br.com.senai.taiffTemperatura.service;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,69 @@ public class DataService {
 		}
 		return acum / qtd;
 	}
+	
+	public double getTemperaturaMinima(int inicio, int fim, List<TemperaturaModel> temperaturas, int termopar) {
+		double minTemp = 999;
+		for (int i = inicio; i <= fim; i++) {
+			
+			switch (termopar) {
+			case 1:
+				minTemp = (temperaturas.get(i).getTermopar_1() < minTemp) ? temperaturas.get(i).getTermopar_1() : minTemp;
+				break;
+			case 2:
+				minTemp = (temperaturas.get(i).getTermopar_2() < minTemp) ? temperaturas.get(i).getTermopar_2() : minTemp;
+				break;
+			case 3:
+				minTemp = (temperaturas.get(i).getTermopar_3() < minTemp) ? temperaturas.get(i).getTermopar_3() : minTemp;
+				break;			
+			}
+			
+		}
+		
+		return minTemp;
+	}
+	
+	public double getTemperaturaMaxima(int inicio, int fim, List<TemperaturaModel> temperaturas, int termopar) {
+		double maxTemp = 0;
+		for (int i = inicio; i <= fim; i++) {
+			
+			switch (termopar) {
+			case 1:
+				maxTemp = (temperaturas.get(i).getTermopar_1() > maxTemp) ? temperaturas.get(i).getTermopar_1() : maxTemp;
+				break;
+			case 2:
+				maxTemp = (temperaturas.get(i).getTermopar_2() > maxTemp) ? temperaturas.get(i).getTermopar_2() : maxTemp;
+				break;
+			case 3:
+				maxTemp = (temperaturas.get(i).getTermopar_3() > maxTemp) ? temperaturas.get(i).getTermopar_3() : maxTemp;
+				break;			
+			}
+			
+		}
+		
+		return maxTemp;
+	}
+	
+	public double getMediaAmb(int inicio, int fim, List<TemperaturaModel> temperaturas) {
+		double media = 0;
+		for (int i = inicio; i <= fim; i++) { 
+			media += temperaturas.get(i).getTermopar_amb();
+		}
+		
+		media /= Math.abs(inicio - fim - 1);
+		
+		return media;
+	}
 
 	public List<RampasModel> rampaSubida(List<TemperaturaModel> temperaturas, int pontosMedia, double variacao) {
 		
 		var rampasTermopar1 = new RampasModel();
 		var rampasTermopar2 = new RampasModel();
 		var rampasTermopar3 = new RampasModel();
+		
+		var InicioRampaTerm1 = 0;
+		var InicioRampaTerm2 = 0;
+		var InicioRampaTerm3 = 0;
 		
 		RampaModel rampaSubindoTermopar1 = new RampaModel();
 		RampaModel rampaDescendoTermopar1 = new RampaModel();
@@ -69,14 +127,14 @@ public class DataService {
 		
 		double temperaturaTermopar1Anterior = 0;
 		double temperaturaTermopar2Anterior = 0;
-		double temperaturaTermopar3Anterior = 0;		
+		double temperaturaTermopar3Anterior = 0;	
 		
-		for (int i = 9; i < temperaturas.size(); i++) {
-			double temperaturaTermopar1Atual = media(i, 10, termopar1);
-			double temperaturaTermopar2Atual = media(i, 10, termopar2);
-			double temperaturaTermopar3Atual = media(i, 10, termopar3);
+		for (int i = pontosMedia - 1; i < temperaturas.size(); i++) {
+			double temperaturaTermopar1Atual = media(i, pontosMedia, termopar1);
+			double temperaturaTermopar2Atual = media(i, pontosMedia, termopar2);
+			double temperaturaTermopar3Atual = media(i, pontosMedia, termopar3);
 			
-			if(i == 9) {
+			if(i == pontosMedia - 1) {
 				temperaturaTermopar1Anterior = temperaturaTermopar1Atual;
 				temperaturaTermopar2Anterior = temperaturaTermopar2Atual;
 				temperaturaTermopar3Anterior = temperaturaTermopar3Atual;
@@ -90,13 +148,15 @@ public class DataService {
 			temperaturaTermopar3Anterior = temperaturaTermopar3Atual;
 			
 			
-			
-			if (Math.abs(diferencaTemperaturaTermopar1) < 1) {
+			if (Math.abs(diferencaTemperaturaTermopar1) < variacao) {
 				if(!inicioRampaTerm1) {
 					
 					if(rampaSubindoTermopar1.getFim() == null) {
-						rampaSubindoTermopar1.setFim(temperaturas.get(i - 2).getDt_leitura());
+						rampaSubindoTermopar1.setFim(temperaturas.get(i + 1).getDt_leitura());
 						rampaSubindoTermopar1.setDuracao(rampaSubindoTermopar1.getInicio().until(rampaSubindoTermopar1.getFim(), ChronoUnit.MILLIS));
+						rampaSubindoTermopar1.setTempMinima(getTemperaturaMinima(InicioRampaTerm1, i + 1, temperaturas, 1));
+						rampaSubindoTermopar1.setTempMaxima(getTemperaturaMaxima(InicioRampaTerm1, i + 1, temperaturas, 1));
+						rampaSubindoTermopar1.setTempAmbiente(getMediaAmb(InicioRampaTerm1, i + 1, temperaturas));
 					}
 					
 					inicioRampaTerm1 = true;
@@ -106,11 +166,13 @@ public class DataService {
 					
 					if (rampaSubindoTermopar1.getInicio() == null) {
 						rampaSubindoTermopar1.setInicio(temperaturas.get(i).getDt_leitura());
+						InicioRampaTerm1 = i;
 						rampaSubindoTermopar1.setRampaSubindo(true);
 						rampaSubindoTermopar1.setTermopar("Termopar1");
 					} else {
-						rampaDescendoTermopar1.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaDescendoTermopar1.setInicio(temperaturas.get(i - 5).getDt_leitura());
 						rampaDescendoTermopar1.setRampaSubindo(false);
+						InicioRampaTerm1 = i - 5;
 						rampaDescendoTermopar1.setTermopar("Termopar1");
 					}
 					
@@ -118,18 +180,25 @@ public class DataService {
 				} else if (!inicioRampaTerm1 && (i + 1) == temperaturas.size()) {
 					rampaDescendoTermopar1.setFim(temperaturas.get(i).getDt_leitura());
 					rampaDescendoTermopar1.setDuracao(rampaDescendoTermopar1.getInicio().until(rampaDescendoTermopar1.getFim(), ChronoUnit.MILLIS));
+					rampaDescendoTermopar1.setTempMinima(getTemperaturaMinima(InicioRampaTerm1, i - 5, temperaturas, 1));
+					rampaDescendoTermopar1.setTempMaxima(getTemperaturaMaxima(InicioRampaTerm1, i, temperaturas, 1));
+					rampaDescendoTermopar1.setTempAmbiente(getMediaAmb(InicioRampaTerm1, i, temperaturas));
+					
 				}
 			}
 			
 			
 			
 			
-			if (Math.abs(diferencaTemperaturaTermopar2) < 1) {
+			if (Math.abs(diferencaTemperaturaTermopar2) < variacao) {
 				if(!inicioRampaTerm2) {
 					
 					if(rampaSubindoTermopar2.getFim() == null) {
 						rampaSubindoTermopar2.setFim(temperaturas.get(i - 2).getDt_leitura());
 						rampaSubindoTermopar2.setDuracao(rampaSubindoTermopar2.getInicio().until(rampaSubindoTermopar2.getFim(), ChronoUnit.MILLIS));
+						rampaSubindoTermopar2.setTempMinima(getTemperaturaMinima(InicioRampaTerm2, i + 1, temperaturas, 2));
+						rampaSubindoTermopar2.setTempMaxima(getTemperaturaMaxima(InicioRampaTerm2, i + 1, temperaturas, 2));
+						rampaSubindoTermopar2.setTempAmbiente(getMediaAmb(InicioRampaTerm2, i + 1, temperaturas));
 					}
 					
 					inicioRampaTerm2 = true;
@@ -142,7 +211,8 @@ public class DataService {
 						rampaSubindoTermopar2.setRampaSubindo(true);
 						rampaSubindoTermopar2.setTermopar("Termopar2");
 					} else {
-						rampaDescendoTermopar2.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaDescendoTermopar2.setInicio(temperaturas.get(i - 5).getDt_leitura());
+						InicioRampaTerm2 = i - 5;
 						rampaDescendoTermopar2.setRampaSubindo(false);
 						rampaDescendoTermopar2.setTermopar("Termopar2");
 					}
@@ -151,16 +221,22 @@ public class DataService {
 				} else if (!inicioRampaTerm2 && (i + 1) == temperaturas.size()) {
 					rampaDescendoTermopar2.setFim(temperaturas.get(i).getDt_leitura());
 					rampaDescendoTermopar2.setDuracao(rampaDescendoTermopar2.getInicio().until(rampaDescendoTermopar2.getFim(), ChronoUnit.MILLIS));
+					rampaDescendoTermopar2.setTempMinima(getTemperaturaMinima(InicioRampaTerm2, i - 5, temperaturas, 2));
+					rampaDescendoTermopar2.setTempMaxima(getTemperaturaMaxima(InicioRampaTerm2, i, temperaturas, 2));
+					rampaDescendoTermopar2.setTempAmbiente(getMediaAmb(InicioRampaTerm2, i, temperaturas));
 				}
 			}
 
 			
-			if (Math.abs(diferencaTemperaturaTermopar3) < 1) {
+			if (Math.abs(diferencaTemperaturaTermopar3) < variacao) {
 				if(!inicioRampaTerm3) {
 					
 					if(rampaSubindoTermopar3.getFim() == null) {
 						rampaSubindoTermopar3.setFim(temperaturas.get(i - 2).getDt_leitura());
 						rampaSubindoTermopar3.setDuracao(rampaSubindoTermopar3.getInicio().until(rampaSubindoTermopar3.getFim(), ChronoUnit.MILLIS));
+						rampaSubindoTermopar3.setTempMinima(getTemperaturaMinima(InicioRampaTerm3, i + 1, temperaturas, 3));
+						rampaSubindoTermopar3.setTempMaxima(getTemperaturaMaxima(InicioRampaTerm3, i + 1, temperaturas, 3));
+						rampaSubindoTermopar3.setTempAmbiente(getMediaAmb(InicioRampaTerm3, i + 1, temperaturas));
 					}
 					
 					inicioRampaTerm3 = true;
@@ -174,7 +250,8 @@ public class DataService {
 						rampaSubindoTermopar3.setTermopar("Termopar3");
 					} else {
 						
-						rampaDescendoTermopar3.setInicio(temperaturas.get(i).getDt_leitura());
+						rampaDescendoTermopar3.setInicio(temperaturas.get(i - 5).getDt_leitura());
+						InicioRampaTerm3 = i - 5;
 						rampaDescendoTermopar3.setRampaSubindo(false);
 						rampaDescendoTermopar3.setTermopar("Termopar3");
 					}
@@ -183,6 +260,9 @@ public class DataService {
 				} else if (!inicioRampaTerm3 && (i + 1) == temperaturas.size()) {
 					rampaDescendoTermopar3.setFim(temperaturas.get(i).getDt_leitura());
 					rampaDescendoTermopar3.setDuracao(rampaDescendoTermopar3.getInicio().until(rampaDescendoTermopar3.getFim(), ChronoUnit.MILLIS));
+					rampaDescendoTermopar3.setTempMinima(getTemperaturaMinima(InicioRampaTerm3, i - 5, temperaturas, 3));
+					rampaDescendoTermopar3.setTempMaxima(getTemperaturaMaxima(InicioRampaTerm3, i, temperaturas, 3));
+					rampaDescendoTermopar3.setTempAmbiente(getMediaAmb(InicioRampaTerm3, i, temperaturas));
 				}
 			}
 		}
