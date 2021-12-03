@@ -44,14 +44,14 @@ export function TabelaRampa(props: any) {
     }
 
     function gerarTabela() {
-        if (props.tipoTeste === 'Aquecimento') {
+        if (props.tipoTeste === 'Aquecimento' || props.tipoTeste === 'Resfriamento') {
             return (
                 <tbody>
                     <tr>
                         <td>Inicio</td>
                         {
                             dadosTabela.map((dados: Rampas) => {
-                                return <td>{pegarDadosTempo(dados.rampaSubindo?.inicio!)}</td>
+                                return <td>{pegarDadosTempo(dados[(props.tipoTeste === 'Aquecimento') ? "rampaSubindo" : "rampaDescendo"]?.inicio!)}</td>
                             })
                         }
                     </tr>
@@ -59,7 +59,7 @@ export function TabelaRampa(props: any) {
                         <td>Fim</td>
                         {
                             dadosTabela.map((dados: Rampas) => {
-                                return <td>{pegarDadosTempo(dados.rampaSubindo?.fim!)}</td>
+                                return <td>{pegarDadosTempo(dados[(props.tipoTeste === 'Aquecimento') ? "rampaSubindo" : "rampaDescendo"]?.fim!)}</td>
                             })
                         }
                     </tr>
@@ -67,7 +67,7 @@ export function TabelaRampa(props: any) {
                         <td>Duração</td>
                         {
                             dadosTabela.map((dados: Rampas) => {
-                                return <td>{dados.rampaSubindo?.duracao! / 1000 } segundos</td>
+                                return <td>{dados[(props.tipoTeste === 'Aquecimento') ? "rampaSubindo" : "rampaDescendo"]?.duracao! / 1000 } segundos</td>
                             })
                         }
                     </tr>
@@ -75,7 +75,7 @@ export function TabelaRampa(props: any) {
                         <td>Mínimo</td>
                         {
                             dadosTabela.map((dados: Rampas) => {
-                                return <td>{dados.rampaSubindo?.tempMinima.toFixed(2)} ºC</td>
+                                return <td>{dados[(props.tipoTeste === 'Aquecimento') ? "rampaSubindo" : "rampaDescendo"]?.tempMinima.toFixed(2)} ºC</td>
                             })
                         }
                     </tr>
@@ -83,7 +83,7 @@ export function TabelaRampa(props: any) {
                         <td>Máximo</td>
                         {
                             dadosTabela.map((dados: Rampas) => {
-                                return <td>{dados.rampaSubindo?.tempMaxima.toFixed(2)} ºC</td>
+                                return <td>{dados[(props.tipoTeste === 'Aquecimento') ? "rampaSubindo" : "rampaDescendo"]?.tempMaxima.toFixed(2)} ºC</td>
                             })
                         }
                     </tr>
@@ -91,7 +91,7 @@ export function TabelaRampa(props: any) {
                         <td>Δ Temperatura</td>
                         {
                             dadosTabela.map((dados: Rampas) => {
-                                return <td>{(dados.rampaSubindo?.tempMaxima! - dados.rampaSubindo?.tempMinima!).toFixed(2)} ºC</td>
+                                return <td>{(dados[(props.tipoTeste === 'Aquecimento') ? "rampaSubindo" : "rampaDescendo"]?.tempMaxima! - dados[(props.tipoTeste === 'Aquecimento') ? "rampaSubindo" : "rampaDescendo"]?.tempMinima!).toFixed(2)} ºC</td>
                             })
                         }
                     </tr>
@@ -110,7 +110,7 @@ export function TabelaRampa(props: any) {
         <Table striped bordered hover>
             <thead>
                 <tr>
-                    <th>Média Ambiente: {(dadosTabela[0].rampaSubindo?.tempAmbiente)?.toFixed(2)} ºC</th>
+                    <th>Média Ambiente: {(dadosTabela[0][(props.tipoTeste === 'Aquecimento') ? "rampaSubindo" : "rampaDescendo"]?.tempAmbiente)?.toFixed(2)} ºC</th>
                     <th>Termopar 1</th>
                     <th>Termopar 2</th>
                     <th>Termopar 3</th>

@@ -73,6 +73,12 @@ public class TemperaturaController {
 		return  ResponseEntity.ok().body(dataService.rampaSubida(temperaturas, 10, 1));
 	}
 	
+	@RequestMapping(value = "/oscilacao", method = RequestMethod.GET)
+	public ResponseEntity<List<RampaModel>> oscilacao() {
+		List<TemperaturaModel> temperaturas = temperaturaRepository.buscaTemperaturaPorOrdemDeData();
+		return ResponseEntity.ok().body(dataService.mediaTermopar(temperaturas));
+	}
+	
 
 	@RequestMapping(value = "/mediaJanelas", method = RequestMethod.GET)
 	public ResponseEntity<List<EstatisticaModel>> mediaDasJanelas() {

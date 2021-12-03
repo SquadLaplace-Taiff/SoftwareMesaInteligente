@@ -4,7 +4,7 @@ import { TipoTeste } from "../../../components/TipoTeste/TipoTeste";
 import { tabela } from '../../../interfaces/tabelaInterface';
 import { TabelaRampa } from './componentes/TabelaRampa'
 
-export class Tabela extends React.Component<{}, any> {
+export class Tabela extends React.Component<{tipoTeste?: string}, any> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -28,7 +28,7 @@ export class Tabela extends React.Component<{}, any> {
     retornarTabela(resposta:any) {
         if (localStorage.getItem('tipoTeste') === 'Aquecimento' || localStorage.getItem('tipoTeste') === 'Resfriamento') {
             return (
-                <TabelaRampa tipoTeste={localStorage.getItem('tipoTeste')} />
+                <TabelaRampa tipoTeste={(this.props.tipoTeste) ? this.props.tipoTeste : localStorage.getItem('tipoTeste')} />
             );
         }
     }

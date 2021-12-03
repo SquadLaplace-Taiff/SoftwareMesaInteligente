@@ -18,5 +18,6 @@ public class RampaModel {
       private boolean rampaSubindo;
       private double TempMinima;
       private double TempMaxima;
-      private double TempAmbiente;      
+      private double TempAmbiente;
+      private double media;
 }

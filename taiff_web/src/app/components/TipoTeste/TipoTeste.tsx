@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import './TipoTeste.css';
 
-export function TipoTeste() {
+export function TipoTeste(props: any) {
 
     function changeTipe(target: any) {
         localStorage.setItem('tipoTeste', target.value);
+        props.trocarTeste(target.value);
     }
 
     return (
