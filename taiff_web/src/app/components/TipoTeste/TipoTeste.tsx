@@ -6,7 +6,9 @@ export function TipoTeste(props: any) {
 
     function changeTipe(target: any) {
         localStorage.setItem('tipoTeste', target.value);
-        props.trocarTeste(target.value);
+        if (props.trocarTeste()){
+            props.trocarTeste(target.value);
+        }
     }
 
     return (

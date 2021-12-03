@@ -12,4 +12,5 @@ export interface Rampa {
     tempAmbiente: number;
     tempMaxima: number;
     tempMinima: number;
+    media: number;
 }

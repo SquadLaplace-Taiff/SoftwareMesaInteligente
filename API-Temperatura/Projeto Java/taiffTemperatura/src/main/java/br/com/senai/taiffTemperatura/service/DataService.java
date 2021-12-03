@@ -40,7 +40,7 @@ public class DataService {
 	public double getMedia(int inicio, int fim, List<TemperaturaModel> temperaturas, int termopar) {
 		double media = 0;
 
-		for (int i = inicio; i <= fim ; i++) {
+		for (int i = inicio; i < fim ; i++) {
 			switch (termopar) {
 			case 1:
 				media += temperaturas.get(i).getTermopar_1();
@@ -168,8 +168,8 @@ public class DataService {
 				}
 
 				diferencaTermopar1 = Math.abs(temperaturaTermopar1Atual - temperaturaTermopar1Anterior);
-				diferencaTermopar2 = Math.abs(temperaturaTermopar3Atual - temperaturaTermopar2Anterior);
-				diferencaTermopar2 = Math.abs(temperaturaTermopar3Atual - temperaturaTermopar3Anterior);
+				diferencaTermopar2 = Math.abs(temperaturaTermopar2Atual - temperaturaTermopar2Anterior);
+				diferencaTermopar3 = Math.abs(temperaturaTermopar3Atual - temperaturaTermopar3Anterior);
 				
 				if (estabilizado || temperaturaTermopar1Atual > temperaturaTermopar1Anterior) {
 					estabilizado = true;

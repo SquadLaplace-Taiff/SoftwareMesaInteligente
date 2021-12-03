@@ -5,14 +5,21 @@ import Lista from '../../components/Coordenadas/Lista';
 import { Header } from "../../components/Header/Header";
 import { APIService } from "../../services/API.service";
 import { TipoTeste } from "../../components/TipoTeste/TipoTeste";
+import { useState } from "react";
 
 export function Home(props:any) {
+
+    const [tipoTeste, setTipoTeste] = useState('');
 
     const apiService = new APIService();
 
     function deletarTemperaturas() {
         apiService.deletarTemperaturaTemporarias();  
         //localStorage.removeItem('tipoTeste'); 
+    }
+
+    function trocarTeste(teste?: string) {
+        (teste) ? setTipoTeste(teste) : setTipoTeste(localStorage.getItem('tipoTeste')!);
     }
 
     localStorage.removeItem('tipoTeste');
@@ -25,7 +32,7 @@ export function Home(props:any) {
             <Container fluid>  
                 <Lista/>
                 <ButtonHome/>
-                <TipoTeste/>
+                <TipoTeste trocarTeste={() => trocarTeste()}/>
             </Container> 
         </>
     )

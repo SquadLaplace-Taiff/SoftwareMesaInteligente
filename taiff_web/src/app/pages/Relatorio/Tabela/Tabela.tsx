@@ -26,11 +26,9 @@ export class Tabela extends React.Component<{tipoTeste?: string}, any> {
 
 
     retornarTabela(resposta:any) {
-        if (localStorage.getItem('tipoTeste') === 'Aquecimento' || localStorage.getItem('tipoTeste') === 'Resfriamento') {
             return (
                 <TabelaRampa tipoTeste={(this.props.tipoTeste) ? this.props.tipoTeste : localStorage.getItem('tipoTeste')} />
             );
-        }
     }
 
     render() {
