@@ -15,3 +15,4 @@ Essa API consiste em apenas um endpoint que suporta 6 tipos de requisição HTTP
  - e) PUT - /posicao/teste/{id} - Edita um teste existente a partir de seu próprio ID
  - f) DELETE - /posicao/teste/{id} - Exclui um teste existente a partir de seu próprio ID
  
+## Passo a Passo para construção (build) ou inicialização dos containers
