@@ -136,11 +136,13 @@ const Lista = () => {
                     value={zeroPeca}
                     onChange={(event: any) => updateZeroPeca(event)}
                     onDelete={() => deleteZeroPeca()}
+                    zeroPeca={true}
                     />
             </Row>
             <Row>
                 <h2 className="title-input">Coordenada</h2>
                 <ListItem 
+                    zeroPeca={false}
                     key={0}
                     index={0}
                     value={coordenada}

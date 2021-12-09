@@ -54,6 +54,12 @@ export function TabelaRampa(props: any) {
         let hora;
 
         hora = time.split('T')[1];
+
+        if (hora) {
+            hora = hora.split(':');
+            hora = `${hora[0]}h${hora[1]}m${hora[2]}s`;
+        }
+
         return hora;
     }
 

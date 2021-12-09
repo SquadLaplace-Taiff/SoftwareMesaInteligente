@@ -48,11 +48,11 @@ export function FolhaDeRosto(props: propsType) {
                     <li className="fdr-item"><strong>Tipo de produto: </strong> {props.location.state.tipo}</li>
                     <li className="fdr-item"><strong>Fabricante: </strong> {props.location.state.fabricante}</li>
                     <li className="fdr-item"><strong>Modelo em placa: </strong> {props.location.state.modeloEmPlaca}</li>
-                    <li className="fdr-item"><strong>Frequência: </strong> {props.location.state.frequencia}</li>
+                    <li className="fdr-item"><strong>Frequência: </strong> {props.location.state.frequencia}Hz</li>
                     <li className="fdr-item"><strong>País de Fabricação: </strong> {props.location.state.paisFabricado}</li>
                     <li className="fdr-item"><strong>Modelo Comercial: </strong> {props.location.state.modeloComercial}</li>
-                    <li className="fdr-item"><strong>Tensão: </strong> {props.location.state.tensao}</li>
-                    <li className="fdr-item"><strong>Potência: </strong> {props.location.state.potencia}</li>
+                    <li className="fdr-item"><strong>Tensão: </strong> {props.location.state.tensao}V</li>
+                    <li className="fdr-item"><strong>Potência: </strong> {props.location.state.potencia}W</li>
                 </ul>
             </Container>
             <Container>

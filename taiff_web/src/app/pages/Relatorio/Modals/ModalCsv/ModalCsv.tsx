@@ -21,7 +21,7 @@ export function ModalCsv(props: any) {
                 </Modal.Header>
                 <Modal.Body className="modal-links">
                     <a href={`http://localhost:8081/temperatura/temperaturasCSV`}> Gerar CSV com os dados de Temperatura </a>
-                    <a href={`http://localhost:8081/temperatura/folhaDeRostoCSV`}> Gerar CSV com os dados de Médias de Temperaturas </a>
+                    {/* <a href={`http://localhost:8081/temperatura/folhaDeRostoCSV`}> Gerar CSV com os dados de Médias de Temperaturas </a> */}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
