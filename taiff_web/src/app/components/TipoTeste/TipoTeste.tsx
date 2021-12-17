@@ -25,6 +25,15 @@ export function TipoTeste(props: any) {
                     />
                 </Col>
                 <Col className="input-row">
+                    <label htmlFor="oscilacao">Oscilação</label>
+                    <input 
+                        id="oscilacao" 
+                        onChange={(e: any) => changeTipe(e.target)} 
+                        type="radio" name="tipoTeste" 
+                        value="Oscilacao" 
+                    />
+                </Col>
+                <Col className="input-row">
                     <label htmlFor="resfriamento">Resfriamento</label>
                     <input 
                         id="resfriamento" 
@@ -32,15 +41,6 @@ export function TipoTeste(props: any) {
                         type="radio" 
                         name="tipoTeste" 
                         value="Resfriamento" 
-                    />
-                </Col>
-                <Col className="input-row">
-                    <label htmlFor="oscilacao">Oscilação</label>
-                    <input 
-                        id="oscilacao" 
-                        onChange={(e: any) => changeTipe(e.target)} 
-                        type="radio" name="tipoTeste" 
-                        value="Oscilacao" 
                     />
                 </Col>
             </Row>

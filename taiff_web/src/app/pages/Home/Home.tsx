@@ -7,33 +7,31 @@ import { APIService } from "../../services/API.service";
 import { TipoTeste } from "../../components/TipoTeste/TipoTeste";
 import { useState } from "react";
 
-export function Home(props:any) {
+export function Home(props: any) {
 
     const [tipoTeste, setTipoTeste] = useState('');
 
     const apiService = new APIService();
 
     function deletarTemperaturas() {
-        apiService.deletarTemperaturaTemporarias();  
-        //localStorage.removeItem('tipoTeste'); 
+        apiService.deletarTemperaturaTemporarias();
+        localStorage.removeItem('tipoTeste');
     }
 
     function trocarTeste(teste?: string) {
         (teste) ? setTipoTeste(teste) : setTipoTeste(localStorage.getItem('tipoTeste')!);
     }
 
-    localStorage.removeItem('tipoTeste');
+    deletarTemperaturas();
 
-    //deletarTemperaturas();
-
-    return( 
+    return (
         <>
-            <Header/>
-            <Container fluid>  
-                <Lista/>
-                <ButtonHome/>
-                <TipoTeste trocarTeste={() => trocarTeste()}/>
-            </Container> 
+            <Header />
+            <Container fluid>
+                <Lista />
+                <ButtonHome />
+                <TipoTeste trocarTeste={() => trocarTeste()} />
+            </Container>
         </>
     )
 

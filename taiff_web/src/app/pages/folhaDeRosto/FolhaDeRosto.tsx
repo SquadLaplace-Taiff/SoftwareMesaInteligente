@@ -72,7 +72,7 @@ export function FolhaDeRosto(props: propsType) {
                 <p className="fdr-background conteudo-editavel" contentEditable></p>
             </Container>
             <Container className="fdr-flex">
-                <Button className="btn-primary" onClick={() => gerarPdf()}>Exportar PDF</Button>
+                <p>Para exportar o pdf pressione "ctrl + p"</p>
             </Container>
 
         </section>

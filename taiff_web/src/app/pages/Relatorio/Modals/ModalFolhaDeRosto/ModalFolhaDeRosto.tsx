@@ -92,7 +92,7 @@ export function ModalFolhaDeRosto() {
                                 }} type="text" placeholder="Modelo em Placa" />
                             </Form.Group>
                             <Form.Group controlId="formFrequencia">
-                                <Form.Label>Frequencia</Form.Label>
+                                <Form.Label>Frequencia(Hz)</Form.Label>
                                 <Form.Control onChange={(e) => {
                                     novoEstado = {
                                         ...folhaDeRosto,
@@ -122,12 +122,12 @@ export function ModalFolhaDeRosto() {
                                         modeloComercial: e.target.value
                                     }
                                     setFolhaDeRosto(novoEstado);
-                                }} type="text" placeholder="Frequencia" />
+                                }} type="text" placeholder="Modelo Comercial" />
                             </Form.Group>
                         </Row>
                         <Row className="mb-3">
                             <Form.Group controlId="formTensao">
-                                <Form.Label>Tensão</Form.Label>
+                                <Form.Label>Tensão(V)</Form.Label>
                                 <Form.Control onChange={(e) => {
                                     novoEstado = {
                                         ...folhaDeRosto,
@@ -138,7 +138,7 @@ export function ModalFolhaDeRosto() {
                             </Form.Group>
 
                             <Form.Group controlId="formPotencia">
-                                <Form.Label>Potência</Form.Label>
+                                <Form.Label>Potência(W)</Form.Label>
                                 <Form.Control onChange={(e) => {
                                     novoEstado = {
                                         ...folhaDeRosto,

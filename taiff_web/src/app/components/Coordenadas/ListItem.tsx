@@ -77,7 +77,7 @@ const ListItem = (props: coordenadaAuxiliar) => {
                         onChange={props.onChange}
                         name={`eixoR_${props.index}`}
                     />
-                    mm
+                    °
                 </label>
 
                 {

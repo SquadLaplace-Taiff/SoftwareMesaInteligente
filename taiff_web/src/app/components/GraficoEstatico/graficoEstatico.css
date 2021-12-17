@@ -1,9 +1,12 @@
 #section-grafico{
-    width: 65vw;
+    max-width: 650px;
+    display: flex;
+    align-content: center;
+    align-items: center;
 }
 
 .grafico { 
-    max-width: 900px !important;
+    width: 650px !important;
 }
 
 .button-container{
